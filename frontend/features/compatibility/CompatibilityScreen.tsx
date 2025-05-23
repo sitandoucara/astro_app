@@ -1,9 +1,30 @@
+import { useLayoutEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Chart() {
+export default function CompatibilityScreen() {
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <Text
+          style={{
+            fontFamily: 'ArefRuqaa_400Regular',
+            fontSize: 20,
+            color: '#32221E',
+            marginLeft: 20,
+          }}>
+          Check your compatibility
+        </Text>
+      ),
+      headerTitleAlign: 'left',
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Chart page</Text>
+      <Text style={styles.welcomeText}>Compatibility page</Text>
     </View>
   );
 }
@@ -17,8 +38,8 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: '#7B635A',
-    fontWeight: 'bold',
     fontFamily: 'ArefRuqaa_400Regular',
+    fontWeight: 'bold',
     fontSize: 42,
     marginBottom: 20,
   },

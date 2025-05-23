@@ -1,9 +1,30 @@
+import { useLayoutEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Learn() {
+export default function HomeScreen() {
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <Text
+          style={{
+            fontFamily: 'ArefRuqaa_400Regular',
+            fontSize: 20,
+            color: '#32221E',
+            marginLeft: 20,
+          }}>
+          Hi You !
+        </Text>
+      ),
+      headerTitleAlign: 'left',
+    });
+  }, [navigation]);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcomeText}>Learn page</Text>
+    <View className="bg-pink-400" style={styles.container}>
+      <Text style={styles.welcomeText}>Home page</Text>
     </View>
   );
 }

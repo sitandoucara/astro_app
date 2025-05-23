@@ -1,7 +1,27 @@
-import React from 'react';
+import { useLayoutEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Profile() {
+export default function ProfileScreen() {
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <Text
+          style={{
+            fontFamily: 'ArefRuqaa_400Regular',
+            fontSize: 20,
+            color: '#32221E',
+            marginLeft: 20,
+          }}>
+          Your profile
+        </Text>
+      ),
+      headerTitleAlign: 'left',
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Profile page</Text>
