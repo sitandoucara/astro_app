@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
   return (
-    <View style={{ flex: 1, backgroundColor: '#F2EAE0' }}>
+    <View className="flex-1 bg-[#F2EAE0]">
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
