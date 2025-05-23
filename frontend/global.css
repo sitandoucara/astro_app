@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-aref {
+  font-family: 'ArefRuqaa_400Regular';
+}
