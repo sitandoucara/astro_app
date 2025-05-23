@@ -2,11 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
 
-import ChartScreen from '../../features/chart/chartScreen';
-import CompatibilityScreen from '../../features/compatibility/CompatibilityScreen';
-import HomeScreen from '../../features/home/HomeScreen';
-import LearnScreen from '../../features/learn/LearnScreen';
-import ProfileScreen from '../../features/profile/ProfileScreen';
+import ChartScreen from 'features/chart/ChartScreen';
+import CompatibilityScreen from 'features/compatibility/CompatibilityScreen';
+import HomeScreen from 'features/home/HomeScreen';
+import LearnScreen from 'features/learn/LearnScreen';
+import ProfileScreen from 'features/profile/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 

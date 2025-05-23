@@ -23,7 +23,7 @@ export default function HomeScreen() {
   }, [navigation]);
 
   return (
-    <View className="bg-pink-400" style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.welcomeText}>Home page</Text>
     </View>
   );
