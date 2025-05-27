@@ -1,6 +1,9 @@
-import { useLayoutEffect } from 'react';
-import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useLayoutEffect } from 'react';
+
+import { ScrollView, Text } from 'react-native';
+
+import BirthChartForm from './BirthChartForm';
 
 export default function ChartScreen() {
   const navigation = useNavigation();
@@ -15,8 +18,11 @@ export default function ChartScreen() {
   }, [navigation]);
 
   return (
-    <View className="flex-1 items-center justify-center bg-[#F2EAE0]">
-      <Text className="text-aref mb-5 text-[42px] font-bold text-[#7B635A]">Chart page</Text>
-    </View>
+    <ScrollView className="flex-1 bg-[#F2EAE0] px-5 pt-10">
+      <Text className="text-aref mb-6 text-center text-3xl font-bold text-[#7B635A]">
+        Generate your Birth Chart
+      </Text>
+      <BirthChartForm />
+    </ScrollView>
   );
 }
