@@ -1,2 +1,10 @@
 demarer --- test iphone : 
 npx expo start -c --tunnel
+
+
+-------
+
+User1:
+MDP: aaaaaa
+Mail : selenakeita@gmail.com
+Usurname : test1
