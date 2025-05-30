@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image } from 'react-native';
+import { useAppDispatch } from 'shared/hooks';
 
 import { signIn } from './useAuth';
 
@@ -8,6 +9,16 @@ export default function SignInScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleLogin = async () => {
+    const { error } = await signIn(email, password, dispatch);
+    if (error) {
+      alert(error.message);
+    } else {
+      navigation.replace('App');
+    }
+  };
 
   return (
     <View className="flex-1 items-center justify-center bg-[#F2EAE0]">
@@ -43,20 +54,13 @@ export default function SignInScreen({ navigation }: any) {
 
         <TouchableOpacity
           className="mt-2 w-64 items-center rounded-full bg-white py-3"
-          onPress={async () => {
-            const { error } = await signIn(email, password);
-            if (error) {
-              alert(error.message);
-            } else {
-              navigation.navigate('App');
-            }
-          }}>
+          onPress={handleLogin}>
           <Text className="font-bold text-[#281109]">Sign in</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text className="mt-4 text-center font-bold text-white">
-            New here? <Text className="text-[#281109]">Create an Account</Text>{' '}
+            New here? <Text className="text-[#281109]">Create an Account</Text>
           </Text>
         </TouchableOpacity>
       </View>

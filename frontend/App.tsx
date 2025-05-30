@@ -5,14 +5,15 @@ import AuthHomeScreen from 'features/auth/AuthHomeScreen';
 import SignInScreen from 'features/auth/SignInScreen';
 import SignUpScreen from 'features/auth/SignUpScreen';
 import { View, Text } from 'react-native';
+import { Provider } from 'react-redux';
 import MyTabs from 'shared/components/mytabs';
-import { UserProvider } from 'shared/contexts/UserContext';
+import SessionGate from 'shared/lib/SessionGate';
 
+import { store } from './app/store';
 import type { RootStackParamList } from './navigation/types';
 
 import './global.css';
 
-//const Stack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
@@ -23,15 +24,16 @@ export default function App() {
 
   if (!fontsLoaded) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View className="flex-1 items-center justify-center">
+        <Text>Loading fonts...</Text>
       </View>
     );
   }
 
   return (
-    <UserProvider>
+    <Provider store={store}>
       <NavigationContainer>
+        <SessionGate />
         <Stack.Navigator initialRouteName="AuthHome" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="AuthHome" component={AuthHomeScreen} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
@@ -39,6 +41,6 @@ export default function App() {
           <Stack.Screen name="App" component={MyTabs} />
         </Stack.Navigator>
       </NavigationContainer>
-    </UserProvider>
+    </Provider>
   );
 }

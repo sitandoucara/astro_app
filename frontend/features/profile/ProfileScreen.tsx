@@ -1,17 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { logout } from 'features/auth/useAuth';
 import type { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { useUser } from 'shared/contexts/UserContext';
+import { useAppSelector, useAppDispatch } from 'shared/hooks';
 
 export default function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const { username, signOut } = useUser();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
 
   const handleLogout = async () => {
-    await signOut();
+    await logout(dispatch);
     navigation.reset({
       index: 0,
       routes: [{ name: 'AuthHome' }],
@@ -22,12 +23,12 @@ export default function ProfileScreen() {
     navigation.setOptions({
       headerTitle: () => (
         <Text className="text-aref ml-5 text-[20px] text-[#32221E]">
-          Your profile ({username ?? 'User'})
+          Your profile ({user?.username ?? 'User'})
         </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, username]);
+  }, [navigation, user]);
 
   return (
     <View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">

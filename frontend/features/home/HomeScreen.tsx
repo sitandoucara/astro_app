@@ -1,20 +1,23 @@
+import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
 import { Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useUser } from 'shared/contexts/UserContext';
+
+import { useAppSelector } from '../../shared/hooks';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  const { username } = useUser();
+  const user = useAppSelector((state) => state.auth.user);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px] text-[#32221E]">Hi {username ?? 'You'} !</Text>
+        <Text className="text-aref ml-5 text-[20px] text-[#32221E]">
+          Hi {user?.username ?? 'You'}!
+        </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation]);
+  }, [navigation, user]);
 
   return (
     <View className="flex-1 items-center justify-center bg-[#F2EAE0]">
