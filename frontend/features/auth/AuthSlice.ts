@@ -4,6 +4,9 @@ interface User {
   id: string;
   email: string;
   username?: string;
+  dateOfBirth?: string;
+  timeOfBirth?: string;
+  birthplace?: string;
 }
 
 interface AuthState {

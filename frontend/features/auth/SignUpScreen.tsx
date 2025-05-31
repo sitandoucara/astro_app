@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image, Modal } from 'react-native';
 
 import { signUp } from './useAuth';
+import useLocationSearch, { LocationResult } from '../../shared/hooks/useLocationSearch';
 
 export default function SignUpScreen({ navigation }: any) {
   const [username, setUsername] = useState('');
@@ -17,6 +18,10 @@ export default function SignUpScreen({ navigation }: any) {
 
   const [timeOfBirth, setTimeOfBirth] = useState<Date | null>(null);
   const [showTimeModal, setShowTimeModal] = useState(false);
+
+  const [birthplaceQuery, setBirthplaceQuery] = useState('');
+  const [selectedPlace, setSelectedPlace] = useState<LocationResult | null>(null);
+  const { results, loading, search } = useLocationSearch();
 
   const formatDate = (date: Date | null) =>
     date ? date.toLocaleDateString() : 'Choose Date of Birth';
@@ -80,10 +85,52 @@ export default function SignUpScreen({ navigation }: any) {
           <Text className="text-center font-bold text-[#281109]">{formatTime(timeOfBirth)}</Text>
         </TouchableOpacity>
 
+        {/* BirthPlace  */}
+        <View className="mt-2 w-64">
+          <TextInput
+            value={birthplaceQuery}
+            onChangeText={(text) => {
+              setBirthplaceQuery(text);
+              search(text);
+            }}
+            placeholder="Birthplace (e.g. Paris)"
+            placeholderTextColor="#281109"
+            className="rounded-full bg-white px-5 py-3 text-center"
+          />
+          {results.length > 0 && !selectedPlace && (
+            <View className="mt-2 max-h-40 rounded-xl bg-white p-2">
+              {results.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    setSelectedPlace(item);
+                    setBirthplaceQuery(item.display_name);
+                  }}
+                  className="py-2">
+                  <Text className="text-sm text-[#281109]">{item.display_name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+        </View>
+
         <TouchableOpacity
           className="mt-2 w-64 items-center rounded-full bg-white py-3"
           onPress={async () => {
-            const { data, error } = await signUp(email, password, username);
+            if (!dateOfBirth || !timeOfBirth || !selectedPlace) {
+              alert('Please fill all fields');
+              return;
+            }
+
+            const { data, error } = await signUp(
+              email,
+              password,
+              username,
+              dateOfBirth,
+              timeOfBirth,
+              selectedPlace.display_name
+            );
+
             if (error) {
               alert(error.message);
             } else {

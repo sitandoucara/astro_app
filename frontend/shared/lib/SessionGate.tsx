@@ -29,29 +29,42 @@ export default function SessionGate() {
       console.log('🔵 session:', session);
       console.log('🔴 session error:', sessionError);
 
+      if (!session) {
+        console.log('🚫 No session found, stay on AuthHome');
+        nav.reset({ index: 0, routes: [{ name: 'AuthHome' }] });
+        setLoading(false);
+        return;
+      }
+
       const {
         data: { user },
         error: userError,
-      } = await supabase.auth.getUser();
+      } = await supabase.auth.getUser(); // 🔥 fetch 100% à jour
       console.log('🟢 user:', user);
       console.log('🟠 user error:', userError);
 
-      if (session && user) {
-        const username = user.user_metadata?.username ?? '';
+      const metadata = user?.user_metadata ?? {};
+      console.log('🧠 metadata:', metadata);
+
+      if (user) {
         dispatch(
           setUser({
             user: {
               id: user.id,
               email: user.email ?? '',
-              username,
+              username: metadata.username ?? '',
+              dateOfBirth: metadata.dateOfBirth ?? '',
+              timeOfBirth: metadata.timeOfBirth ?? '',
+              birthplace: metadata.birthplace ?? '',
             },
             token: session.access_token,
           })
         );
+
         console.log('✅ User logged in, navigating to App');
         nav.reset({ index: 0, routes: [{ name: 'App' }] });
       } else {
-        console.log('🚫 No session found, stay on AuthHome');
+        console.log('🚫 No user returned from getUser');
         nav.reset({ index: 0, routes: [{ name: 'AuthHome' }] });
       }
 

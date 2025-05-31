@@ -8,3 +8,8 @@ User1:
 MDP: aaaaaa
 Mail : selenakeita@gmail.com
 Usurname : test1
+
+------- API-----
+
+**Localisation (BirthPlace) : Nominatim (OpenStreetMap)
+**Birth Chart : freeastrologyapi.com

@@ -2,12 +2,24 @@ import { supabase } from 'shared/lib/supabase';
 import { clearUser, setUser } from './AuthSlice';
 import { AppDispatch } from 'app/store';
 
-export const signUp = async (email: string, password: string, username: string) => {
+export const signUp = async (
+  email: string,
+  password: string,
+  username: string,
+  dateOfBirth: Date,
+  timeOfBirth: Date,
+  birthplace: string
+) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { username }, // <-- stocké dans user_metadata
+      data: {
+        username,
+        dateOfBirth: dateOfBirth.toISOString(),
+        timeOfBirth: timeOfBirth.toISOString(),
+        birthplace,
+      },
     },
   });
 

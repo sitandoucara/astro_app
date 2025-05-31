@@ -32,8 +32,18 @@ export default function ProfileScreen() {
 
   return (
     <View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">
-      <Text className="text-aref mb-5 text-[42px] font-bold text-[#7B635A]">Profile page</Text>
-
+      {user && (
+        <View className="items-center space-y-2">
+          <Text className="font-semibold text-[#32221E]">Username: {user.username}</Text>
+          <Text className="font-semibold text-[#32221E]">Birthplace: {user.birthplace}</Text>
+          <Text className="font-semibold text-[#32221E]">
+            Date of birth: {user.dateOfBirth?.slice(0, 10)}
+          </Text>
+          <Text className="font-semibold text-[#32221E]">
+            Time of birth: {user.timeOfBirth?.slice(11, 16)}
+          </Text>
+        </View>
+      )}
       <TouchableOpacity
         className="mt-2 w-64 items-center rounded-full bg-[#7B635A] py-3"
         onPress={handleLogout}>
