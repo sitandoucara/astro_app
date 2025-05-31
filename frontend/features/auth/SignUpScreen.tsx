@@ -122,20 +122,44 @@ export default function SignUpScreen({ navigation }: any) {
               return;
             }
 
-            const { data, error } = await signUp(
-              email,
-              password,
-              username,
-              dateOfBirth,
-              timeOfBirth,
-              selectedPlace.display_name
-            );
+            const lat = selectedPlace.lat;
+            const lon = selectedPlace.lon;
 
-            if (error) {
-              alert(error.message);
-            } else {
-              alert('Account created!');
-              navigation.navigate('SignIn');
+            try {
+              const res = await fetch(`http://localhost:4000/api/timezone?lat=${lat}&lon=${lon}`);
+              const tzData = await res.json();
+
+              if (!res.ok) throw new Error(tzData.error || 'Failed to get timezone');
+
+              const timezoneName = tzData.name;
+              const timezoneOffset = tzData.timezone;
+
+              console.log('Timezone fetched:', { timezoneName, timezoneOffset });
+
+              const { data, error } = await signUp(
+                email,
+                password,
+                username,
+                dateOfBirth,
+                timeOfBirth,
+                selectedPlace.display_name,
+                timezoneName,
+                timezoneOffset,
+                parseFloat(lat),
+                parseFloat(lon)
+              );
+
+              if (error) {
+                console.error('Signup error:', error);
+                alert(error.message);
+              } else {
+                console.log('Account created!');
+                alert('Account created!');
+                navigation.navigate('SignIn');
+              }
+            } catch (err) {
+              console.error('Timezone error:', err);
+              alert('Unable to fetch timezone');
             }
           }}>
           <Text className="font-bold text-[#281109]">Create</Text>

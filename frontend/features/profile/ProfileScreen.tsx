@@ -42,6 +42,13 @@ export default function ProfileScreen() {
           <Text className="font-semibold text-[#32221E]">
             Time of birth: {user.timeOfBirth?.slice(11, 16)}
           </Text>
+          <Text className="font-semibold text-[#32221E]">Timezonename: {user.timezoneName}</Text>
+          <Text className="font-semibold text-[#32221E]">
+            Timezoneoffset: {user.timezoneOffset}
+          </Text>
+          <Text className="font-semibold text-[#32221E]">Timezone: {user.timeOfBirth}</Text>
+          <Text className="font-semibold text-[#32221E]">Latitude: {user.latitude}</Text>
+          <Text className="font-semibold text-[#32221E]">Longitude: {user.longitude}</Text>
         </View>
       )}
       <TouchableOpacity

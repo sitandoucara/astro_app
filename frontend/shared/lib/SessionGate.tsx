@@ -39,7 +39,7 @@ export default function SessionGate() {
       const {
         data: { user },
         error: userError,
-      } = await supabase.auth.getUser(); // 🔥 fetch 100% à jour
+      } = await supabase.auth.getUser();
       console.log('🟢 user:', user);
       console.log('🟠 user error:', userError);
 
@@ -56,6 +56,10 @@ export default function SessionGate() {
               dateOfBirth: metadata.dateOfBirth ?? '',
               timeOfBirth: metadata.timeOfBirth ?? '',
               birthplace: metadata.birthplace ?? '',
+              timezoneName: metadata.timezoneName ?? '',
+              timezoneOffset: metadata.timezoneOffset ?? 0,
+              latitude: metadata.latitude ?? null,
+              longitude: metadata.longitude ?? null,
             },
             token: session.access_token,
           })

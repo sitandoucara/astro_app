@@ -8,7 +8,11 @@ export const signUp = async (
   username: string,
   dateOfBirth: Date,
   timeOfBirth: Date,
-  birthplace: string
+  birthplace: string,
+  timezoneName: string,
+  timezoneOffset: number,
+  latitude: number,
+  longitude: number
 ) => {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -19,9 +23,30 @@ export const signUp = async (
         dateOfBirth: dateOfBirth.toISOString(),
         timeOfBirth: timeOfBirth.toISOString(),
         birthplace,
+        timezoneName,
+        timezoneOffset,
+        latitude,
+        longitude,
       },
     },
   });
+
+  console.log('📤 Signup payload:', {
+    username,
+    dateOfBirth: dateOfBirth.toISOString(),
+    timeOfBirth: timeOfBirth.toISOString(),
+    birthplace,
+    timezoneName,
+    timezoneOffset,
+    latitude,
+    longitude,
+  });
+
+  if (error) {
+    console.error('Signup error:', error);
+  } else {
+    console.log('Signup success:', data);
+  }
 
   return { data, error };
 };

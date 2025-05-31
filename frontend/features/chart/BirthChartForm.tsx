@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
-import useBirthChartForm from './useBirthChartForm';
+import { useEffect, useState } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
 import WebView from 'react-native-webview';
+import { useAppSelector } from 'shared/hooks';
 
 export default function BirthChartForm() {
-  const { values, handleChange, getPayload } = useBirthChartForm();
-  const [loading, setLoading] = useState(false);
+  const user = useAppSelector((state) => state.auth.user);
   const [chartUrl, setChartUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const generateHtmlWithSvg = (url: string) => `
   <html>
     <head>
@@ -45,99 +46,85 @@ export default function BirthChartForm() {
   </html>
 `;
 
-  const handleGenerate = async () => {
+  const generateChart = async () => {
+    if (
+      !user ||
+      !user.dateOfBirth ||
+      !user.timeOfBirth ||
+      user.latitude == null ||
+      user.longitude == null ||
+      user.timezoneOffset == null
+    ) {
+      console.warn('Missing user data for chart generation');
+      return;
+    }
+
     try {
       setLoading(true);
-      setChartUrl(null);
+
+      const date = new Date(user.dateOfBirth);
+      const time = new Date(user.timeOfBirth);
+
+      const payload = {
+        year: date.getUTCFullYear(),
+        month: date.getUTCMonth() + 1,
+        date: date.getUTCDate(),
+        hours: time.getUTCHours(),
+        minutes: time.getUTCMinutes(),
+        seconds: 0,
+        latitude: user.latitude,
+        longitude: user.longitude,
+        timezone: user.timezoneOffset,
+        config: {
+          observation_point: 'topocentric',
+          ayanamsha: 'tropical',
+          house_system: 'Placidus',
+          language: 'en',
+          exclude_planets: [],
+          allowed_aspects: ['Conjunction', 'Opposition', 'Trine', 'Square'],
+          aspect_line_colors: {
+            Conjunction: '#558B6E',
+            Opposition: '#88A09E',
+            Trine: '#B88C9E',
+            Square: '#704C5E',
+          },
+          wheel_chart_colors: {
+            zodiac_sign_background_color: '#303036',
+            chart_background_color: '#281109',
+            zodiac_signs_text_color: '#FFFFFF',
+            dotted_line_color: '#FFFAFF',
+            planets_icon_color: '#FFFAFF',
+          },
+          orb_values: {
+            Conjunction: 5,
+            Opposition: 5,
+            Trine: 5,
+            Square: 5,
+          },
+        },
+      };
+
       const response = await fetch('http://localhost:4000/api/chart', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(getPayload()),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
-      console.log('Réponse backend:', data);
-
       setChartUrl(data.output || null);
-    } catch (error) {
-      console.error('Erreur API :', error);
+    } catch (err) {
+      console.error('Erreur lors de la génération du thème :', err);
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    generateChart();
+  }, [user]);
+
   return (
     <View className="space-y-5 pb-10">
-      {/* Inputs */}
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Year (e.g. 1998)"
-        keyboardType="numeric"
-        value={values.year}
-        onChangeText={handleChange('year')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Month (e.g. 3)"
-        keyboardType="numeric"
-        value={values.month}
-        onChangeText={handleChange('month')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Date (e.g. 3)"
-        keyboardType="numeric"
-        value={values.date}
-        onChangeText={handleChange('date')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Hours (e.g. 10)"
-        keyboardType="numeric"
-        value={values.hours}
-        onChangeText={handleChange('hours')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Minutes (e.g. 30)"
-        keyboardType="numeric"
-        value={values.minutes}
-        onChangeText={handleChange('minutes')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Latitude (e.g. 48.8566)"
-        keyboardType="numeric"
-        value={values.latitude}
-        onChangeText={handleChange('latitude')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Longitude (e.g. 2.3522)"
-        keyboardType="numeric"
-        value={values.longitude}
-        onChangeText={handleChange('longitude')}
-      />
-      <TextInput
-        className="rounded-xl border border-[#7B635A] bg-white px-4 py-2 text-[#32221E]"
-        placeholder="Timezone (e.g. 2.0)"
-        keyboardType="numeric"
-        value={values.timezone}
-        onChangeText={handleChange('timezone')}
-      />
-
-      {/* Bouton */}
-      <TouchableOpacity
-        className="mt-2 rounded-xl bg-[#7B635A] py-3"
-        onPress={handleGenerate}
-        disabled={loading}>
-        <Text className="text-center text-lg font-bold text-white">
-          {loading ? 'Chargement...' : 'Générer mon thème astral'}
-        </Text>
-      </TouchableOpacity>
-
       {/* Loader */}
       {loading && <ActivityIndicator size="large" color="#7B635A" className="pt-2" />}
 
