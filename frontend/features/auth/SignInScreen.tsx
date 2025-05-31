@@ -37,20 +37,21 @@ export default function SignInScreen({ navigation }: any) {
           placeholderTextColor="#281109"
           className="mt-2 w-64 rounded-full bg-white px-5 py-3 text-center"
         />
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password"
-          placeholderTextColor="#281109"
-          secureTextEntry={!isPasswordVisible}
-          className="mt-2 w-64 rounded-full bg-white px-5 py-3 text-center"
-        />
-
-        <TouchableOpacity
-          className="absolute right-10 top-[188px]"
-          onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
-          <Ionicons name={isPasswordVisible ? 'eye-off' : 'eye'} size={24} color="#B84A8E" />
-        </TouchableOpacity>
+        <View className="relative mt-2 w-64">
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password"
+            placeholderTextColor="#281109"
+            secureTextEntry={!isPasswordVisible}
+            className="w-64 rounded-full bg-white px-5 py-3 text-center"
+          />
+          <TouchableOpacity
+            className="absolute right-4 top-1/2 -translate-y-1/2"
+            onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+            <Ionicons name={isPasswordVisible ? 'eye-off' : 'eye'} size={22} color="#281109" />
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           className="mt-2 w-64 items-center rounded-full bg-white py-3"
@@ -59,7 +60,7 @@ export default function SignInScreen({ navigation }: any) {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text className="mt-4 text-center font-bold text-white">
+          <Text className="mt-4 text-center font-bold text-[#7B635A]">
             New here? <Text className="text-[#281109]">Create an Account</Text>
           </Text>
         </TouchableOpacity>
