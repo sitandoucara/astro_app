@@ -3,7 +3,12 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
 
-export default function BirthChartForm() {
+interface BirthChartFormProps {
+  setPlanets: (value: any) => void;
+  setAscendant: (value: any) => void;
+}
+
+export default function BirthChartForm({ setPlanets, setAscendant }: BirthChartFormProps) {
   const user = useAppSelector((state) => state.auth.user);
   const [chartUrl, setChartUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -104,14 +109,40 @@ export default function BirthChartForm() {
         },
       };
 
-      const response = await fetch('http://localhost:4000/api/chart', {
+      // 🌀 1. Fetch Chart SVG
+      const chartRes = await fetch('http://localhost:4000/api/chart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const chartData = await chartRes.json();
+      setChartUrl(chartData.output || null);
+
+      // 🌌 2. Fetch Planets Text Info
+      const planetsRes = await fetch('http://localhost:4000/api/chart/planets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
-      setChartUrl(data.output || null);
+      const planetsData = await planetsRes.json();
+      const planetList = planetsData.output ?? [];
+
+      const planetsObj: any = {};
+      let ascendant = null;
+
+      planetList.forEach((item: any) => {
+        const planetName = item.planet?.en;
+        const sign = item.zodiac_sign?.name?.en;
+        if (planetName === 'Ascendant') {
+          ascendant = { sign };
+        } else {
+          planetsObj[planetName] = { sign };
+        }
+      });
+
+      setPlanets(planetsObj);
+      setAscendant(ascendant);
     } catch (err) {
       console.error('Erreur lors de la génération du thème :', err);
     } finally {
