@@ -12,7 +12,8 @@ export const signUp = async (
   timezoneName: string,
   timezoneOffset: number,
   latitude: number,
-  longitude: number
+  longitude: number,
+  gender: string
 ) => {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -27,6 +28,7 @@ export const signUp = async (
         timezoneOffset,
         latitude,
         longitude,
+        gender,
       },
     },
   });
@@ -40,6 +42,7 @@ export const signUp = async (
     timezoneOffset,
     latitude,
     longitude,
+    gender,
   });
 
   if (error) {
@@ -58,13 +61,25 @@ export const signIn = async (email: string, password: string, dispatch: AppDispa
   });
 
   if (data?.session && data.user) {
-    const username = data.user.user_metadata?.username ?? '';
+    const metadata = data.user.user_metadata || {};
+
     dispatch(
       setUser({
         user: {
           id: data.user.id,
           email: data.user.email ?? '',
-          username,
+          username: metadata.username ?? '',
+          dateOfBirth: metadata.dateOfBirth,
+          timeOfBirth: metadata.timeOfBirth,
+          birthplace: metadata.birthplace,
+          latitude: metadata.latitude,
+          longitude: metadata.longitude,
+          timezoneName: metadata.timezoneName,
+          timezoneOffset: metadata.timezoneOffset,
+          gender: metadata.gender,
+          birthChartUrl: metadata.birthChartUrl,
+          planets: metadata.planets,
+          ascendant: metadata.ascendant,
         },
         token: data.session.access_token,
       })

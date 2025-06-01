@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PlanetData, AscendantData } from 'types/astrology';
 
 export interface User {
   id: string;
@@ -11,6 +12,10 @@ export interface User {
   timezoneOffset?: number;
   latitude?: number;
   longitude?: number;
+  gender?: string;
+  birthChartUrl?: string;
+  planets?: Record<string, PlanetData>;
+  ascendant?: AscendantData;
 }
 
 interface AuthState {

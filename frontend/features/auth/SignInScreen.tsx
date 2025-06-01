@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { generateChart } from 'features/chart/GenerateChart';
 import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image } from 'react-native';
 import { useAppDispatch } from 'shared/hooks';
@@ -12,10 +13,37 @@ export default function SignInScreen({ navigation }: any) {
   const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
-    const { error } = await signIn(email, password, dispatch);
+    console.log('👉 Connexion en cours...');
+    const { data, error } = await signIn(email, password, dispatch);
+
     if (error) {
+      console.log('❌ Erreur de connexion:', error.message);
       alert(error.message);
     } else {
+      const user = data?.user;
+      console.log('✅ Connexion réussie:', user);
+
+      if (user && !user.user_metadata?.birthChartUrl) {
+        console.log('🧠 BirthChart manquant, génération...');
+
+        const metadata = user.user_metadata;
+
+        const chartPayload = {
+          id: user.id,
+          dateOfBirth: metadata.dateOfBirth,
+          timeOfBirth: metadata.timeOfBirth,
+          latitude: metadata.latitude,
+          longitude: metadata.longitude,
+          timezoneOffset: metadata.timezoneOffset,
+        };
+
+        console.log('🛰️ Données envoyées pour le chart :', chartPayload);
+
+        await generateChart(chartPayload);
+      } else {
+        console.log('✔️ BirthChart déjà existant');
+      }
+
       navigation.replace('App');
     }
   };

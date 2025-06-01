@@ -1,14 +1,41 @@
-import { useLayoutEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-import BirthChartForm from './BirthChartForm';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import WebView from 'react-native-webview';
+import { useAppSelector } from 'shared/hooks';
 
 export default function ChartScreen() {
   const navigation = useNavigation();
-  const [planets, setPlanets] = useState<any>(null);
-  const [ascendant, setAscendant] = useState<any>(null);
+  const user = useAppSelector((state) => state.auth.user);
+  const [ascendant, setAscendant] = useState<{ sign: string } | null>(null);
+  const chartUrl = user?.birthChartUrl;
 
+  type PlanetData = {
+    sign: string;
+    [key: string]: any;
+  };
+
+  const [planets, setPlanets] = useState<Record<string, PlanetData> | null>(null);
+
+  // ➤ Injection depuis Redux à l'ouverture de l'écran
+  useEffect(() => {
+    if (user?.planets) {
+      const formattedPlanets: Record<string, PlanetData> = Object.entries(user.planets).reduce(
+        (acc, [key, value]) => {
+          acc[key] = typeof value === 'string' ? { sign: value } : value;
+          return acc;
+        },
+        {} as Record<string, PlanetData>
+      );
+      setPlanets(formattedPlanets);
+    }
+
+    if (user?.ascendant) {
+      setAscendant(user.ascendant);
+    }
+  }, [user]);
+
+  // ➤ Custom header
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -18,24 +45,69 @@ export default function ChartScreen() {
     });
   }, [navigation]);
 
+  // ➤ WebView HTML builder
+  const generateHtmlWithSvg = (url: string) => `
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+          html, body {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+          .container {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transform: scale(1.1);
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <img src="${url}" />
+        </div>
+      </body>
+    </html>
+  `;
+
   return (
     <ScrollView className="flex-1 bg-[#F2EAE0] px-5 pt-10">
       <Text className="text-aref mb-6 text-center text-3xl font-bold text-[#7B635A]">
-        Generate your Birth Chart
+        Your Birth Chart
       </Text>
 
-      {/* Génération du thème (image + callback pour données texte) */}
-      <BirthChartForm setPlanets={setPlanets} setAscendant={setAscendant} />
+      {chartUrl && (
+        <View className="items-center pt-5">
+          <WebView
+            originWhitelist={['*']}
+            source={{ html: generateHtmlWithSvg(chartUrl) }}
+            style={{ width: 300, height: 300, backgroundColor: 'transparent' }}
+            scrollEnabled={false}
+          />
+        </View>
+      )}
 
-      {/* Affichage des positions planétaires principales */}
-      {planets && ascendant && (
+      {planets && (
         <View className="mt-6 space-y-1">
-          <Text className="text-[#32221E]">☀ Sun: {planets.Sun?.sign}</Text>
-          <Text className="text-[#32221E]">🌙 Moon: {planets.Moon?.sign}</Text>
-          <Text className="text-[#32221E]">⬆ Ascendant: {ascendant?.sign}</Text>
-          <Text className="text-[#32221E]">♀ Venus: {planets.Venus?.sign}</Text>
-          <Text className="text-[#32221E]">♂ Mars: {planets.Mars?.sign}</Text>
-          {/* Ajoute plus si besoin */}
+          {Object.entries(planets).map(([planet, data]) => (
+            <Text key={planet} className="text-[#32221E]">
+              {planet}: {data.sign}
+            </Text>
+          ))}
         </View>
       )}
     </ScrollView>

@@ -6,6 +6,8 @@ import { useLayoutEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 
+import WebView from 'react-native-webview';
+
 export default function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
@@ -35,6 +37,7 @@ export default function ProfileScreen() {
       {user && (
         <View className="items-center space-y-2">
           <Text className="font-semibold text-[#32221E]">Username: {user.username}</Text>
+          <Text className="font-semibold text-[#32221E]">Gender: {user.gender}</Text>
           <Text className="font-semibold text-[#32221E]">Birthplace: {user.birthplace}</Text>
           <Text className="font-semibold text-[#32221E]">
             Date of birth: {user.dateOfBirth?.slice(0, 10)}
@@ -49,6 +52,15 @@ export default function ProfileScreen() {
           <Text className="font-semibold text-[#32221E]">Timezone: {user.timeOfBirth}</Text>
           <Text className="font-semibold text-[#32221E]">Latitude: {user.latitude}</Text>
           <Text className="font-semibold text-[#32221E]">Longitude: {user.longitude}</Text>
+
+          {/*{user?.birthChartUrl && (
+            <WebView
+              originWhitelist={['*']}
+              source={{ uri: user.birthChartUrl }}
+              style={{ width: 300, height: 300, backgroundColor: 'transparent' }}
+              scrollEnabled={false}
+            />
+          )}*/}
         </View>
       )}
       <TouchableOpacity

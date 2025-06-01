@@ -60,6 +60,10 @@ export default function SessionGate() {
               timezoneOffset: metadata.timezoneOffset ?? 0,
               latitude: metadata.latitude ?? null,
               longitude: metadata.longitude ?? null,
+              gender: metadata.gender ?? '',
+              birthChartUrl: metadata.birthChartUrl ?? '',
+              planets: metadata.planets ?? null,
+              ascendant: metadata.ascendant ?? null,
             },
             token: session.access_token,
           })

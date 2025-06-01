@@ -22,6 +22,7 @@ export default function SignUpScreen({ navigation }: any) {
   const [birthplaceQuery, setBirthplaceQuery] = useState('');
   const [selectedPlace, setSelectedPlace] = useState<LocationResult | null>(null);
   const { results, loading, search } = useLocationSearch();
+  const [gender, setGender] = useState<string | null>(null);
 
   const formatDate = (date: Date | null) =>
     date ? date.toLocaleDateString() : 'Choose Date of Birth';
@@ -114,10 +115,24 @@ export default function SignUpScreen({ navigation }: any) {
           )}
         </View>
 
+        <Text className="mt-2 text-center font-bold text-[#32221E]">Select your gender</Text>
+        <View className="flex-row justify-center space-x-3">
+          {['Male', 'Female', 'Other'].map((option) => (
+            <TouchableOpacity
+              key={option}
+              onPress={() => setGender(option)}
+              className={`rounded-full border px-4 py-2 ${
+                gender === option ? 'bg-[#7B635A]' : 'bg-white'
+              }`}>
+              <Text className={gender === option ? 'text-white' : 'text-[#281109]'}>{option}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         <TouchableOpacity
           className="mt-2 w-64 items-center rounded-full bg-white py-3"
           onPress={async () => {
-            if (!dateOfBirth || !timeOfBirth || !selectedPlace) {
+            if (!dateOfBirth || !timeOfBirth || !selectedPlace || !gender) {
               alert('Please fill all fields');
               return;
             }
@@ -146,7 +161,8 @@ export default function SignUpScreen({ navigation }: any) {
                 timezoneName,
                 timezoneOffset,
                 parseFloat(lat),
-                parseFloat(lon)
+                parseFloat(lon),
+                gender
               );
 
               if (error) {
