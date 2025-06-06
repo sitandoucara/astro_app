@@ -13,18 +13,18 @@ export default function SignInScreen({ navigation }: any) {
   const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
-    console.log('👉 Connexion en cours...');
+    console.log('Connexion en cours...');
     const { data, error } = await signIn(email, password, dispatch);
 
     if (error) {
-      console.log('❌ Erreur de connexion:', error.message);
+      console.log('Erreur de connexion:', error.message);
       alert(error.message);
     } else {
       const user = data?.user;
-      console.log('✅ Connexion réussie:', user);
+      console.log('Connexion réussie:', user);
 
       if (user && !user.user_metadata?.birthChartUrl) {
-        console.log('🧠 BirthChart manquant, génération...');
+        console.log('BirthChart manquant, génération...');
 
         const metadata = user.user_metadata;
 
@@ -37,11 +37,11 @@ export default function SignInScreen({ navigation }: any) {
           timezoneOffset: metadata.timezoneOffset,
         };
 
-        console.log('🛰️ Données envoyées pour le chart :', chartPayload);
+        console.log('Données envoyées pour le chart :', chartPayload);
 
         await generateChart(chartPayload);
       } else {
-        console.log('✔️ BirthChart déjà existant');
+        console.log('BirthChart déjà existant');
       }
 
       navigation.replace('App');

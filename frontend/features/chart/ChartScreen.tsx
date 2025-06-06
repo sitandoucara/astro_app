@@ -7,7 +7,6 @@ import { useAppSelector } from 'shared/hooks';
 export default function ChartScreen() {
   const navigation = useNavigation();
   const user = useAppSelector((state) => state.auth.user);
-  const [ascendant, setAscendant] = useState<{ sign: string } | null>(null);
   const chartUrl = user?.birthChartUrl;
 
   type PlanetData = {
@@ -16,8 +15,23 @@ export default function ChartScreen() {
   };
 
   const [planets, setPlanets] = useState<Record<string, PlanetData> | null>(null);
+  const [ascendant, setAscendant] = useState<{ sign: string } | null>(null);
+  const [planetsDescriptions, setPlanetsDescriptions] = useState<{
+    [planet: string]: { sign: string; text: string };
+  } | null>(null);
 
-  // ➤ Injection depuis Redux à l'ouverture de l'écran
+  const fetchSignDetail = async (sign: string): Promise<any> => {
+    try {
+      const url = `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/${sign}.json`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Failed to fetch ${sign}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Error loading JSON:', error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     if (user?.planets) {
       const formattedPlanets: Record<string, PlanetData> = Object.entries(user.planets).reduce(
@@ -35,7 +49,50 @@ export default function ChartScreen() {
     }
   }, [user]);
 
-  // ➤ Custom header
+  useEffect(() => {
+    const loadDescriptions = async () => {
+      if (!planets || !user?.gender) return;
+      const gender = user.gender.toLowerCase();
+      const validPlanets = [
+        'sun',
+        'moon',
+        'venus',
+        'mars',
+        'ascendant',
+        'mercury',
+        'jupiter',
+        'saturn',
+        'uranus',
+        'neptune',
+      ];
+
+      const descriptions: {
+        [planet: string]: {
+          sign: string;
+          text: string;
+        };
+      } = {};
+
+      for (const [planet, data] of Object.entries(planets)) {
+        const lowerPlanet = planet.toLowerCase();
+        const sign = data.sign;
+        if (validPlanets.includes(lowerPlanet)) {
+          const detail = await fetchSignDetail(sign);
+          if (detail?.[lowerPlanet]?.[gender]) {
+            descriptions[planet] = {
+              sign,
+              text: detail[lowerPlanet][gender],
+            };
+          }
+        }
+      }
+
+      setPlanetsDescriptions(descriptions);
+    };
+
+    loadDescriptions();
+  }, [planets, user]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -45,7 +102,6 @@ export default function ChartScreen() {
     });
   }, [navigation]);
 
-  // ➤ WebView HTML builder
   const generateHtmlWithSvg = (url: string) => `
     <html>
       <head>
@@ -101,12 +157,17 @@ export default function ChartScreen() {
         </View>
       )}
 
-      {planets && (
-        <View className="mt-6 space-y-1">
-          {Object.entries(planets).map(([planet, data]) => (
-            <Text key={planet} className="text-[#32221E]">
-              {planet}: {data.sign}
-            </Text>
+      {planetsDescriptions && (
+        <View className="mt-7 space-y-4">
+          {Object.entries(planetsDescriptions).map(([planet, info]) => (
+            <View
+              key={planet}
+              className="mt-4 rounded-[13px] border border-[#32221E] bg-[#32221E]/50 p-3">
+              <Text className="font-bold text-[#281109]">
+                {planet} in {info.sign}
+              </Text>
+              <Text className="mt-1 text-white">{info.text}</Text>
+            </View>
           ))}
         </View>
       )}

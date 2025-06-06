@@ -13,3 +13,6 @@ Usurname : test1
 
 **Localisation (BirthPlace) : Nominatim (OpenStreetMap)
 **Birth Chart : freeastrologyapi.com
+
+
+***Clement.barbaza@gmail.com
