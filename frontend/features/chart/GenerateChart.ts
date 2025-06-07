@@ -1,5 +1,5 @@
-import { supabase } from 'shared/lib/supabase';
 import { decode } from 'base64-arraybuffer';
+import { supabase } from 'shared/lib/supabase';
 
 type UserAstroData = {
   id: string;
@@ -82,7 +82,7 @@ export const generateChart = async (user: UserAstroData) => {
   const planetJson = await planetRes.json();
   const planetData = planetJson.output ?? [];
 
-  // Simplify planet data → only { planetName: sign }
+  // Take one data ex: { planetName: sign }
   const simplifiedPlanets: Record<string, string> = {};
   planetData.forEach((planet: any) => {
     const name = planet.planet?.en;

@@ -1,17 +1,58 @@
+import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout } from 'features/auth/useAuth';
 import type { RootStackParamList } from 'navigation/types';
-import { useLayoutEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { useLayoutEffect, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 
-import WebView from 'react-native-webview';
+import { toggleDarkMode } from 'shared/theme/themeSlice';
 
 export default function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const colors = {
+    tailwind: {
+      background: isDarkMode ? 'bg-[#F2EAE0]' : 'bg-[#281109]',
+      cardBg: isDarkMode ? 'bg-[#8B7E78]' : 'bg-[#402B25]',
+      itemBg: isDarkMode ? 'bg-[#F5F0ED]' : 'bg-[#5D4B46]',
+      iconBg: isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]',
+      textPrimary: isDarkMode ? 'text-[#281109]' : 'text-[#F2EAE0]',
+      textSecondary: isDarkMode ? 'text-[#A8958C]' : 'text-[#D8C8B4]',
+      textReverse: isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]',
+      textOnCard: 'text-[#281109]',
+    },
+    raw: {
+      icon: isDarkMode ? '#281109' : '#F2EAE0',
+      thumb: isDarkMode ? '#F2EAE0' : '#32221E',
+      trackOff: '#32221E',
+      trackOn: '#F2EAE0',
+    },
+  };
+
+  type SettingItemProps = {
+    icon: React.ReactNode;
+    label: string;
+    rightComponent?: React.ReactNode;
+    onPress?: () => void;
+  };
+
+  const SettingItem: React.FC<SettingItemProps> = ({ icon, label, rightComponent, onPress }) => (
+    <TouchableOpacity
+      className={`mb-3 flex-row items-center justify-between rounded-lg p-4 ${colors.tailwind.itemBg}`}
+      onPress={onPress}>
+      <View className="flex-row items-center space-x-3">
+        <View>{icon}</View>
+        <Text className={`font-medium ${colors.tailwind.textOnCard}`}>{label}</Text>
+      </View>
+      {rightComponent}
+    </TouchableOpacity>
+  );
 
   const handleLogout = async () => {
     await logout(dispatch);
@@ -24,50 +65,128 @@ export default function ProfileScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px] text-[#32221E]">
-          Your profile ({user?.username ?? 'User'})
-        </Text>
+        <View>
+          <Text className="text-aref ml-5 text-[15px]" style={{ color: colors.raw.icon }}>
+            Your profile ({user?.username ?? 'User'})
+          </Text>
+
+          <Text className="text-aref ml-5 text-[12px]" style={{ color: colors.raw.icon }}>
+            {user?.dateOfBirth ? `${user.dateOfBirth.slice(0, 10)}` : ''}
+            {user?.timeOfBirth ? ` • ${user.timeOfBirth.slice(11, 16)}` : ''}
+          </Text>
+        </View>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, user]);
+  }, [navigation, user, isDarkMode]);
 
   return (
-    <View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">
+    <ScrollView className={`flex-1 ${colors.tailwind.background} p-4`}>
+      {/*<View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">*/}
       {user && (
-        <View className="items-center space-y-2">
-          <Text className="font-semibold text-[#32221E]">Username: {user.username}</Text>
-          <Text className="font-semibold text-[#32221E]">Gender: {user.gender}</Text>
-          <Text className="font-semibold text-[#32221E]">Birthplace: {user.birthplace}</Text>
-          <Text className="font-semibold text-[#32221E]">
-            Date of birth: {user.dateOfBirth?.slice(0, 10)}
-          </Text>
-          <Text className="font-semibold text-[#32221E]">
-            Time of birth: {user.timeOfBirth?.slice(11, 16)}
-          </Text>
-          <Text className="font-semibold text-[#32221E]">Timezonename: {user.timezoneName}</Text>
-          <Text className="font-semibold text-[#32221E]">
-            Timezoneoffset: {user.timezoneOffset}
-          </Text>
-          <Text className="font-semibold text-[#32221E]">Timezone: {user.timeOfBirth}</Text>
-          <Text className="font-semibold text-[#32221E]">Latitude: {user.latitude}</Text>
-          <Text className="font-semibold text-[#32221E]">Longitude: {user.longitude}</Text>
-
-          {/*{user?.birthChartUrl && (
-            <WebView
-              originWhitelist={['*']}
-              source={{ uri: user.birthChartUrl }}
-              style={{ width: 300, height: 300, backgroundColor: 'transparent' }}
-              scrollEnabled={false}
-            />
-          )}*/}
+        <View>
+          <View className="mb-8 flex-row items-center justify-between pt-4">
+            <View className="flex-row items-center gap-2">
+              <View className={`rounded-full p-2 ${colors.tailwind.cardBg}`}>
+                <Feather name="user" size={24} color={colors.raw.icon} />
+              </View>
+              <View>
+                <Text className={`text-xl font-semibold ${colors.tailwind.textPrimary}`}>
+                  {user.username}{' '}
+                  {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
+                </Text>
+                <Text className={`text-sm ${colors.tailwind.textSecondary}`}>{user.email}</Text>
+              </View>
+            </View>
+            <Feather name="chevron-right" size={24} color={colors.raw.icon} />
+          </View>
         </View>
       )}
-      <TouchableOpacity
-        className="mt-2 w-64 items-center rounded-full bg-[#7B635A] py-3"
-        onPress={handleLogout}>
-        <Text className="font-bold text-white">Log out</Text>
-      </TouchableOpacity>
-    </View>
+
+      {/* Appearance & Language */}
+      <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+        <SettingItem
+          icon={<Feather name="sun" size={20} color={colors.raw.icon} />}
+          label=" Light Appearance"
+          rightComponent={
+            <Switch
+              value={!isDarkMode}
+              onValueChange={() => {
+                dispatch(toggleDarkMode());
+              }}
+              thumbColor={isDarkMode ? '#F2EAE0' : '#32221E'}
+              trackColor={{ false: '#32221E', true: '#F2EAE0' }}
+            />
+          }
+          onPress={undefined}
+        />
+        <SettingItem
+          icon={<Feather name="globe" size={20} color={colors.raw.icon} />}
+          label=" Change Language"
+          rightComponent={
+            <View className="flex-row items-center space-x-2">
+              <Text
+                className={`rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                English(US)
+              </Text>
+              <Feather name="chevron-right" size={20} color={colors.raw.icon} />
+            </View>
+          }
+          onPress={undefined}
+        />
+        <SettingItem
+          icon={<FontAwesome5 name="crown" size={20} color={colors.raw.icon} />}
+          label=" Subscriptions"
+          rightComponent={
+            <View className="flex-row items-center space-x-2">
+              <Text
+                className={`rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                Free Plan
+              </Text>
+              <Feather name="chevron-right" size={20} color={colors.raw.icon} />
+            </View>
+          }
+          onPress={undefined}
+        />
+      </View>
+
+      {/* Feedback */}
+      <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+        <SettingItem
+          icon={<Feather name="star" size={20} color={colors.raw.icon} />}
+          label=" Rate us"
+          rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
+          onPress={undefined}
+        />
+        <SettingItem
+          icon={<Feather name="message-circle" size={20} color={colors.raw.icon} />}
+          label=" Contact us"
+          rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
+          onPress={undefined}
+        />
+        <SettingItem
+          icon={<Feather name="users" size={20} color={colors.raw.icon} />}
+          label=" Follow us"
+          rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
+          onPress={undefined}
+        />
+      </View>
+
+      {/* Account */}
+      <View className={`rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+        <SettingItem
+          icon={<Feather name="log-out" size={20} color={colors.raw.icon} />}
+          label=" Log Out"
+          rightComponent={undefined}
+          onPress={handleLogout}
+        />
+        <SettingItem
+          icon={<Feather name="trash-2" size={20} color={colors.raw.icon} />}
+          label=" Delete Account"
+          rightComponent={undefined}
+          onPress={undefined}
+        />
+      </View>
+    </ScrollView>
   );
 }

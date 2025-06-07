@@ -8,11 +8,19 @@ import HomeScreen from 'features/home/HomeScreen';
 import LearnScreen from 'features/learn/LearnScreen';
 import ProfileScreen from 'features/profile/ProfileScreen';
 
+import { useAppSelector } from 'shared/hooks';
+
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const borderColor = isDarkMode ? '#32221E' : '#F2EAE0';
+  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
+
   return (
-    <View className="flex-1 bg-[#F2EAE0]">
+    <View className="flex-1" style={{ backgroundColor }}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -40,16 +48,16 @@ export default function MyTabs() {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#32221E',
-          tabBarInactiveTintColor: 'rgba(50, 34, 30, 0.5)',
+          tabBarActiveTintColor: textColor,
+          tabBarInactiveTintColor: textColor + '80',
           tabBarStyle: {
-            backgroundColor: '#F2EAE0',
-            borderTopColor: '#32221E',
+            backgroundColor,
+            borderTopColor: borderColor,
             borderTopWidth: 1,
           },
           headerStyle: {
-            backgroundColor: '#F2EAE0',
-            borderBottomColor: '#32221E',
+            backgroundColor,
+            borderBottomColor: borderColor,
             borderBottomWidth: 1,
           },
         })}>

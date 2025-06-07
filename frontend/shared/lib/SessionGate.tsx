@@ -69,10 +69,10 @@ export default function SessionGate() {
           })
         );
 
-        console.log('✅ User logged in, navigating to App');
+        console.log('User logged in, navigating to App');
         nav.reset({ index: 0, routes: [{ name: 'App' }] });
       } else {
-        console.log('🚫 No user returned from getUser');
+        console.log('No user returned from getUser');
         nav.reset({ index: 0, routes: [{ name: 'AuthHome' }] });
       }
 

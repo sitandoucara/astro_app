@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/themed/dist/Button';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import WebView from 'react-native-webview';
@@ -146,6 +147,8 @@ export default function ChartScreen() {
         Your Birth Chart
       </Text>
 
+      <Button>Share</Button>
+
       {chartUrl && (
         <View className="items-center pt-5">
           <WebView
@@ -162,11 +165,11 @@ export default function ChartScreen() {
           {Object.entries(planetsDescriptions).map(([planet, info]) => (
             <View
               key={planet}
-              className="mt-4 rounded-[13px] border border-[#32221E] bg-[#32221E]/50 p-3">
-              <Text className="font-bold text-[#281109]">
+              className="border-light-border bg-light-cardback mt-4 rounded-[13px] border p-3">
+              <Text className="text-light-text1 font-bold">
                 {planet} in {info.sign}
               </Text>
-              <Text className="mt-1 text-white">{info.text}</Text>
+              <Text className="text-light-text3 mt-1">{info.text}</Text>
             </View>
           ))}
         </View>
