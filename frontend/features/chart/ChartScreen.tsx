@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button } from '@rneui/themed/dist/Button';
+
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
-import { Feather } from '@expo/vector-icons';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function ChartScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
@@ -169,13 +170,19 @@ export default function ChartScreen() {
         </View>
       )}
 
-      <TouchableOpacity
-        //activeOpacity={0.9}
-        className="flex items-center rounded-full border border-dark-background  p-2">
-        <Text className="text-aref rounded-full bg-dark-background px-8 py-2 text-base font-semibold text-dark-text1">
-          SHARE
-        </Text>
-      </TouchableOpacity>
+      <View className="rounded-full border-2 border-stone-600  p-2">
+        <TouchableOpacity
+          onPress={() => Alert.alert('share!')}
+          activeOpacity={0.8}
+          className=" shadow-opacity-30  elevation-1 rounded-full bg-[#BFB0A7] px-2 py-4 shadow-2xl shadow-md shadow-light-text2">
+          <View className="flex-row  justify-center gap-2">
+            <MaterialCommunityIcons name="share" size={20} color="#32221E" />
+            <Text className="text-aref  text-base font-bold tracking-wide text-[#32221E]">
+              Share
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
 
       {planetsDescriptions && (
         <View className="mt-7 space-y-4">
