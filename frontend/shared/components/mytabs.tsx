@@ -59,6 +59,7 @@ export default function MyTabs() {
             backgroundColor,
             borderBottomColor: borderColor,
             borderBottomWidth: 1,
+            height: 120,
           },
         })}>
         <Tab.Screen name="Home" component={HomeScreen} />

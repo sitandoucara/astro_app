@@ -1,12 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/themed/dist/Button';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
+import { Feather } from '@expo/vector-icons';
 
 export default function ChartScreen() {
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
+  const titleColor = isDarkMode ? '#7B635A' : '#D8C8B4';
   const navigation = useNavigation();
+
   const user = useAppSelector((state) => state.auth.user);
   const chartUrl = user?.birthChartUrl;
 
@@ -97,11 +104,13 @@ export default function ChartScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px] text-[#32221E]">Here is your chart</Text>
+        <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
+          Your Chart!
+        </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation]);
+  }, [navigation, isDarkMode]);
 
   const generateHtmlWithSvg = (url: string) => `
     <html>
@@ -142,12 +151,12 @@ export default function ChartScreen() {
   `;
 
   return (
-    <ScrollView className="flex-1 bg-[#F2EAE0] px-5 pt-10">
-      <Text className="text-aref mb-6 text-center text-3xl font-bold text-[#7B635A]">
+    <ScrollView className="flex-1  px-5 pt-10" style={{ backgroundColor }}>
+      <Text
+        className="text-aref mb-6 text-center text-3xl font-bold "
+        style={{ color: titleColor }}>
         Your Birth Chart
       </Text>
-
-      <Button>Share</Button>
 
       {chartUrl && (
         <View className="items-center pt-5">
@@ -160,16 +169,25 @@ export default function ChartScreen() {
         </View>
       )}
 
+      <TouchableOpacity
+        //activeOpacity={0.9}
+        className="flex items-center rounded-full border border-dark-background  p-2">
+        <Text className=" rounded-full bg-dark-background px-8 py-2 text-base font-semibold text-dark-text1">
+          SHARE
+        </Text>
+      </TouchableOpacity>
+
       {planetsDescriptions && (
         <View className="mt-7 space-y-4">
           {Object.entries(planetsDescriptions).map(([planet, info]) => (
             <View
               key={planet}
-              className="border-light-border bg-light-cardback mt-4 rounded-[13px] border p-3">
-              <Text className="text-light-text1 font-bold">
+              className="mt-4 rounded-[13px] border  bg-light-cardback p-3"
+              style={{ borderColor: titleColor }}>
+              <Text className="font-bold " style={{ color: titleColor }}>
                 {planet} in {info.sign}
               </Text>
-              <Text className="text-light-text3 mt-1">{info.text}</Text>
+              <Text className="mt-1 text-light-text3">{info.text}</Text>
             </View>
           ))}
         </View>

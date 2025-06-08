@@ -4,10 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthHomeScreen from 'features/auth/AuthHomeScreen';
 import SignInScreen from 'features/auth/SignInScreen';
 import SignUpScreen from 'features/auth/SignUpScreen';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import MyTabs from 'shared/components/mytabs';
 import SessionGate from 'shared/lib/SessionGate';
+import { useAppSelector } from 'shared/hooks';
 
 import { store } from './app/store';
 import type { RootStackParamList } from './navigation/types';
@@ -15,6 +16,13 @@ import type { RootStackParamList } from './navigation/types';
 import './global.css';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+function StatusBarTheme() {
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  console.log('Dark mode ?', isDarkMode);
+
+  return <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} translucent={false} />;
+}
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -32,8 +40,10 @@ export default function App() {
 
   return (
     <Provider store={store}>
+      <StatusBarTheme />
       <NavigationContainer>
         <SessionGate />
+
         <Stack.Navigator initialRouteName="AuthHome" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="AuthHome" component={AuthHomeScreen} />
           <Stack.Screen name="SignIn" component={SignInScreen} />

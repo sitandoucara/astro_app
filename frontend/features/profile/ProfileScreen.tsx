@@ -65,12 +65,13 @@ export default function ProfileScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <View>
-          <Text className="text-aref ml-5 text-[15px]" style={{ color: colors.raw.icon }}>
+        <View className="p-2">
+          <Text
+            className="text-aref ml-5 text-[18px] font-medium"
+            style={{ color: colors.raw.icon }}>
             Your profile ({user?.username ?? 'User'})
           </Text>
-
-          <Text className="text-aref ml-5 text-[12px]" style={{ color: colors.raw.icon }}>
+          <Text className="text-aref ml-5 mt-1 text-[14px]" style={{ color: colors.raw.icon }}>
             {user?.dateOfBirth ? `${user.dateOfBirth.slice(0, 10)}` : ''}
             {user?.timeOfBirth ? ` • ${user.timeOfBirth.slice(11, 16)}` : ''}
           </Text>

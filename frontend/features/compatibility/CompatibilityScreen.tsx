@@ -1,22 +1,32 @@
 import { useLayoutEffect } from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from 'shared/hooks';
 
 export default function CompatibilityScreen() {
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
+  const titleColor = isDarkMode ? '#7B635A' : '#D8C8B4';
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px] text-[#32221E]">Check your compatibility</Text>
+        <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
+          Your compability
+        </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation]);
+  }, [navigation, isDarkMode]);
 
   return (
-    <View className="flex-1 items-center justify-center bg-[#F2EAE0]">
-      <Text className="text-aref mb-5 text-[42px] font-bold text-[#7B635A]">
+    <View className="flex-1 items-center justify-center" style={{ backgroundColor }}>
+      <Text
+        style={{ fontFamily: 'ArefRuqaa_400Regular', color: titleColor }}
+        className="mb-5 text-[42px] font-bold">
         Compatibility page
       </Text>
     </View>
