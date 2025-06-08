@@ -6,14 +6,13 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function LearnScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  const navigation = useNavigation();
 
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const titleColor = isDarkMode ? '#7B635A' : '#D8C8B4';
-  const navigation = useNavigation();
-
-  // Couleurs dynamiques
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-dark-cardback';
+  const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
+  const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
+  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
   const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
@@ -38,8 +37,8 @@ export default function LearnScreen() {
         <View className="  justify-center">
           {/* Header avec les 2 grandes icones */}
           <View className="h-16 w-16 items-center justify-center ">
-            <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109] ">
-              <MaterialCommunityIcons name="paperclip" size={20} color="#F2EAE0" />
+            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+              <MaterialCommunityIcons name="paperclip" size={20} style={{ color: iconColor }} />
             </View>
           </View>
 
@@ -60,8 +59,8 @@ export default function LearnScreen() {
         <View className="  justify-center">
           {/* Header avec les 2 grandes icones */}
           <View className="h-16 w-16 items-center justify-center ">
-            <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109] ">
-              <MaterialCommunityIcons name="book" size={20} color="#F2EAE0" />
+            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+              <MaterialCommunityIcons name="book" size={20} style={{ color: iconColor }} />
             </View>
           </View>
 
@@ -84,8 +83,12 @@ export default function LearnScreen() {
         <View className="  justify-center">
           {/* Header avec les 2 grandes icones */}
           <View className="h-16 w-16 items-center justify-center ">
-            <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109] ">
-              <MaterialCommunityIcons name="gamepad-variant" size={20} color="#F2EAE0" />
+            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+              <MaterialCommunityIcons
+                name="gamepad-variant"
+                size={20}
+                style={{ color: iconColor }}
+              />
             </View>
           </View>
 

@@ -9,7 +9,9 @@ export default function CompatibilityScreen() {
 
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const titleColor = isDarkMode ? '#7B635A' : '#D8C8B4';
+  const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
+  const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
+
   const navigation = useNavigation();
 
   // Images zodiac selon thème
@@ -20,7 +22,8 @@ export default function CompatibilityScreen() {
   const signImage = isDarkMode ? darkSignUrl : lightSignUrl;
 
   // Couleurs dynamiques
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-dark-cardback';
+  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
+
   const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
@@ -78,8 +81,9 @@ export default function CompatibilityScreen() {
         onPress={() => Alert.alert('Birth Charts Compatibility clicked! (Locked)')}
         className={`relative  w-full rounded-3xl px-6 py-8 ${cardBg} border ${borderColor}`}>
         {/* Lock Icon en position absolue */}
-        <View className="absolute right-4 top-2 h-6 w-6 items-center justify-center  rounded-full bg-[#281109]">
-          <Feather name="lock" size={16} color="#F2EAE0" />
+        <View
+          className={`absolute right-4 top-2 h-6 w-6 items-center justify-center  rounded-full ${iconBg}`}>
+          <Feather name="lock" size={16} style={{ color: iconColor }} />
         </View>
 
         <View className=" items-center justify-center">
@@ -88,19 +92,37 @@ export default function CompatibilityScreen() {
             {/* Groupe de gauche - 2x2 dans des cercles */}
             <View className="mr-6">
               <View className="mb-3 flex-row">
-                <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109] ">
-                  <MaterialCommunityIcons name="zodiac-sagittarius" size={20} color="#F2EAE0" />
+                <View
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-sagittarius"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-libra" size={20} color="#F2EAE0" />
+                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-libra"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
               </View>
               <View className="flex-row">
-                <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-aquarius" size={20} color="#F2EAE0" />
+                <View
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-aquarius"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-capricorn" size={20} color="#F2EAE0" />
+                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-capricorn"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
               </View>
             </View>
@@ -111,19 +133,37 @@ export default function CompatibilityScreen() {
             {/* Groupe de droite - 2x2 dans des cercles */}
             <View className="ml-6">
               <View className="mb-3 flex-row">
-                <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-sagittarius" size={20} color="#F2EAE0" />
+                <View
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-sagittarius"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-libra" size={20} color="#F2EAE0" />
+                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-libra"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
               </View>
               <View className="flex-row">
-                <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-aquarius" size={20} color="#F2EAE0" />
+                <View
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-aquarius"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#281109]">
-                  <MaterialCommunityIcons name="zodiac-capricorn" size={20} color="#F2EAE0" />
+                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  <MaterialCommunityIcons
+                    name="zodiac-capricorn"
+                    size={20}
+                    style={{ color: iconColor }}
+                  />
                 </View>
               </View>
             </View>

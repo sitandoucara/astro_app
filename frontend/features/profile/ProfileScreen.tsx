@@ -1,4 +1,11 @@
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import {
+  Feather,
+  FontAwesome5,
+  FontAwesome6,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout } from 'features/auth/useAuth';
@@ -25,7 +32,8 @@ export default function ProfileScreen() {
       textPrimary: isDarkMode ? 'text-[#281109]' : 'text-[#F2EAE0]',
       textSecondary: isDarkMode ? 'text-[#A8958C]' : 'text-[#D8C8B4]',
       textReverse: isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]',
-      textOnCard: 'text-[#281109]',
+      borderReverse: isDarkMode ? ' border-[#281109] ' : 'border-[#F2EAE0]',
+      textOnCard: isDarkMode ? 'text-[#281109]' : 'text-[#F2EAE0]',
     },
     raw: {
       icon: isDarkMode ? '#281109' : '#F2EAE0',
@@ -44,7 +52,7 @@ export default function ProfileScreen() {
 
   const SettingItem: React.FC<SettingItemProps> = ({ icon, label, rightComponent, onPress }) => (
     <TouchableOpacity
-      className={`mb-3 flex-row items-center justify-between rounded-lg p-4 ${colors.tailwind.itemBg}`}
+      className={`mb-3 flex-row items-center justify-between border-b-[0.2px] p-4 ${colors.tailwind.borderReverse}`}
       onPress={onPress}>
       <View className="flex-row items-center space-x-3">
         <View>{icon}</View>
@@ -109,22 +117,40 @@ export default function ProfileScreen() {
       {/* Appearance & Language */}
       <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
         <SettingItem
-          icon={<Feather name="sun" size={20} color={colors.raw.icon} />}
-          label=" Light Appearance"
+          icon={
+            isDarkMode ? (
+              <MaterialCommunityIcons
+                name="white-balance-sunny"
+                size={20}
+                color={colors.raw.icon}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name="moon-waning-crescent"
+                size={20}
+                color={colors.raw.icon}
+              />
+            )
+          }
+          label={isDarkMode ? ' Light Appearance' : ' Dark Appearance'}
           rightComponent={
             <Switch
-              value={!isDarkMode}
+              value={isDarkMode}
               onValueChange={() => {
                 dispatch(toggleDarkMode());
               }}
-              thumbColor={isDarkMode ? '#F2EAE0' : '#32221E'}
-              trackColor={{ false: '#32221E', true: '#F2EAE0' }}
+              thumbColor={isDarkMode ? '#32221E' : '#F2EAE0'}
+              trackColor={{
+                true: '#F2EAE0',
+                false: '#32221E',
+              }}
             />
           }
           onPress={undefined}
         />
+
         <SettingItem
-          icon={<Feather name="globe" size={20} color={colors.raw.icon} />}
+          icon={<FontAwesome5 name="globe-americas" size={20} color={colors.raw.icon} />}
           label=" Change Language"
           rightComponent={
             <View className="flex-row items-center space-x-2">
@@ -138,7 +164,7 @@ export default function ProfileScreen() {
           onPress={undefined}
         />
         <SettingItem
-          icon={<FontAwesome5 name="crown" size={20} color={colors.raw.icon} />}
+          icon={<FontAwesome6 name="crown" size={20} color={colors.raw.icon} />}
           label=" Subscriptions"
           rightComponent={
             <View className="flex-row items-center space-x-2">
@@ -156,19 +182,19 @@ export default function ProfileScreen() {
       {/* Feedback */}
       <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
         <SettingItem
-          icon={<Feather name="star" size={20} color={colors.raw.icon} />}
+          icon={<FontAwesome6 name="masks-theater" size={20} color={colors.raw.icon} />}
           label=" Rate us"
           rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
           onPress={undefined}
         />
         <SettingItem
-          icon={<Feather name="message-circle" size={20} color={colors.raw.icon} />}
+          icon={<MaterialCommunityIcons name="message-badge" size={20} color={colors.raw.icon} />}
           label=" Contact us"
           rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
           onPress={undefined}
         />
         <SettingItem
-          icon={<Feather name="users" size={20} color={colors.raw.icon} />}
+          icon={<MaterialIcons name="verified" size={20} color={colors.raw.icon} />}
           label=" Follow us"
           rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
           onPress={undefined}
@@ -178,13 +204,13 @@ export default function ProfileScreen() {
       {/* Account */}
       <View className={`rounded-xl p-4 ${colors.tailwind.cardBg}`}>
         <SettingItem
-          icon={<Feather name="log-out" size={20} color={colors.raw.icon} />}
+          icon={<Ionicons name="log-out" size={20} color={colors.raw.icon} />}
           label=" Log Out"
           rightComponent={undefined}
           onPress={handleLogout}
         />
         <SettingItem
-          icon={<Feather name="trash-2" size={20} color={colors.raw.icon} />}
+          icon={<FontAwesome6 name="trash" size={20} color={colors.raw.icon} />}
           label=" Delete Account"
           rightComponent={undefined}
           onPress={undefined}

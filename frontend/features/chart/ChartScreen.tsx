@@ -152,15 +152,9 @@ export default function ChartScreen() {
   `;
 
   return (
-    <ScrollView className="flex-1  px-5 pt-10" style={{ backgroundColor }}>
-      <Text
-        className="text-aref mb-6 text-center text-3xl font-bold "
-        style={{ color: titleColor }}>
-        Your Birth Chart
-      </Text>
-
+    <ScrollView className="flex-1  px-5 " style={{ backgroundColor }}>
       {chartUrl && (
-        <View className="items-center pt-5">
+        <View className="items-center pt-2">
           <WebView
             originWhitelist={['*']}
             source={{ html: generateHtmlWithSvg(chartUrl) }}
@@ -170,11 +164,11 @@ export default function ChartScreen() {
         </View>
       )}
 
-      <View className="rounded-full border-2 border-stone-600  p-2">
+      <View className="mt-4 rounded-full border-2  border-stone-600 p-2">
         <TouchableOpacity
           onPress={() => Alert.alert('share!')}
           activeOpacity={0.8}
-          className=" shadow-opacity-30  elevation-1 rounded-full bg-[#BFB0A7] px-2 py-4 shadow-2xl shadow-md shadow-light-text2">
+          className="shadow-opacity-30  elevation-1 rounded-full bg-[#BFB0A7] px-2 py-4  shadow-md shadow-light-text2">
           <View className="flex-row  justify-center gap-2">
             <MaterialCommunityIcons name="share" size={20} color="#32221E" />
             <Text className="text-aref  text-base font-bold tracking-wide text-[#32221E]">
