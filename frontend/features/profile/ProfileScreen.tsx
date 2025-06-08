@@ -48,7 +48,7 @@ export default function ProfileScreen() {
       onPress={onPress}>
       <View className="flex-row items-center space-x-3">
         <View>{icon}</View>
-        <Text className={`font-medium ${colors.tailwind.textOnCard}`}>{label}</Text>
+        <Text className={`text-aref font-medium ${colors.tailwind.textOnCard}`}>{label}</Text>
       </View>
       {rightComponent}
     </TouchableOpacity>
@@ -92,11 +92,13 @@ export default function ProfileScreen() {
                 <Feather name="user" size={24} color={colors.raw.icon} />
               </View>
               <View>
-                <Text className={`text-xl font-semibold ${colors.tailwind.textPrimary}`}>
+                <Text className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
                   {user.username}{' '}
                   {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
                 </Text>
-                <Text className={`text-sm ${colors.tailwind.textSecondary}`}>{user.email}</Text>
+                <Text className={`text-aref text-sm ${colors.tailwind.textSecondary}`}>
+                  {user.email}
+                </Text>
               </View>
             </View>
             <Feather name="chevron-right" size={24} color={colors.raw.icon} />
@@ -127,7 +129,7 @@ export default function ProfileScreen() {
           rightComponent={
             <View className="flex-row items-center space-x-2">
               <Text
-                className={`rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
                 English(US)
               </Text>
               <Feather name="chevron-right" size={20} color={colors.raw.icon} />
@@ -141,7 +143,7 @@ export default function ProfileScreen() {
           rightComponent={
             <View className="flex-row items-center space-x-2">
               <Text
-                className={`rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
                 Free Plan
               </Text>
               <Feather name="chevron-right" size={20} color={colors.raw.icon} />

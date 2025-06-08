@@ -13,6 +13,7 @@ Usurname : test1
 
 **Localisation (BirthPlace) : Nominatim (OpenStreetMap)
 **Birth Chart : freeastrologyapi.com
+**Horoscope : https://ashutoshkrris.in/projects
 
 
 ***Clement.barbaza@gmail.com

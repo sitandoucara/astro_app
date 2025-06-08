@@ -172,7 +172,7 @@ export default function ChartScreen() {
       <TouchableOpacity
         //activeOpacity={0.9}
         className="flex items-center rounded-full border border-dark-background  p-2">
-        <Text className=" rounded-full bg-dark-background px-8 py-2 text-base font-semibold text-dark-text1">
+        <Text className="text-aref rounded-full bg-dark-background px-8 py-2 text-base font-semibold text-dark-text1">
           SHARE
         </Text>
       </TouchableOpacity>
@@ -184,10 +184,10 @@ export default function ChartScreen() {
               key={planet}
               className="mt-4 rounded-[13px] border  bg-light-cardback p-3"
               style={{ borderColor: titleColor }}>
-              <Text className="font-bold " style={{ color: titleColor }}>
+              <Text className="text-aref font-bold " style={{ color: titleColor }}>
                 {planet} in {info.sign}
               </Text>
-              <Text className="mt-1 text-light-text3">{info.text}</Text>
+              <Text className="text-aref mt-1 text-light-text3">{info.text}</Text>
             </View>
           ))}
         </View>
