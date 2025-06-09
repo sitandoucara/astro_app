@@ -1,251 +1,110 @@
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { BlurView } from 'expo-blur';
-import { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, Image, Modal } from 'react-native';
+import { useState, useLayoutEffect } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 
+import StepOne from './components/StepOne';
+import StepTwo from './components/StepTwo';
+import StepThree from './components/StepThree';
 import { signUp } from './useAuth';
-import useLocationSearch, { LocationResult } from '../../shared/hooks/useLocationSearch';
+import { LocationResult } from '../../shared/hooks/useLocationSearch';
 
 export default function SignUpScreen({ navigation }: any) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    username: '',
+    gender: null as string | null,
+    birthplaceQuery: '',
+    selectedPlace: null as LocationResult | null,
+    dateOfBirth: null as Date | null,
+    timeOfBirth: null as Date | null,
+  });
 
-  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
-  const [showDateModal, setShowDateModal] = useState(false);
+  const updateForm = (data: Partial<typeof formData>) =>
+    setFormData((prev) => ({ ...prev, ...data }));
 
-  const [timeOfBirth, setTimeOfBirth] = useState<Date | null>(null);
-  const [showTimeModal, setShowTimeModal] = useState(false);
+  const goToNext = () => setStep((prev) => prev + 1);
+  const goBack = () => setStep((prev) => prev - 1);
 
-  const [birthplaceQuery, setBirthplaceQuery] = useState('');
-  const [selectedPlace, setSelectedPlace] = useState<LocationResult | null>(null);
-  const { results, loading, search } = useLocationSearch();
-  const [gender, setGender] = useState<string | null>(null);
+  const submitForm = async () => {
+    const { email, password, username, dateOfBirth, timeOfBirth, selectedPlace, gender } = formData;
+    if (!dateOfBirth || !timeOfBirth || !selectedPlace || !gender) {
+      alert('Please fill all fields');
+      return;
+    }
+    try {
+      const lat = selectedPlace.lat;
+      const lon = selectedPlace.lon;
+      const res = await fetch(`http://localhost:4000/api/timezone?lat=${lat}&lon=${lon}`);
+      const tzData = await res.json();
+      if (!res.ok) throw new Error(tzData.error || 'Failed to get timezone');
+      const { name: timezoneName, timezone: timezoneOffset } = tzData;
+      const { data, error } = await signUp(
+        email,
+        password,
+        username,
+        dateOfBirth,
+        timeOfBirth,
+        selectedPlace.display_name,
+        timezoneName,
+        timezoneOffset,
+        parseFloat(lat),
+        parseFloat(lon),
+        gender
+      );
+      if (error) {
+        console.error('Signup error:', error);
+        alert(error.message);
+      } else {
+        alert('Account created!');
+        navigation.navigate('SignIn');
+      }
+    } catch (err) {
+      console.error('Timezone error:', err);
+      alert('Unable to fetch timezone');
+    }
+  };
 
-  const formatDate = (date: Date | null) =>
-    date ? date.toLocaleDateString() : 'Choose Date of Birth';
-  const formatTime = (date: Date | null) =>
-    date
-      ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      : 'Choose Time of Birth';
-
-  return (
-    <View className="flex-1 items-center justify-center bg-[#F2EAE0] px-6">
-      <Image
-        source={require('../../assets/logo.png')}
-        style={{ width: 200, height: 200 }}
-        resizeMode="contain"
-      />
-      <Text className="mt-2 text-sm font-bold italic text-[#32221E]">Create an Account</Text>
-
-      <View className="mt-10 w-full items-center space-y-4">
-        <TextInput
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Username"
-          placeholderTextColor="#281109"
-          className="w-64 rounded-full bg-white px-5 py-3 text-center"
-        />
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email"
-          placeholderTextColor="#281109"
-          className="mt-2 w-64 rounded-full bg-white px-5 py-3 text-center"
-        />
-
-        <View className="relative mt-2 w-64">
-          <TextInput
-            value={password}
-            onChangeText={setPassword}
-            placeholder="Password"
-            placeholderTextColor="#281109"
-            secureTextEntry={!isPasswordVisible}
-            className="w-64 rounded-full bg-white px-5 py-3 text-center"
-          />
-          <TouchableOpacity
-            className="absolute right-4 top-1/2 -translate-y-1/2"
-            onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
-            <Ionicons name={isPasswordVisible ? 'eye-off' : 'eye'} size={22} color="#281109" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Date Picker Button */}
+  // configure header with transparent background and dynamic title
+  useLayoutEffect(() => {
+    const titles = ['Welcome to AstroMood', 'About you', 'Birth details'];
+    navigation.setOptions({
+      headerShown: true,
+      headerTransparent: true,
+      title: titles[step - 1] || '',
+      headerLeft: () => (
         <TouchableOpacity
-          className="mt-2 w-64 rounded-full bg-white px-5 py-3"
-          onPress={() => setShowDateModal(true)}>
-          <Text className=" text-center font-bold text-[#281109]">{formatDate(dateOfBirth)}</Text>
-        </TouchableOpacity>
-
-        {/* Time Picker Button */}
-        <TouchableOpacity
-          className="mt-2 w-64 rounded-full bg-white px-5 py-3"
-          onPress={() => setShowTimeModal(true)}>
-          <Text className="text-center font-bold text-[#281109]">{formatTime(timeOfBirth)}</Text>
-        </TouchableOpacity>
-
-        {/* BirthPlace  */}
-        <View className="mt-2 w-64">
-          <TextInput
-            value={birthplaceQuery}
-            onChangeText={(text) => {
-              setBirthplaceQuery(text);
-              search(text);
-            }}
-            placeholder="Birthplace (e.g. Paris)"
-            placeholderTextColor="#281109"
-            className="rounded-full bg-white px-5 py-3 text-center"
-          />
-          {results.length > 0 && !selectedPlace && (
-            <View className="mt-2 max-h-40 rounded-xl bg-white p-2">
-              {results.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    setSelectedPlace(item);
-                    setBirthplaceQuery(item.display_name);
-                  }}
-                  className="py-2">
-                  <Text className="text-sm text-[#281109]">{item.display_name}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        </View>
-
-        <Text className="mt-2 text-center font-bold text-[#32221E]">Select your gender</Text>
-        <View className="flex-row justify-center space-x-3">
-          {['Male', 'Female', 'Other'].map((option) => (
-            <TouchableOpacity
-              key={option}
-              onPress={() => setGender(option)}
-              className={`rounded-full border px-4 py-2 ${
-                gender === option ? 'bg-[#7B635A]' : 'bg-white'
-              }`}>
-              <Text className={gender === option ? 'text-white' : 'text-[#281109]'}>{option}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <TouchableOpacity
-          className="mt-2 w-64 items-center rounded-full bg-white py-3"
-          onPress={async () => {
-            if (!dateOfBirth || !timeOfBirth || !selectedPlace || !gender) {
-              alert('Please fill all fields');
-              return;
-            }
-
-            const lat = selectedPlace.lat;
-            const lon = selectedPlace.lon;
-
-            try {
-              const res = await fetch(`http://localhost:4000/api/timezone?lat=${lat}&lon=${lon}`);
-              const tzData = await res.json();
-
-              if (!res.ok) throw new Error(tzData.error || 'Failed to get timezone');
-
-              const timezoneName = tzData.name;
-              const timezoneOffset = tzData.timezone;
-
-              console.log('Timezone fetched:', { timezoneName, timezoneOffset });
-
-              const { data, error } = await signUp(
-                email,
-                password,
-                username,
-                dateOfBirth,
-                timeOfBirth,
-                selectedPlace.display_name,
-                timezoneName,
-                timezoneOffset,
-                parseFloat(lat),
-                parseFloat(lon),
-                gender
-              );
-
-              if (error) {
-                console.error('Signup error:', error);
-                alert(error.message);
-              } else {
-                console.log('Account created!');
-                alert('Account created!');
-                navigation.navigate('SignIn');
-              }
-            } catch (err) {
-              console.error('Timezone error:', err);
-              alert('Unable to fetch timezone');
+          style={{ marginLeft: 16 }}
+          onPress={() => {
+            if (step > 1) {
+              goBack();
+            } else {
+              navigation.goBack();
             }
           }}>
-          <Text className="font-bold text-[#281109]">Create</Text>
+          <Ionicons name="arrow-back" size={24} color="#281109" />
         </TouchableOpacity>
+      ),
+    });
+  }, [navigation, step]);
 
-        <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-          <Text className="mt-4 text-center font-bold text-[#7B635A]">
-            Already have an account? <Text className="text-[#281109]">Sign in</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Date Modal */}
-      <Modal transparent visible={showDateModal} animationType="fade">
-        <BlurView intensity={40} tint="dark" className="flex-1 justify-end">
-          <View className="rounded-t-2xl bg-[#0F0A0A] p-4">
-            <View className="flex-row items-center justify-between">
-              <Text className="text-lg font-bold text-white">Choose Your Date of Birth</Text>
-              <TouchableOpacity onPress={() => setShowDateModal(false)}>
-                <Ionicons name="close" size={24} color="white" />
-              </TouchableOpacity>
-            </View>
-            <DateTimePicker
-              value={dateOfBirth || new Date()}
-              mode="date"
-              display="spinner"
-              textColor="#ffffff"
-              onChange={(_, selectedDate) => {
-                if (selectedDate) setDateOfBirth(selectedDate);
-              }}
-              style={{ backgroundColor: '#0F0A0A' }}
-            />
-            <TouchableOpacity
-              className="mt-4 items-center rounded-full bg-white py-3"
-              onPress={() => setShowDateModal(false)}>
-              <Text className="font-bold text-[#281109]">Confirm</Text>
-            </TouchableOpacity>
-          </View>
-        </BlurView>
-      </Modal>
-
-      {/* Time Modal */}
-      <Modal transparent visible={showTimeModal} animationType="fade">
-        <BlurView intensity={40} tint="dark" className="flex-1 justify-end">
-          <View className="rounded-t-2xl bg-[#0F0A0A] p-4">
-            <View className="flex-row items-center justify-between">
-              <Text className="text-lg font-bold text-white">Choose Your Time of Birth</Text>
-              <TouchableOpacity onPress={() => setShowTimeModal(false)}>
-                <Ionicons name="close" size={24} color="white" />
-              </TouchableOpacity>
-            </View>
-            <DateTimePicker
-              value={timeOfBirth || new Date()}
-              mode="time"
-              textColor="#ffffff"
-              is24Hour={false}
-              display="spinner"
-              onChange={(_, selectedTime) => {
-                if (selectedTime) setTimeOfBirth(selectedTime);
-              }}
-              style={{ backgroundColor: '#0F0A0A' }}
-            />
-            <TouchableOpacity
-              className="mt-4 items-center rounded-full bg-white py-3"
-              onPress={() => setShowTimeModal(false)}>
-              <Text className="font-bold text-[#281109]">Confirm</Text>
-            </TouchableOpacity>
-          </View>
-        </BlurView>
-      </Modal>
+  return (
+    <View className="flex-1 bg-[#F2EAE0]">
+      {step === 1 && <StepOne formData={formData} updateForm={updateForm} onNext={goToNext} />}
+      {step === 2 && (
+        <StepTwo formData={formData} updateForm={updateForm} onNext={goToNext} onBack={goBack} />
+      )}
+      {step === 3 && (
+        <StepThree
+          formData={formData}
+          updateForm={updateForm}
+          onBack={goBack}
+          onSubmit={submitForm}
+        />
+      )}
     </View>
   );
 }

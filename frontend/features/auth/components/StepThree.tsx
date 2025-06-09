@@ -1,0 +1,103 @@
+import { Text, TouchableOpacity, View, Modal } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { BlurView } from 'expo-blur';
+import { useState } from 'react';
+
+export default function StepThree({ formData, updateForm, onBack, onSubmit }: any) {
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [showTimeModal, setShowTimeModal] = useState(false);
+
+  const formatDate = (date: Date | null) =>
+    date ? date.toLocaleDateString() : 'Choose Date of Birth';
+  const formatTime = (date: Date | null) =>
+    date
+      ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      : 'Choose Time of Birth';
+
+  return (
+    <View className="flex-1 items-center justify-center space-y-4">
+      <View className="mb-2 w-full items-center">
+        <View className="mb-2 flex-row space-x-2">
+          <View className="h-2 w-10 rounded-full bg-[#281109]" />
+          <View className="h-2 w-10 rounded-full bg-[#281109]" />
+          <View className="h-2 w-10 rounded-full bg-[#281109]" />
+        </View>
+        <Text className="text-xl font-bold text-[#32221E]">Birth details</Text>
+        <Text className="text-sm text-[#7B635A]">When were you born under the sky?</Text>
+      </View>
+
+      <TouchableOpacity
+        className="w-64 rounded-full bg-white px-5 py-3"
+        onPress={() => setShowDateModal(true)}>
+        <Text className="text-center font-bold text-[#281109]">
+          {formatDate(formData.dateOfBirth)}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        className="mt-2 w-64 rounded-full bg-white px-5 py-3"
+        onPress={() => setShowTimeModal(true)}>
+        <Text className="text-center font-bold text-[#281109]">
+          {formatTime(formData.timeOfBirth)}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={onSubmit} className="mt-5 w-64 rounded-full bg-[#32221E] py-3">
+        <Text className="text-center font-bold text-white">Confirm</Text>
+      </TouchableOpacity>
+
+      <Modal transparent visible={showDateModal} animationType="fade">
+        <BlurView intensity={40} tint="dark" className="flex-1 justify-end">
+          <View className="rounded-t-2xl bg-[#0F0A0A] p-4">
+            <View className="flex-row items-center justify-between">
+              <Text className="text-lg font-bold text-white">Choose Your Date of Birth</Text>
+              <TouchableOpacity onPress={() => setShowDateModal(false)}>
+                <Text className="text-xl text-white">×</Text>
+              </TouchableOpacity>
+            </View>
+            <DateTimePicker
+              value={formData.dateOfBirth || new Date()}
+              mode="date"
+              display="spinner"
+              textColor="#ffffff"
+              onChange={(_, selected) => selected && updateForm({ dateOfBirth: selected })}
+              style={{ backgroundColor: '#0F0A0A' }}
+            />
+            <TouchableOpacity
+              className="mt-4 items-center rounded-full bg-white py-3"
+              onPress={() => setShowDateModal(false)}>
+              <Text className="font-bold text-[#281109]">Confirm</Text>
+            </TouchableOpacity>
+          </View>
+        </BlurView>
+      </Modal>
+
+      <Modal transparent visible={showTimeModal} animationType="fade">
+        <BlurView intensity={40} tint="dark" className="flex-1 justify-end">
+          <View className="rounded-t-2xl bg-[#0F0A0A] p-4">
+            <View className="flex-row items-center justify-between">
+              <Text className="text-lg font-bold text-white">Choose Your Time of Birth</Text>
+              <TouchableOpacity onPress={() => setShowTimeModal(false)}>
+                <Text className="text-xl text-white">×</Text>
+              </TouchableOpacity>
+            </View>
+            <DateTimePicker
+              value={formData.timeOfBirth || new Date()}
+              mode="time"
+              display="spinner"
+              is24Hour={false}
+              textColor="#ffffff"
+              onChange={(_, selected) => selected && updateForm({ timeOfBirth: selected })}
+              style={{ backgroundColor: '#0F0A0A' }}
+            />
+            <TouchableOpacity
+              className="mt-4 items-center rounded-full bg-white py-3"
+              onPress={() => setShowTimeModal(false)}>
+              <Text className="font-bold text-[#281109]">Confirm</Text>
+            </TouchableOpacity>
+          </View>
+        </BlurView>
+      </Modal>
+    </View>
+  );
+}
