@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { BlurView } from 'expo-blur';
 import { useState, useLayoutEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 
 import StepOne from './components/StepOne';
 import StepTwo from './components/StepTwo';
@@ -71,10 +71,17 @@ export default function SignUpScreen({ navigation }: any) {
   // configure header with transparent background and dynamic title
   useLayoutEffect(() => {
     const titles = ['Welcome to AstroMood', 'About you', 'Birth details'];
+
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
-      title: titles[step - 1] || '',
+      headerTitle: () => (
+        <Text className="text-aref text-left text-xl font-bold text-[#32221E]">
+          {titles[step - 1] || ''}
+        </Text>
+      ),
+      headerTitleAlign: 'left',
+
       headerLeft: () => (
         <TouchableOpacity
           style={{ marginLeft: 16 }}
