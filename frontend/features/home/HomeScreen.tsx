@@ -30,12 +30,25 @@ export default function HomeScreen() {
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
 
+  // Images zodiac selon thème
+  const lightSignUrl =
+    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
+  const darkSignUrl =
+    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_dark.png';
+  const signImage = isDarkMode ? darkSignUrl : lightSignUrl;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
-          Hi {user?.username ?? 'You'}!
-        </Text>
+        <View className="flex-row gap-2">
+          <Image source={{ uri: signImage }} className="h-10 w-10" />
+
+          <View>
+            <Text className="text-aref text-[20px]" style={{ color: textColor }}>
+              Hi {user?.username ?? 'You'}!
+            </Text>
+          </View>
+        </View>
       ),
       headerTitleAlign: 'left',
     });

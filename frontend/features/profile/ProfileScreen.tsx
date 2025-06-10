@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout } from 'features/auth/useAuth';
 import type { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect, useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 
 import { toggleDarkMode } from 'shared/theme/themeSlice';
@@ -42,6 +42,13 @@ export default function ProfileScreen() {
       trackOn: '#F2EAE0',
     },
   };
+
+  // Images zodiac selon thème
+  const lightSignUrl =
+    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
+  const darkSignUrl =
+    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_dark.png';
+  const signImage = isDarkMode ? darkSignUrl : lightSignUrl;
 
   type SettingItemProps = {
     icon: React.ReactNode;
@@ -97,7 +104,7 @@ export default function ProfileScreen() {
           <View className="mb-8 flex-row items-center justify-between pt-4">
             <View className="flex-row items-center gap-2">
               <View className={`rounded-full p-2 ${colors.tailwind.cardBg}`}>
-                <Feather name="user" size={24} color={colors.raw.icon} />
+                <Image source={{ uri: signImage }} className="h-12 w-12" />
               </View>
               <View>
                 <Text className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
@@ -184,19 +191,16 @@ export default function ProfileScreen() {
         <SettingItem
           icon={<FontAwesome6 name="masks-theater" size={20} color={colors.raw.icon} />}
           label=" Rate us"
-          rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
           onPress={undefined}
         />
         <SettingItem
           icon={<MaterialCommunityIcons name="message-badge" size={20} color={colors.raw.icon} />}
           label=" Contact us"
-          rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
           onPress={undefined}
         />
         <SettingItem
           icon={<MaterialIcons name="verified" size={20} color={colors.raw.icon} />}
           label=" Follow us"
-          rightComponent={<Feather name="chevron-right" size={20} color={colors.raw.icon} />}
           onPress={undefined}
         />
       </View>

@@ -75,12 +75,6 @@ export default function SignUpScreen({ navigation }: any) {
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
-      headerTitle: () => (
-        <Text className="text-aref text-left text-xl font-bold text-[#32221E]">
-          {titles[step - 1] || ''}
-        </Text>
-      ),
-      headerTitleAlign: 'left',
 
       headerLeft: () => (
         <TouchableOpacity
@@ -92,7 +86,12 @@ export default function SignUpScreen({ navigation }: any) {
               navigation.goBack();
             }
           }}>
-          <Ionicons name="arrow-back" size={24} color="#281109" />
+          <View className="flex-row gap-2">
+            <Ionicons name="arrow-back" size={24} color="#281109" />
+            <Text className="text-aref m-l-2  text-left text-xl font-bold text-[#32221E]">
+              {titles[step - 1] || ''}
+            </Text>
+          </View>
         </TouchableOpacity>
       ),
     });
