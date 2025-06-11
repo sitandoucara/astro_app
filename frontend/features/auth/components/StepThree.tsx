@@ -21,7 +21,7 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
           <View className="mb-2 flex-row gap-2">
             <View className="h-1 w-32 rounded-full bg-[#281109]" />
             <View className="h-1 w-32 rounded-full bg-[#281109]" />
-            <View className="h-1 w-32 rounded-full bg-[#281109]/50" />
+            <View className="h-1 w-32 rounded-full bg-[#281109]" />
           </View>
 
           <Text className="text-aref text-sm text-[#7B635A]">
