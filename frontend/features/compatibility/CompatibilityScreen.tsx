@@ -3,6 +3,11 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import { RootStackParamList } from 'navigation/types';
 
 export default function CompatibilityScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
@@ -12,8 +17,9 @@ export default function CompatibilityScreen() {
   const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
   const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
 
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
 
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   // Images zodiac selon thème
   const lightSignUrl =
     'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
@@ -44,7 +50,7 @@ export default function CompatibilityScreen() {
       {/* Zodiac Sign Compatibility */}
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
+        onPress={() => navigation.navigate('ZodiacSignsCompatibility')}
         className={` w-full rounded-3xl p-8 ${cardBg} border ${borderColor} mb-4`}>
         <View className=" items-center justify-center">
           {/* Header avec les 2 grandes icones */}
@@ -78,7 +84,7 @@ export default function CompatibilityScreen() {
       {/* Birth Charts Compatibility (Locked) */}
       <TouchableOpacity
         //activeOpacity={0.8}
-        onPress={() => Alert.alert('Birth Charts Compatibility clicked! (Locked)')}
+        onPress={() => navigation.navigate('BirthChartCompability')}
         className={`relative  w-full rounded-3xl px-6 py-8 ${cardBg} border ${borderColor}`}>
         {/* Lock Icon en position absolue */}
         <View

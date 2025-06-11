@@ -14,6 +14,8 @@ import { store } from './app/store';
 import type { RootStackParamList } from './navigation/types';
 
 import './global.css';
+import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSignsCompatibility';
+import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,6 +51,8 @@ export default function App() {
           <Stack.Screen name="SignIn" component={SignInScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="App" component={MyTabs} />
+          <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
+          <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

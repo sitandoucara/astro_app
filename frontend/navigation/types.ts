@@ -3,4 +3,7 @@ export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   App: undefined;
+  ZodiacSignsCompatibility: undefined;
+  CompatibilityScreen: undefined;
+  BirthChartCompability: undefined;
 };
