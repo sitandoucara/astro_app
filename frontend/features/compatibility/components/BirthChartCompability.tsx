@@ -32,6 +32,7 @@ export default function BirthChartCompability({ onBack }: any) {
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
+      headerTitle: '',
       headerLeft: () => (
         <TouchableOpacity
           style={{ marginLeft: 16 }}

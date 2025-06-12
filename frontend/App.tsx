@@ -9,8 +9,10 @@ import { Provider } from 'react-redux';
 import MyTabs from 'shared/components/mytabs';
 import SessionGate from 'shared/lib/SessionGate';
 import { useAppSelector } from 'shared/hooks';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { store } from './app/store';
+import { store, persistor } from './app/store';
+
 import type { RootStackParamList } from './navigation/types';
 
 import './global.css';
@@ -42,19 +44,21 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <StatusBarTheme />
-      <NavigationContainer>
-        <SessionGate />
+      <PersistGate loading={null} persistor={persistor}>
+        <StatusBarTheme />
+        <NavigationContainer>
+          <SessionGate />
 
-        <Stack.Navigator initialRouteName="AuthHome" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="AuthHome" component={AuthHomeScreen} />
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="App" component={MyTabs} />
-          <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
-          <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
-        </Stack.Navigator>
-      </NavigationContainer>
+          <Stack.Navigator initialRouteName="AuthHome" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="AuthHome" component={AuthHomeScreen} />
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="App" component={MyTabs} />
+            <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
+            <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }

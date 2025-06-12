@@ -29,6 +29,7 @@ export default function HomeScreen() {
   const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
+  const textthree = isDarkMode ? 'text-[#ffff]' : 'text-[#ffffff]';
 
   // Images zodiac selon thème
   const lightSignUrl =
@@ -237,7 +238,7 @@ export default function HomeScreen() {
               <Text className={`text-aref mb-3 text-lg font-medium ${textPrimary}`}>
                 Affirmation
               </Text>
-              <Text className={`text-aref ${textSecondary}`} style={{ lineHeight: 24 }}>
+              <Text className={`text-aref ${textthree}`} style={{ lineHeight: 24 }}>
                 I can be a masterpiece and a work in progress at the same time
               </Text>
             </View>

@@ -6,7 +6,7 @@ module.exports = {
     'node_modules/(?!(expo|expo-font|expo-modules-core|react-native|@react-native|@react-navigation|react-redux|react-native-css-interop|@expo/vector-icons)/)',
   ],
   moduleNameMapper: {
-    '^@expo/vector-icons$': '<rootDir>/__mocks__/@expo/vector-icons.js',
+    '^@react-native-async-storage/async-storage$': '<rootDir>/__mocks__/asyncStorageMock.js',
     '^app/(.*)$': '<rootDir>/app/$1',
     '^features/(.*)$': '<rootDir>/features/$1',
     '^shared/(.*)$': '<rootDir>/shared/$1',

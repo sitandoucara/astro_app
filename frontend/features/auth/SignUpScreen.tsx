@@ -75,6 +75,7 @@ export default function SignUpScreen({ navigation }: any) {
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
+      headerTitle: '',
 
       headerLeft: () => (
         <TouchableOpacity
