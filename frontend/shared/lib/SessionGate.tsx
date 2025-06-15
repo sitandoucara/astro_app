@@ -1,94 +1,166 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { setUser } from 'features/auth/AuthSlice';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AuthHomeScreen from 'features/auth/AuthHomeScreen';
+import { setUser, clearUser } from 'features/auth/AuthSlice'; // Assurez-vous d'avoir clearUser
+import SignInScreen from 'features/auth/SignInScreen';
+import SignUpScreen from 'features/auth/SignUpScreen';
+import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
+import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSignsCompatibility';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, View, AppState } from 'react-native';
+import { AppState, StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { supabase } from 'shared/lib/supabase';
+import LoadingScreen from 'shared/components/LoadingScreen';
+import MyTabs from 'shared/components/mytabs';
+
+import { supabase } from './supabase';
+import { useAppSelector } from 'shared/hooks';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+function StatusBarTheme() {
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  console.log('Dark mode ?', isDarkMode);
+  return <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} translucent={false} />;
+}
 
 export default function SessionGate() {
   const [loading, setLoading] = useState(true);
-  const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const dispatch = useDispatch();
 
-  AppState.addEventListener('change', (state) => {
-    if (state === 'active') {
-      supabase.auth.startAutoRefresh();
-    } else {
-      supabase.auth.stopAutoRefresh();
-    }
-  });
-
   useEffect(() => {
+    AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        supabase.auth.startAutoRefresh();
+      } else {
+        supabase.auth.stopAutoRefresh();
+      }
+    });
+
     const checkSession = async () => {
       const {
         data: { session },
-        error: sessionError,
       } = await supabase.auth.getSession();
-      console.log('🔵 session:', session);
-      console.log('🔴 session error:', sessionError);
 
       if (!session) {
-        console.log('🚫 No session found, stay on AuthHome');
-        nav.reset({ index: 0, routes: [{ name: 'AuthHome' }] });
+        setIsAuthenticated(false);
         setLoading(false);
         return;
       }
 
       const {
         data: { user },
-        error: userError,
       } = await supabase.auth.getUser();
-      console.log('🟢 user:', user);
-      console.log('🟠 user error:', userError);
 
-      const metadata = user?.user_metadata ?? {};
-      console.log('🧠 metadata:', metadata);
-
-      if (user) {
-        dispatch(
-          setUser({
-            user: {
-              id: user.id,
-              email: user.email ?? '',
-              username: metadata.username ?? '',
-              dateOfBirth: metadata.dateOfBirth ?? '',
-              timeOfBirth: metadata.timeOfBirth ?? '',
-              birthplace: metadata.birthplace ?? '',
-              timezoneName: metadata.timezoneName ?? '',
-              timezoneOffset: metadata.timezoneOffset ?? 0,
-              latitude: metadata.latitude ?? null,
-              longitude: metadata.longitude ?? null,
-              gender: metadata.gender ?? '',
-              birthChartUrl: metadata.birthChartUrl ?? '',
-              planets: metadata.planets ?? null,
-              ascendant: metadata.ascendant ?? null,
-            },
-            token: session.access_token,
-          })
-        );
-
-        console.log('User logged in, navigating to App');
-        nav.reset({ index: 0, routes: [{ name: 'App' }] });
-      } else {
-        console.log('No user returned from getUser');
-        nav.reset({ index: 0, routes: [{ name: 'AuthHome' }] });
+      if (!user) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
       }
 
+      const metadata = user?.user_metadata ?? {};
+
+      dispatch(
+        setUser({
+          user: {
+            id: user.id,
+            email: user.email ?? '',
+            username: metadata.username ?? '',
+            dateOfBirth: metadata.dateOfBirth ?? '',
+            timeOfBirth: metadata.timeOfBirth ?? '',
+            birthplace: metadata.birthplace ?? '',
+            timezoneName: metadata.timezoneName ?? '',
+            timezoneOffset: metadata.timezoneOffset ?? 0,
+            latitude: metadata.latitude ?? null,
+            longitude: metadata.longitude ?? null,
+            gender: metadata.gender ?? '',
+            birthChartUrl: metadata.birthChartUrl ?? '',
+            planets: metadata.planets ?? null,
+            ascendant: metadata.ascendant ?? null,
+          },
+          token: session.access_token,
+        })
+      );
+
+      setIsAuthenticated(true);
       setLoading(false);
     };
 
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        dispatch(clearUser());
+        setIsAuthenticated(false);
+        setLoading(false);
+      } else if (event === 'SIGNED_IN' && session) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (user) {
+          const metadata = user.user_metadata ?? {};
+
+          dispatch(
+            setUser({
+              user: {
+                id: user.id,
+                email: user.email ?? '',
+                username: metadata.username ?? '',
+                dateOfBirth: metadata.dateOfBirth ?? '',
+                timeOfBirth: metadata.timeOfBirth ?? '',
+                birthplace: metadata.birthplace ?? '',
+                timezoneName: metadata.timezoneName ?? '',
+                timezoneOffset: metadata.timezoneOffset ?? 0,
+                latitude: metadata.latitude ?? null,
+                longitude: metadata.longitude ?? null,
+                gender: metadata.gender ?? '',
+                birthChartUrl: metadata.birthChartUrl ?? '',
+                planets: metadata.planets ?? null,
+                ascendant: metadata.ascendant ?? null,
+              },
+              token: session.access_token,
+            })
+          );
+
+          setIsAuthenticated(true);
+        }
+        setLoading(false);
+      }
+    });
+
     checkSession();
-  }, []);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [dispatch]);
 
   if (loading) {
-    return (
-      <View className="flex-1 items-center justify-center bg-[#F2EAE0]">
-        <ActivityIndicator size="large" color="#281109" />
-      </View>
-    );
+    return <LoadingScreen />;
   }
 
-  return null;
+  return (
+    <>
+      <StatusBarTheme />
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {isAuthenticated ? (
+            <>
+              <Stack.Screen name="App" component={MyTabs} />
+              <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
+              <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="AuthHome" component={AuthHomeScreen} />
+              <Stack.Screen name="SignIn" component={SignInScreen} />
+              <Stack.Screen name="SignUp" component={SignUpScreen} />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
+  );
 }

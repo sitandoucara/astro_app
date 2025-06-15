@@ -18,6 +18,11 @@ Usurname : test1
 
 ***Clement.barbaza@gmail.com
 
+
+------help/android----
+
+****link: https://my-astromood-help.netlify.app/
+
 -------
 
 {/*<Text className="font-semibold text-[#32221E]">Gender: {user.gender}</Text>

@@ -10,10 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout } from 'features/auth/useAuth';
 import type { RootStackParamList } from 'navigation/types';
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
-
 import { toggleDarkMode } from 'shared/theme/themeSlice';
 
 export default function ProfileScreen() {
@@ -71,10 +70,6 @@ export default function ProfileScreen() {
 
   const handleLogout = async () => {
     await logout(dispatch);
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'AuthHome' }],
-    });
   };
 
   useLayoutEffect(() => {

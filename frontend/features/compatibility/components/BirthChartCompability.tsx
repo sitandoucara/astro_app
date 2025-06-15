@@ -1,7 +1,7 @@
-import { useState, useLayoutEffect } from 'react';
-import { Alert, Text, Image, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { useLayoutEffect } from 'react';
+import { Alert, Text, Image, TouchableOpacity, View } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 
 export default function BirthChartCompability({ onBack }: any) {
@@ -9,19 +9,12 @@ export default function BirthChartCompability({ onBack }: any) {
 
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const titleColor = isDarkMode ? '#7B635A' : '#D8C8B4';
-
-  const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
   const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
-
   const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-
   const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
 
   const navigation = useNavigation();
-  const step = 1;
 
   const goBack = () => {
     if (onBack) onBack();
@@ -37,11 +30,7 @@ export default function BirthChartCompability({ onBack }: any) {
         <TouchableOpacity
           style={{ marginLeft: 16 }}
           onPress={() => {
-            if (step > 1) {
-              goBack();
-            } else {
-              navigation.goBack();
-            }
+            goBack();
           }}>
           <View className="flex-row gap-2">
             <Ionicons name="arrow-back" size={24} style={{ color: textColor }} />
@@ -54,7 +43,7 @@ export default function BirthChartCompability({ onBack }: any) {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, step]);
+  }, [navigation]);
 
   return (
     <View className="flex-1 items-center justify-center p-10" style={{ backgroundColor }}>
