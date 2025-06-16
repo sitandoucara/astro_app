@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import ChartScreen from 'features/chart/ChartScreen';
 import CompatibilityScreen from 'features/compatibility/CompatibilityScreen';
 import HomeScreen from 'features/home/HomeScreen';
-import LearnScreen from 'features/learn/LearnScreen';
+import ExploreScreen from 'features/learn/ExploreScreen';
 import ProfileScreen from 'features/profile/ProfileScreen';
 
 import { useAppSelector } from 'shared/hooks';
@@ -36,7 +36,7 @@ export default function MyTabs() {
               case 'Compatibility':
                 iconName = focused ? 'heart' : 'heart-outline';
                 break;
-              case 'Learn':
+              case 'Explore':
                 iconName = focused ? 'book' : 'book-outline';
                 break;
               case 'Profile':
@@ -65,7 +65,7 @@ export default function MyTabs() {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Chart" component={ChartScreen} />
         <Tab.Screen name="Compatibility" component={CompatibilityScreen} />
-        <Tab.Screen name="Learn" component={LearnScreen} />
+        <Tab.Screen name="Explore" component={ExploreScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </View>

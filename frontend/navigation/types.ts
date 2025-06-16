@@ -6,4 +6,5 @@ export type RootStackParamList = {
   ZodiacSignsCompatibility: undefined;
   CompatibilityScreen: undefined;
   BirthChartCompability: undefined;
+  LearnScreen: undefined;
 };

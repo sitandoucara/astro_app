@@ -1,12 +1,14 @@
-import { useLayoutEffect } from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Text, TouchableOpacity, View, Image, Alert } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'navigation/types';
+import { useLayoutEffect } from 'react';
+import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function LearnScreen() {
+export default function ExploreScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
@@ -21,7 +23,7 @@ export default function LearnScreen() {
     navigation.setOptions({
       headerTitle: () => (
         <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
-          You can learn
+          You can Explore
         </Text>
       ),
       headerTitleAlign: 'left',
@@ -32,7 +34,7 @@ export default function LearnScreen() {
     <View className="flex-1 items-center justify-center px-2" style={{ backgroundColor }}>
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
+        onPress={() => navigation.navigate('LearnScreen')}
         className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
         <View className="  justify-center">
           {/* Header avec les 2 grandes icones */}

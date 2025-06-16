@@ -6,6 +6,7 @@ import SignInScreen from 'features/auth/SignInScreen';
 import SignUpScreen from 'features/auth/SignUpScreen';
 import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
 import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSignsCompatibility';
+import LearnScreen from 'features/learn/components/LearnScreen';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
@@ -151,6 +152,7 @@ export default function SessionGate() {
               <Stack.Screen name="App" component={MyTabs} />
               <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
               <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
+              <Stack.Screen name="LearnScreen" component={LearnScreen} />
             </>
           ) : (
             <>
