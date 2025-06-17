@@ -1,0 +1,22 @@
+{
+  "title": "Level 5: The Four Elements",
+  "duration": 240,
+  "text": [
+    {
+      "timestamp": 0,
+      "content": "Fire signs are Aries, Leo, and Sagittarius \u2013 passionate and energetic."
+    },
+    {
+      "timestamp": 60,
+      "content": "Earth signs are Taurus, Virgo, and Capricorn \u2013 practical and grounded."
+    },
+    {
+      "timestamp": 120,
+      "content": "Air signs are Gemini, Libra, and Aquarius \u2013 intellectual and communicative."
+    },
+    {
+      "timestamp": 180,
+      "content": "Water signs are Cancer, Scorpio, and Pisces \u2013 emotional and intuitive."
+    }
+  ]
+}

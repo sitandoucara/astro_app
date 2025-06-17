@@ -7,4 +7,5 @@ export type RootStackParamList = {
   CompatibilityScreen: undefined;
   BirthChartCompability: undefined;
   LearnScreen: undefined;
+  AudioBookScreen: { title: string; jsonUrl: string };
 };

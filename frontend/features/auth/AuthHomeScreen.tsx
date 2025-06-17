@@ -7,7 +7,8 @@ export default function AuthHomeScreen({ navigation }: any) {
 
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-[#F6D5C1]';
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
-  const textButton = isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]';
+  const textButton1 = isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]';
+  const textButton2 = isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]';
   const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
   const bgButton2 = isDarkMode ? 'bg-[#281109]' : 'bg-[#F6D5C1]';
 
@@ -52,7 +53,7 @@ export default function AuthHomeScreen({ navigation }: any) {
                   activeOpacity={0.8}
                   className={`shadow-opacity-30  elevation-1 rounded-full ${bgButton} px-16  py-3 shadow-md shadow-light-text2`}>
                   <Text
-                    className={`text-aref text-center text-xl font-bold tracking-wide  text-[#281109] `}>
+                    className={`text-aref text-center text-xl font-bold tracking-wide   ${textButton1}`}>
                     Create Account
                   </Text>
                 </TouchableOpacity>
@@ -74,7 +75,7 @@ export default function AuthHomeScreen({ navigation }: any) {
                   activeOpacity={0.8}
                   className={`shadow-opacity-30  elevation-1 rounded-full ${bgButton2} px-8  py-3 shadow-lg shadow-[#281109]`}>
                   <Text
-                    className={`text-aref text-center text-base font-bold tracking-wide  ${textButton} `}>
+                    className={`text-aref text-center text-base font-bold tracking-wide  ${textButton2} `}>
                     Already have an account
                   </Text>
                 </TouchableOpacity>

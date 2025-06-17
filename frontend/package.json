@@ -43,7 +43,8 @@
     "react-navigation": "^5.0.0",
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
-    "vector-icons": "^0.1.0"
+    "vector-icons": "^0.1.0",
+    "expo-av": "~15.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

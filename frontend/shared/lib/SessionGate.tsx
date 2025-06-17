@@ -6,6 +6,7 @@ import SignInScreen from 'features/auth/SignInScreen';
 import SignUpScreen from 'features/auth/SignUpScreen';
 import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
 import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSignsCompatibility';
+import AudioBookScreen from 'features/learn/components/AudioBookScreen';
 import LearnScreen from 'features/learn/components/LearnScreen';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
@@ -13,9 +14,9 @@ import { AppState, StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
 import LoadingScreen from 'shared/components/LoadingScreen';
 import MyTabs from 'shared/components/mytabs';
+import { useAppSelector } from 'shared/hooks';
 
 import { supabase } from './supabase';
-import { useAppSelector } from 'shared/hooks';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -153,6 +154,7 @@ export default function SessionGate() {
               <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
               <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
               <Stack.Screen name="LearnScreen" component={LearnScreen} />
+              <Stack.Screen name="AudioBookScreen" component={AudioBookScreen} />
             </>
           ) : (
             <>

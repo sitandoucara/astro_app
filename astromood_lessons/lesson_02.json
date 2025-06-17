@@ -1,0 +1,22 @@
+{
+  "title": "Level 2: The Zodiac Signs",
+  "duration": 240,
+  "text": [
+    {
+      "timestamp": 0,
+      "content": "There are twelve zodiac signs, starting with Aries and ending with Pisces."
+    },
+    {
+      "timestamp": 60,
+      "content": "Each sign belongs to an element: fire, earth, air, or water."
+    },
+    {
+      "timestamp": 120,
+      "content": "Signs also have modalities: cardinal, fixed, or mutable."
+    },
+    {
+      "timestamp": 180,
+      "content": "Learning about your sun sign is the first step in understanding your chart."
+    }
+  ]
+}

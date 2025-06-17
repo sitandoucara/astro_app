@@ -1,12 +1,14 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
-import { Text, TouchableOpacity, View, Modal, Alert, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 
 export default function LearnScreen({ onBack }: any) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
@@ -47,27 +49,27 @@ export default function LearnScreen({ onBack }: any) {
   const chapters = [
     {
       id: '01',
-      title: 'Level 1 : Introduction',
+      title: 'Level 1: Introduction to Astrology',
       duration: '16 min 9 sec',
     },
     {
       id: '02',
-      title: 'Level 1: UI Design Basics',
+      title: 'Level 2: The Zodiac Signs',
       duration: '16 min 10 sec',
     },
     {
       id: '03',
-      title: 'Level 1: UX Design Process',
+      title: 'Level 3: The Planets and Their',
       duration: '20 min 2 sec',
     },
     {
       id: '04',
-      title: 'Level 2: Prototyping and Interaction',
+      title: 'Level 4: The Ascendant and the Houses',
       duration: '23 min 8 sec',
     },
     {
       id: '05',
-      title: 'Level 2: Usability Testing',
+      title: 'Level 5: The Four Elements',
       duration: '15 min 5 sec',
     },
     {
@@ -103,7 +105,12 @@ export default function LearnScreen({ onBack }: any) {
             <TouchableOpacity
               key={chapter.id}
               activeOpacity={0.8}
-              onPress={() => Alert.alert(`${chapter.title} clicked!`)}
+              onPress={() =>
+                navigation.navigate('AudioBookScreen', {
+                  title: chapter.title,
+                  jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
+                })
+              }
               className={`mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`}>
               <View className="flex-row items-center">
                 {/* Numéro du chapitre - centré horizontalement */}

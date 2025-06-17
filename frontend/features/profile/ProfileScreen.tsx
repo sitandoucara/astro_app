@@ -8,10 +8,20 @@ import {
 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { logout } from 'features/auth/useAuth';
+import { logout, deleteAccount } from 'features/auth/useAuth';
 import type { RootStackParamList } from 'navigation/types';
-import { useLayoutEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
+import { useLayoutEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Switch,
+  Image,
+  Alert,
+  Modal,
+  ActivityIndicator,
+} from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 import { toggleDarkMode } from 'shared/theme/themeSlice';
 
@@ -21,6 +31,9 @@ export default function ProfileScreen() {
   const user = useAppSelector((state) => state.auth.user);
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const colors = {
     tailwind: {
@@ -33,12 +46,15 @@ export default function ProfileScreen() {
       textReverse: isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]',
       borderReverse: isDarkMode ? ' border-[#281109] ' : 'border-[#F2EAE0]',
       textOnCard: isDarkMode ? 'text-[#281109]' : 'text-[#F2EAE0]',
+      modalBg: isDarkMode ? 'bg-[#F2EAE0]' : 'bg-[#402B25]',
     },
     raw: {
       icon: isDarkMode ? '#281109' : '#F2EAE0',
       thumb: isDarkMode ? '#F2EAE0' : '#32221E',
       trackOff: '#32221E',
       trackOn: '#F2EAE0',
+      modalBg: isDarkMode ? '#F2EAE0' : '#402B25',
+      danger: isDarkMode ? '#871515' : '#EF4444',
     },
   };
 
@@ -54,15 +70,31 @@ export default function ProfileScreen() {
     label: string;
     rightComponent?: React.ReactNode;
     onPress?: () => void;
+    isDanger?: boolean;
   };
 
-  const SettingItem: React.FC<SettingItemProps> = ({ icon, label, rightComponent, onPress }) => (
+  const SettingItem: React.FC<SettingItemProps> = ({
+    icon,
+    label,
+    rightComponent,
+    onPress,
+    isDanger = false,
+  }) => (
     <TouchableOpacity
       className={`mb-3 flex-row items-center justify-between border-b-[0.2px] p-4 ${colors.tailwind.borderReverse}`}
       onPress={onPress}>
       <View className="flex-row items-center space-x-3">
         <View>{icon}</View>
-        <Text className={`text-aref font-medium ${colors.tailwind.textOnCard}`}>{label}</Text>
+        <Text
+          className={`text-aref font-medium ${
+            isDanger
+              ? isDarkMode
+                ? 'text-[#871515]'
+                : 'text-[#EF4444]'
+              : colors.tailwind.textOnCard
+          }`}>
+          {label}
+        </Text>
       </View>
       {rightComponent}
     </TouchableOpacity>
@@ -70,6 +102,34 @@ export default function ProfileScreen() {
 
   const handleLogout = async () => {
     await logout(dispatch);
+  };
+
+  const showDeleteConfirmation = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+
+    try {
+      const result = await deleteAccount(dispatch);
+
+      if (result.error) {
+        Alert.alert('Error', 'An error occurred while deleting your account. Please try again.', [
+          { text: 'OK' },
+        ]);
+      } else {
+        Alert.alert('Account Deleted', 'Your account has been successfully deleted.', [
+          { text: 'OK' },
+        ]);
+      }
+    } catch (error) {
+      console.error('Unexpected error during account deletion:', error);
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.', [{ text: 'OK' }]);
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+    }
   };
 
   useLayoutEffect(() => {
@@ -92,129 +152,181 @@ export default function ProfileScreen() {
   }, [navigation, user, isDarkMode]);
 
   return (
-    <ScrollView className={`flex-1 ${colors.tailwind.background} p-4`}>
-      {/*<View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">*/}
-      {user && (
-        <View>
-          <View className="mb-8 flex-row items-center justify-between pt-4">
-            <View className="flex-row items-center gap-2">
-              <View className={`rounded-full p-2 ${colors.tailwind.cardBg}`}>
-                <Image source={{ uri: signImage }} className="h-12 w-12" />
+    <>
+      <ScrollView className={`flex-1 ${colors.tailwind.background} p-4`}>
+        {/*<View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">*/}
+        {user && (
+          <View>
+            <View className="mb-8 flex-row items-center justify-between pt-4">
+              <View className="flex-row items-center gap-2">
+                <View className={`rounded-full p-2 ${colors.tailwind.cardBg}`}>
+                  <Image source={{ uri: signImage }} className="h-12 w-12" />
+                </View>
+                <View>
+                  <Text
+                    className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
+                    {user.username}{' '}
+                    {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
+                  </Text>
+                  <Text className={`text-aref text-sm ${colors.tailwind.textSecondary}`}>
+                    {user.email}
+                  </Text>
+                </View>
               </View>
-              <View>
-                <Text className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
-                  {user.username}{' '}
-                  {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
-                </Text>
-                <Text className={`text-aref text-sm ${colors.tailwind.textSecondary}`}>
-                  {user.email}
-                </Text>
-              </View>
+              <Feather name="chevron-right" size={24} color={colors.raw.icon} />
             </View>
-            <Feather name="chevron-right" size={24} color={colors.raw.icon} />
+          </View>
+        )}
+        {/* Appearance & Language */}
+        <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+          <SettingItem
+            icon={
+              isDarkMode ? (
+                <MaterialCommunityIcons
+                  name="white-balance-sunny"
+                  size={20}
+                  color={colors.raw.icon}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="moon-waning-crescent"
+                  size={20}
+                  color={colors.raw.icon}
+                />
+              )
+            }
+            label={isDarkMode ? ' Light Appearance' : ' Dark Appearance'}
+            rightComponent={
+              <Switch
+                value={isDarkMode}
+                onValueChange={() => {
+                  dispatch(toggleDarkMode());
+                }}
+                thumbColor={isDarkMode ? '#32221E' : '#F2EAE0'}
+                trackColor={{
+                  true: '#F2EAE0',
+                  false: '#32221E',
+                }}
+              />
+            }
+            onPress={undefined}
+          />
+          <SettingItem
+            icon={<FontAwesome5 name="globe-americas" size={20} color={colors.raw.icon} />}
+            label=" Change Language"
+            rightComponent={
+              <View className="flex-row items-center space-x-2">
+                <Text
+                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                  English(US)
+                </Text>
+                <Feather name="chevron-right" size={20} color={colors.raw.icon} />
+              </View>
+            }
+            onPress={undefined}
+          />
+          <SettingItem
+            icon={<FontAwesome6 name="crown" size={20} color={colors.raw.icon} />}
+            label=" Subscriptions"
+            rightComponent={
+              <View className="flex-row items-center space-x-2">
+                <Text
+                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                  Free Plan
+                </Text>
+                <Feather name="chevron-right" size={20} color={colors.raw.icon} />
+              </View>
+            }
+            onPress={undefined}
+          />
+        </View>
+        {/* Feedback */}
+        <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+          <SettingItem
+            icon={<FontAwesome6 name="masks-theater" size={20} color={colors.raw.icon} />}
+            label=" Rate us"
+            onPress={undefined}
+          />
+          <SettingItem
+            icon={<MaterialCommunityIcons name="message-badge" size={20} color={colors.raw.icon} />}
+            label=" Contact us"
+            onPress={undefined}
+          />
+          <SettingItem
+            icon={<MaterialIcons name="verified" size={20} color={colors.raw.icon} />}
+            label=" Follow us"
+            onPress={undefined}
+          />
+        </View>
+        {/* Account */}
+        <View className={`rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+          <SettingItem
+            icon={<Ionicons name="log-out" size={20} color={colors.raw.icon} />}
+            label=" Log Out"
+            rightComponent={undefined}
+            onPress={handleLogout}
+          />
+          <SettingItem
+            icon={<FontAwesome6 name="trash" size={20} color={colors.raw.danger} />}
+            label=" Delete Account"
+            rightComponent={undefined}
+            onPress={showDeleteConfirmation}
+            isDanger
+          />
+          <Text className={`text-aref text-center font-medium ${colors.tailwind.textPrimary} p-2`}>
+            V1.1.0
+          </Text>
+        </View>
+      </ScrollView>
+
+      <Modal
+        visible={showDeleteModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowDeleteModal(false)}>
+        <View className="flex-1 items-center justify-center bg-black/50 p-4">
+          <View
+            className={`w-full max-w-sm rounded-xl p-6 ${colors.tailwind.modalBg}`}
+            style={{ backgroundColor: colors.raw.modalBg }}>
+            <View className="mb-4 items-center">
+              <FontAwesome6 name="triangle-exclamation" size={48} color={colors.raw.danger} />
+            </View>
+
+            <Text
+              className={`text-aref mb-2 text-center text-lg font-bold ${colors.tailwind.textOnCard}`}>
+              Delete Your Account
+            </Text>
+
+            <Text className={`text-aref mb-6 text-center ${colors.tailwind.textOnCard}`}>
+              This action is irreversible. All your data will be permanently deleted.
+              {'\n\n'}
+              Are you sure you want to delete your account?
+            </Text>
+
+            <View className="flex-row gap-2">
+              <TouchableOpacity
+                className={`flex-1 rounded-lg border p-3 ${colors.tailwind.borderReverse}`}
+                onPress={() => setShowDeleteModal(false)}
+                disabled={isDeleting}>
+                <Text className={`text-aref text-center font-medium ${colors.tailwind.textOnCard}`}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="flex-1 rounded-lg bg-red-600 p-3"
+                onPress={handleDeleteAccount}
+                disabled={isDeleting}>
+                {isDeleting ? (
+                  <ActivityIndicator color="white" size="small" />
+                ) : (
+                  <Text className="text-aref text-center font-medium text-white">Delete</Text>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      )}
-
-      {/* Appearance & Language */}
-      <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
-        <SettingItem
-          icon={
-            isDarkMode ? (
-              <MaterialCommunityIcons
-                name="white-balance-sunny"
-                size={20}
-                color={colors.raw.icon}
-              />
-            ) : (
-              <MaterialCommunityIcons
-                name="moon-waning-crescent"
-                size={20}
-                color={colors.raw.icon}
-              />
-            )
-          }
-          label={isDarkMode ? ' Light Appearance' : ' Dark Appearance'}
-          rightComponent={
-            <Switch
-              value={isDarkMode}
-              onValueChange={() => {
-                dispatch(toggleDarkMode());
-              }}
-              thumbColor={isDarkMode ? '#32221E' : '#F2EAE0'}
-              trackColor={{
-                true: '#F2EAE0',
-                false: '#32221E',
-              }}
-            />
-          }
-          onPress={undefined}
-        />
-
-        <SettingItem
-          icon={<FontAwesome5 name="globe-americas" size={20} color={colors.raw.icon} />}
-          label=" Change Language"
-          rightComponent={
-            <View className="flex-row items-center space-x-2">
-              <Text
-                className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
-                English(US)
-              </Text>
-              <Feather name="chevron-right" size={20} color={colors.raw.icon} />
-            </View>
-          }
-          onPress={undefined}
-        />
-        <SettingItem
-          icon={<FontAwesome6 name="crown" size={20} color={colors.raw.icon} />}
-          label=" Subscriptions"
-          rightComponent={
-            <View className="flex-row items-center space-x-2">
-              <Text
-                className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
-                Free Plan
-              </Text>
-              <Feather name="chevron-right" size={20} color={colors.raw.icon} />
-            </View>
-          }
-          onPress={undefined}
-        />
-      </View>
-
-      {/* Feedback */}
-      <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
-        <SettingItem
-          icon={<FontAwesome6 name="masks-theater" size={20} color={colors.raw.icon} />}
-          label=" Rate us"
-          onPress={undefined}
-        />
-        <SettingItem
-          icon={<MaterialCommunityIcons name="message-badge" size={20} color={colors.raw.icon} />}
-          label=" Contact us"
-          onPress={undefined}
-        />
-        <SettingItem
-          icon={<MaterialIcons name="verified" size={20} color={colors.raw.icon} />}
-          label=" Follow us"
-          onPress={undefined}
-        />
-      </View>
-
-      {/* Account */}
-      <View className={`rounded-xl p-4 ${colors.tailwind.cardBg}`}>
-        <SettingItem
-          icon={<Ionicons name="log-out" size={20} color={colors.raw.icon} />}
-          label=" Log Out"
-          rightComponent={undefined}
-          onPress={handleLogout}
-        />
-        <SettingItem
-          icon={<FontAwesome6 name="trash" size={20} color={colors.raw.icon} />}
-          label=" Delete Account"
-          rightComponent={undefined}
-          onPress={undefined}
-        />
-      </View>
-    </ScrollView>
+      </Modal>
+    </>
   );
 }
