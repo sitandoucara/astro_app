@@ -1,8 +1,8 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useLayoutEffect, useState, useEffect, useRef } from 'react';
-import { Text, TouchableOpacity, View, Modal, Alert, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, View, Alert, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { Audio } from 'expo-av';
 import type { AVPlaybackStatus, AVPlaybackStatusSuccess } from 'expo-av';
@@ -36,16 +36,11 @@ export default function AudioBookScreen({ onBack }: any) {
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
+  // Couleurs dynamiques - gardées en style car elles dépendent de l'état
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-
   const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
   const textLecteur = isDarkMode ? '#FFFFFF' : '#281109';
-
-  // Couleurs pour le surlignage
   const highlightBg = isDarkMode ? '#281109' : '#F2EAE0';
   const highlightText = isDarkMode ? '#F2EAE0' : '#281109';
 
@@ -219,7 +214,6 @@ export default function AudioBookScreen({ onBack }: any) {
     }
   };
 
-  // Fonction CORRIGÉE pour rendre le texte avec surlignage
   const renderTextWithHighlight = (textBlocks: TextBlock[]) => {
     let globalWordIndex: number = 0;
 
@@ -236,11 +230,10 @@ export default function AudioBookScreen({ onBack }: any) {
         return (
           <Text
             key={`${blockIndex}-${wordIndex}`}
+            className="px-0.5 py-0.5"
             style={{
               backgroundColor: isHighlighted ? highlightBg : 'transparent',
               color: isHighlighted ? highlightText : textColor,
-              paddingHorizontal: 2,
-              paddingVertical: 1,
             }}>
             {word.trim()}
             {wordIndex < words.length - 1 ? ' ' : ''}
@@ -249,7 +242,7 @@ export default function AudioBookScreen({ onBack }: any) {
       });
 
       return (
-        <Text className="text-aref" key={blockIndex} style={{ fontSize: 18, lineHeight: 28 }}>
+        <Text className="text-aref text-lg leading-7" key={blockIndex}>
           {renderedWords}
           {blockIndex < textBlocks.length - 1 ? ' ' : ''}
         </Text>
@@ -399,14 +392,14 @@ export default function AudioBookScreen({ onBack }: any) {
       headerTransparent: true,
       headerTitle: '',
       headerLeft: () => (
-        <TouchableOpacity onPress={goBack} style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Ionicons name="chevron-back" size={24} color={textColor} />
-          <View style={{ marginLeft: 8 }}>
-            <Text
-              className="text-aref"
-              style={{ color: textColor, fontSize: 18, fontWeight: '600' }}>
-              {title}
-            </Text>
+        <TouchableOpacity className="ml-4" onPress={goBack}>
+          <View className="flex-row items-center gap-2">
+            <Ionicons name="chevron-back" size={24} color={textColor} />
+            <View className="ml-2">
+              <Text className="text-aref text-left text-xl font-bold" style={{ color: textColor }}>
+                {title}
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       ),
@@ -414,15 +407,11 @@ export default function AudioBookScreen({ onBack }: any) {
   }, [navigation, title, textColor]);
 
   return (
-    <View style={{ flex: 1, backgroundColor }}>
-      <ScrollView
-        style={{ flex: 1, paddingHorizontal: 20, paddingTop: 100 }}
-        showsVerticalScrollIndicator={false}>
+    <View className="flex-1" style={{ backgroundColor }}>
+      <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
         <View className="mt-4">
           {loading ? (
-            <Text
-              className="text-aref"
-              style={{ color: textColor, fontSize: 18, textAlign: 'center' }}>
+            <Text className="text-aref text-center text-lg" style={{ color: textColor }}>
               Chargement...
             </Text>
           ) : (
@@ -433,16 +422,9 @@ export default function AudioBookScreen({ onBack }: any) {
 
       {/* Audio Player */}
       <View
+        className="absolute bottom-0 left-0 right-0 border-t px-5 py-6"
         style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
           backgroundColor: isDarkMode ? 'rgba(50, 34, 30, 0.95)' : 'rgba(242, 234, 224, 0.95)',
-
-          paddingHorizontal: 20,
-          paddingVertical: 25,
-          borderTopWidth: 1,
           borderTopColor: isDarkMode ? '#544A46' : '#D8D3D0',
           shadowColor: '#000',
           shadowOffset: { width: 0, height: -2 },
@@ -451,29 +433,16 @@ export default function AudioBookScreen({ onBack }: any) {
           elevation: 10,
         }}>
         {/* Waveform visualization stylisée */}
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 20,
-            paddingHorizontal: 10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-end',
-              height: 50,
-              width: '100%',
-              justifyContent: 'space-between',
-            }}>
+        <View className="mb-5 flex-row justify-center px-2.5">
+          <View className="w-full flex-row items-end justify-between" style={{ height: 50 }}>
             {Array.from({ length: 60 }).map((_, i) => {
               const isPlayed = i < (progressPercentage / 100) * 60;
               const height = Math.random() * 35 + 8;
               return (
                 <View
                   key={i}
+                  className="w-0.5 rounded-full"
                   style={{
-                    width: 3,
                     height: height,
                     backgroundColor: isPlayed
                       ? isDarkMode
@@ -482,7 +451,6 @@ export default function AudioBookScreen({ onBack }: any) {
                       : isDarkMode
                         ? '#544A46'
                         : '#B8B3B0',
-                    borderRadius: 1.5,
                     opacity: isPlayed ? 1 : 0.4,
                     transform: [{ scaleY: isPlayed ? 1 : 0.7 }],
                   }}
@@ -491,24 +459,14 @@ export default function AudioBookScreen({ onBack }: any) {
             })}
           </View>
         </View>
+
         {/* Contrôles audio avec temps */}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 20,
-          }}>
+        <View className="mb-5 flex-row items-center justify-between">
           {/* Temps actuel */}
-          <View style={{ minWidth: 50 }}>
+          <View className="min-w-12">
             <Text
-              className="text-aref"
-              style={{
-                color: textLecteur,
-                fontSize: 16,
-                fontWeight: '600',
-                textAlign: 'center',
-              }}>
+              className="text-aref text-center text-base font-semibold"
+              style={{ color: textLecteur }}>
               {formatTime(currentTime)}
             </Text>
           </View>
@@ -516,20 +474,15 @@ export default function AudioBookScreen({ onBack }: any) {
           {/* Bouton Play/Pause central */}
           <TouchableOpacity
             onPress={togglePlayPause}
+            className="h-16 w-16 items-center justify-center rounded-full border-2 shadow-lg"
             style={{
-              width: 70,
-              height: 70,
-              borderRadius: 35,
               backgroundColor: isDarkMode ? '#F2EAE0' : '#281109',
-              justifyContent: 'center',
-              alignItems: 'center',
+              borderColor: isDarkMode ? '#D8D3D0' : '#442F29',
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,
               elevation: 8,
-              borderWidth: 2,
-              borderColor: isDarkMode ? '#D8D3D0' : '#442F29',
             }}>
             {isPlaying ? (
               <MaterialIcons name="pause" size={36} color={isDarkMode ? '#32221E' : '#F2EAE0'} />
@@ -543,15 +496,10 @@ export default function AudioBookScreen({ onBack }: any) {
           </TouchableOpacity>
 
           {/* Temps total */}
-          <View style={{ minWidth: 50 }}>
+          <View className="min-w-12">
             <Text
-              className="text-aref"
-              style={{
-                color: textLecteur,
-                fontSize: 16,
-                fontWeight: '600',
-                textAlign: 'center',
-              }}>
+              className="text-aref text-center text-base font-semibold"
+              style={{ color: textLecteur }}>
               {formatTime(duration)}
             </Text>
           </View>

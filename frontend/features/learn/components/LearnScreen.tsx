@@ -7,6 +7,8 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 
+import Animated, { FadeInUp } from 'react-native-reanimated';
+
 export default function LearnScreen({ onBack }: any) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -109,49 +111,51 @@ export default function LearnScreen({ onBack }: any) {
       <ScrollView className="mt-20">
         <View>
           <View className="mt-8">
-            {chapters.map((chapter) => (
-              <TouchableOpacity
-                key={chapter.id}
-                activeOpacity={0.8}
-                onPress={() =>
-                  navigation.navigate('AudioBookScreen', {
-                    title: chapter.title,
-                    jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
-                  })
-                }
-                className={`mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`}>
-                <View className="flex-row items-center">
-                  {/* Numéro du chapitre - centré horizontalement */}
-                  <View className="mr-4 w-10 items-center justify-center">
-                    <Text className={`text-aref text-lg font-bold ${textPrimary}`}>
-                      {chapter.id}
-                    </Text>
-                  </View>
-                  {/* Contenu du chapitre */}
-                  <View className="flex-1">
-                    <Text
-                      className={`text-aref whitespace-nowrap text-base font-medium ${textPrimary} mb-1`}>
-                      {chapter.title}
-                    </Text>
-                    <Text className={`text-aref whitespace-nowrap text-sm ${textSecondary}`}>
-                      {chapter.duration}
-                    </Text>
-                  </View>
-                  {/* Bouton play et cadenas */}
-                  <View className="ml-3 flex-row items-center">
-                    {/* Cadenas pour Level 2 et 3 */}
-                    {isLocked(chapter.title) && (
-                      <View className="ml-2 h-8 w-8 items-center justify-center">
-                        <MaterialIcons name="lock" size={20} style={{ color: iconColor }} />
+            {chapters.map((chapter, idx) => (
+              <Animated.View key={chapter.id} entering={FadeInUp.delay(idx * 50).duration(400)}>
+                <TouchableOpacity
+                  key={chapter.id}
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    navigation.navigate('AudioBookScreen', {
+                      title: chapter.title,
+                      jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
+                    })
+                  }
+                  className={`mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`}>
+                  <View className="flex-row items-center">
+                    {/* Numéro du chapitre - centré horizontalement */}
+                    <View className="mr-4 w-10 items-center justify-center">
+                      <Text className={`text-aref text-lg font-bold ${textPrimary}`}>
+                        {chapter.id}
+                      </Text>
+                    </View>
+                    {/* Contenu du chapitre */}
+                    <View className="flex-1">
+                      <Text
+                        className={`text-aref whitespace-nowrap text-base font-medium ${textPrimary} mb-1`}>
+                        {chapter.title}
+                      </Text>
+                      <Text className={`text-aref whitespace-nowrap text-sm ${textSecondary}`}>
+                        {chapter.duration}
+                      </Text>
+                    </View>
+                    {/* Bouton play et cadenas */}
+                    <View className="ml-3 flex-row items-center">
+                      {/* Cadenas pour Level 2 et 3 */}
+                      {isLocked(chapter.title) && (
+                        <View className="ml-2 h-8 w-8 items-center justify-center">
+                          <MaterialIcons name="lock" size={20} style={{ color: iconColor }} />
+                        </View>
+                      )}
+                      {/* Icône play */}
+                      <View className="h-10 w-10 items-center justify-center">
+                        <Ionicons name="play-circle" size={32} style={{ color: iconColor }} />
                       </View>
-                    )}
-                    {/* Icône play */}
-                    <View className="h-10 w-10 items-center justify-center">
-                      <Ionicons name="play-circle" size={32} style={{ color: iconColor }} />
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </Animated.View>
             ))}
           </View>
         </View>
