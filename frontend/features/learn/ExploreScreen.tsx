@@ -54,31 +54,7 @@ export default function ExploreScreen() {
 
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
-        className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
-        <View className="  justify-center">
-          {/* Header avec les 2 grandes icones */}
-          <View className="h-16 w-16 items-center justify-center ">
-            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
-              <MaterialCommunityIcons name="book" size={20} style={{ color: iconColor }} />
-            </View>
-          </View>
-
-          {/* Texte centré */}
-          <View className="">
-            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
-              Mini-books
-            </Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
-              304 Reports delivered today
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
+        onPress={() => navigation.navigate('QuizzScreen')}
         className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
         <View className="  justify-center">
           {/* Header avec les 2 grandes icones */}
@@ -96,6 +72,30 @@ export default function ExploreScreen() {
           <View className="">
             <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
               Test & Quiz
+            </Text>
+            <Text className={`text-aref text-sm ${textSecondary}`}>
+              304 Reports delivered today
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
+        className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
+        <View className="  justify-center">
+          {/* Header avec les 2 grandes icones */}
+          <View className="h-16 w-16 items-center justify-center ">
+            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+              <MaterialCommunityIcons name="book" size={20} style={{ color: iconColor }} />
+            </View>
+          </View>
+
+          {/* Texte centré */}
+          <View className="">
+            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
+              Mini-books
             </Text>
             <Text className={`text-aref text-sm ${textSecondary}`}>
               304 Reports delivered today

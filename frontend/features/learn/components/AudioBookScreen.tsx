@@ -1,11 +1,11 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { Audio } from 'expo-av';
+import type { AVPlaybackStatus, AVPlaybackStatusSuccess } from 'expo-av';
 import { useLayoutEffect, useState, useEffect, useRef } from 'react';
 import { Text, TouchableOpacity, View, Alert, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
-import { Audio } from 'expo-av';
-import type { AVPlaybackStatus, AVPlaybackStatusSuccess } from 'expo-av';
 
 export default function AudioBookScreen({ onBack }: any) {
   const navigation = useNavigation();
@@ -39,7 +39,6 @@ export default function AudioBookScreen({ onBack }: any) {
   // Couleurs dynamiques - gardées en style car elles dépendent de l'état
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
   const textLecteur = isDarkMode ? '#FFFFFF' : '#281109';
   const highlightBg = isDarkMode ? '#281109' : '#F2EAE0';
   const highlightText = isDarkMode ? '#F2EAE0' : '#281109';
@@ -53,6 +52,20 @@ export default function AudioBookScreen({ onBack }: any) {
   }
 
   const [chapterData, setChapterData] = useState<ChapterData | null>(null);
+
+  // Fonction pour extraire l'ID de la leçon depuis l'URL JSON
+  const extractLessonId = (jsonUrl: string): string => {
+    const match = jsonUrl.match(/lesson_(\d+)\.json/);
+    return match ? match[1] : '01';
+  };
+
+  // Fonction pour construire l'URL audio dynamiquement
+  const getAudioUrl = (jsonUrl: string): string => {
+    const lessonId = extractLessonId(jsonUrl);
+    const baseUrl =
+      'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/';
+    return `${baseUrl}lesson_${lessonId}_female.mp3`;
+  };
 
   const goBack = async () => {
     if (sound) {
@@ -109,17 +122,13 @@ export default function AudioBookScreen({ onBack }: any) {
       wordIndex: number;
     }[] = [];
 
-    console.log('=== CRÉATION DES MOTS AVEC TIMESTAMPS ===');
-    console.log('Durée totale audio:', totalDuration);
-    console.log('Blocs de texte:', textBlocks);
-
+    const lessonId = extractLessonId(jsonUrl);
     textBlocks.forEach((block: TextBlock, blockIndex: number) => {
       const blockWords: string[] = block.content
         .split(/\s+/)
         .filter((word: string) => word.trim() !== '');
       const blockStartTime: number = block.timestamp;
 
-      // Utiliser endTimestamp s'il existe, sinon calculer comme avant
       const blockEndTime: number =
         block.endTimestamp ||
         (blockIndex < textBlocks.length - 1 ? textBlocks[blockIndex + 1].timestamp : totalDuration);
@@ -154,7 +163,7 @@ export default function AudioBookScreen({ onBack }: any) {
       });
     });
 
-    console.log(`Total de ${words.length} mots créés`);
+    console.log(`Total de ${words.length} mots créés pour la lesson ${lessonId}`);
     return words;
   };
 
@@ -203,8 +212,9 @@ export default function AudioBookScreen({ onBack }: any) {
       const newWordIndex = findCurrentWordIndex(newTime, wordsRef.current);
       if (newWordIndex !== currentWordIndex) {
         setCurrentWordIndex(newWordIndex);
+        const lessonId = extractLessonId(jsonUrl);
         console.log(
-          `Temps: ${newTime.toFixed(2)}s, Mot index: ${newWordIndex}, Mot: ${
+          `[Lesson ${lessonId}] Temps: ${newTime.toFixed(2)}s, Mot index: ${newWordIndex}, Mot: ${
             newWordIndex >= 0 && wordsRef.current[newWordIndex]
               ? wordsRef.current[newWordIndex].word
               : 'Aucun'
@@ -255,7 +265,7 @@ export default function AudioBookScreen({ onBack }: any) {
     const loadChapterData = async () => {
       try {
         setLoading(true);
-        console.log('Chargement des données depuis:', jsonUrl);
+        //const lessonId = extractLessonId(jsonUrl);
         const response = await fetch(jsonUrl);
 
         if (!response.ok) {
@@ -263,45 +273,9 @@ export default function AudioBookScreen({ onBack }: any) {
         }
 
         const data = await response.json();
-        console.log('Données chargées:', data);
         setChapterData(data);
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
-        // Utiliser les données JSON que vous avez fournies comme fallback
-        const fallbackData: ChapterData = {
-          title: 'Level 1: Introduction to Astrology',
-          duration: 20,
-          totalWords: 47,
-          text: [
-            {
-              timestamp: 0,
-              content: 'Astrology is the study of the stars and how they influence our lives.',
-              wordsCount: 13,
-              endTimestamp: 5,
-            },
-            {
-              timestamp: 5,
-              content:
-                'The zodiac is divided into 12 signs, each representing a segment of the sky.',
-              wordsCount: 14,
-              endTimestamp: 10,
-            },
-            {
-              timestamp: 10,
-              content: 'Each sign has its own characteristics, strengths and weaknesses.',
-              wordsCount: 9,
-              endTimestamp: 15,
-            },
-            {
-              timestamp: 15,
-              content:
-                'Astrology is not a religion but a symbolic language and a tool for self-reflection.',
-              wordsCount: 14,
-              endTimestamp: 20,
-            },
-          ],
-        };
-        setChapterData(fallbackData);
       } finally {
         setLoading(false);
       }
@@ -313,21 +287,12 @@ export default function AudioBookScreen({ onBack }: any) {
   // Créer la structure des mots avec timestamps quand les données sont chargées ET que l'audio est chargé
   useEffect(() => {
     if (chapterData && duration > 0) {
-      console.log('=== EFFET DE CRÉATION DES MOTS ===');
-      console.log('ChapterData:', chapterData);
-      console.log('Duration:', duration);
+      //const lessonId = extractLessonId(jsonUrl);
 
       const words = createWordsWithTimestamps(chapterData.text, duration);
       setWordsWithTimestamps(words);
-      // IMPORTANT: Mettre à jour aussi la référence
       wordsRef.current = words;
-
-      console.log('=== RÉSUMÉ DES MOTS CRÉÉS ===');
-      console.log('Nombre total de mots:', words.length);
       if (words.length > 0) {
-        console.log('Premier mot:', words[0]);
-        console.log('Dernier mot:', words[words.length - 1]);
-        console.log('Premiers 5 mots:');
         words.slice(0, 5).forEach((w, i) => {
           console.log(
             `  ${i}: "${w.word}" (${w.startTime.toFixed(2)}s - ${w.endTime.toFixed(2)}s)`
@@ -337,14 +302,19 @@ export default function AudioBookScreen({ onBack }: any) {
     } else {
       console.log('Pas de données ou durée = 0:', { chapterData: !!chapterData, duration });
     }
-  }, [chapterData, duration]);
+  }, [chapterData, duration, jsonUrl]);
 
-  // Charger l'audio
+  // Charger l'audio - VERSION DYNAMIQUE
   useEffect(() => {
     let isMounted = true;
 
     const loadSound = async () => {
       try {
+        if (sound) {
+          await sound.unloadAsync();
+          setSound(null);
+        }
+
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: false,
           staysActiveInBackground: true,
@@ -353,13 +323,17 @@ export default function AudioBookScreen({ onBack }: any) {
           playThroughEarpieceAndroid: false,
         });
 
+        // Construire l'URL audio dynamiquement
+        const audioUrl = getAudioUrl(jsonUrl);
+        const lessonId = extractLessonId(jsonUrl);
+
+        console.log(`Chargement de l'audio pour la lesson ${lessonId}: ${audioUrl}`);
+
         const { sound: audioSound, status } = await Audio.Sound.createAsync(
-          {
-            uri: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_01_female.mp3',
-          },
+          { uri: audioUrl },
           {
             shouldPlay: false,
-            progressUpdateIntervalMillis: 100, // Mise à jour toutes les 100ms
+            progressUpdateIntervalMillis: 100,
           },
           onPlaybackStatusUpdate
         );
@@ -368,11 +342,15 @@ export default function AudioBookScreen({ onBack }: any) {
           setSound(audioSound);
           const audioDuration = (status.durationMillis ?? 0) / 1000;
           setDuration(audioDuration);
-          console.log('Audio chargé, durée:', audioDuration);
+          console.log(`Audio chargé pour la lesson ${lessonId}, durée: ${audioDuration}s`);
         }
       } catch (error) {
         console.error('Erreur de chargement du son:', error);
-        Alert.alert('Erreur', 'Impossible de charger le fichier audio');
+        const lessonId = extractLessonId(jsonUrl);
+        Alert.alert(
+          'Erreur Audio',
+          `Impossible de charger le fichier audio pour la lesson ${lessonId}. Vérifiez que le fichier existe.`
+        );
       }
     };
 
@@ -384,9 +362,10 @@ export default function AudioBookScreen({ onBack }: any) {
         sound.unloadAsync();
       }
     };
-  }, []);
+  }, [jsonUrl]);
 
   useLayoutEffect(() => {
+    //const lessonId = extractLessonId(jsonUrl);
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
@@ -404,18 +383,27 @@ export default function AudioBookScreen({ onBack }: any) {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, title, textColor]);
+  }, [navigation, title, textColor, jsonUrl]);
 
   return (
     <View className="flex-1" style={{ backgroundColor }}>
       <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
         <View className="mt-4">
           {loading ? (
-            <Text className="text-aref text-center text-lg" style={{ color: textColor }}>
-              Chargement...
-            </Text>
+            <View className="items-center justify-center py-10">
+              <Text className="text-aref mb-2 text-center text-lg" style={{ color: textColor }}>
+                Chargement de la lesson {extractLessonId(jsonUrl)}...
+              </Text>
+              <Text
+                className="text-aref text-center text-sm opacity-70"
+                style={{ color: textColor }}>
+                Préparation du texte et de l'audio
+              </Text>
+            </View>
           ) : (
-            chapterData?.text && renderTextWithHighlight(chapterData.text)
+            chapterData?.text && (
+              <View className="mt-5">{renderTextWithHighlight(chapterData.text)}</View>
+            )
           )}
         </View>
       </ScrollView>
@@ -443,7 +431,7 @@ export default function AudioBookScreen({ onBack }: any) {
                   key={i}
                   className="w-0.5 rounded-full"
                   style={{
-                    height: height,
+                    height,
                     backgroundColor: isPlayed
                       ? isDarkMode
                         ? '#F2EAE0'
@@ -474,23 +462,29 @@ export default function AudioBookScreen({ onBack }: any) {
           {/* Bouton Play/Pause central */}
           <TouchableOpacity
             onPress={togglePlayPause}
+            disabled={!sound || loading}
             className="h-16 w-16 items-center justify-center rounded-full border-2 shadow-lg"
             style={{
-              backgroundColor: isDarkMode ? '#F2EAE0' : '#281109',
-              borderColor: isDarkMode ? '#D8D3D0' : '#442F29',
+              backgroundColor: !sound || loading ? '#999' : isDarkMode ? '#F2EAE0' : '#281109',
+              borderColor: !sound || loading ? '#777' : isDarkMode ? '#D8D3D0' : '#442F29',
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,
               elevation: 8,
+              opacity: !sound || loading ? 0.5 : 1,
             }}>
             {isPlaying ? (
-              <MaterialIcons name="pause" size={36} color={isDarkMode ? '#32221E' : '#F2EAE0'} />
+              <MaterialIcons
+                name="pause"
+                size={36}
+                color={!sound || loading ? '#555' : isDarkMode ? '#32221E' : '#F2EAE0'}
+              />
             ) : (
               <MaterialIcons
                 name="play-arrow"
                 size={36}
-                color={isDarkMode ? '#32221E' : '#F2EAE0'}
+                color={!sound || loading ? '#555' : isDarkMode ? '#32221E' : '#F2EAE0'}
               />
             )}
           </TouchableOpacity>

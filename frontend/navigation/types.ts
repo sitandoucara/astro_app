@@ -8,4 +8,6 @@ export type RootStackParamList = {
   BirthChartCompability: undefined;
   LearnScreen: undefined;
   AudioBookScreen: { title: string; jsonUrl: string };
+  GuessWhoGame: undefined;
+  QuizzScreen: undefined;
 };

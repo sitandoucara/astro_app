@@ -7,7 +7,9 @@ import SignUpScreen from 'features/auth/SignUpScreen';
 import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
 import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSignsCompatibility';
 import AudioBookScreen from 'features/learn/components/AudioBookScreen';
+import GuessWhoGame from 'features/learn/components/GuessWhoGame';
 import LearnScreen from 'features/learn/components/LearnScreen';
+import QuizzScreen from 'features/learn/components/TestScreen';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
@@ -155,6 +157,8 @@ export default function SessionGate() {
               <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
               <Stack.Screen name="LearnScreen" component={LearnScreen} />
               <Stack.Screen name="AudioBookScreen" component={AudioBookScreen} />
+              <Stack.Screen name="GuessWhoGame" component={GuessWhoGame} />
+              <Stack.Screen name="QuizzScreen" component={QuizzScreen} />
             </>
           ) : (
             <>

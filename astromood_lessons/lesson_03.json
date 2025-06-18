@@ -1,22 +1,31 @@
 {
   "title": "Level 3: The Planets and Their Meaning",
-  "duration": 240,
+  "duration": 20,
+  "totalWords": 50,
   "text": [
     {
       "timestamp": 0,
-      "content": "The planets in astrology represent different aspects of personality and life experiences."
+      "content": "The planets in astrology represent different aspects of personality and life experiences.",
+      "wordsCount": 14,
+      "endTimestamp": 5
     },
     {
-      "timestamp": 60,
-      "content": "The Sun represents your core identity, while the Moon governs emotions."
+      "timestamp": 5,
+      "content": "The Sun represents your core identity, while the Moon governs emotions.",
+      "wordsCount": 13,
+      "endTimestamp": 10
     },
     {
-      "timestamp": 120,
-      "content": "Mercury rules communication, Venus love, and Mars action."
+      "timestamp": 10,
+      "content": "Mercury rules communication, Venus love, and Mars action.",
+      "wordsCount": 10,
+      "endTimestamp": 15
     },
     {
-      "timestamp": 180,
-      "content": "Outer planets like Uranus, Neptune, and Pluto affect generational themes."
+      "timestamp": 15,
+      "content": "Outer planets like Uranus, Neptune, and Pluto affect generational themes.",
+      "wordsCount": 13,
+      "endTimestamp": 20
     }
   ]
 }

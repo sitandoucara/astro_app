@@ -8,7 +8,7 @@ import { Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
 
-export default function LearnScreen({ onBack }: any) {
+export default function QuizzScreen({ onBack }: any) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
@@ -124,10 +124,7 @@ export default function LearnScreen({ onBack }: any) {
       );
     } else {
       // Naviguer vers l'AudioBookScreen pour les leçons disponibles
-      navigation.navigate('AudioBookScreen', {
-        title: chapter.title,
-        jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
-      });
+      navigation.navigate('GuessWhoGame');
     }
   };
 
