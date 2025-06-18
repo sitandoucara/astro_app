@@ -54,22 +54,22 @@ export default function LearnScreen({ onBack }: any) {
     },
     {
       id: '02',
-      title: 'Level 2: The Zodiac Signs',
+      title: 'Level 1: The Zodiac Signs',
       duration: '16 min 10 sec',
     },
     {
       id: '03',
-      title: 'Level 3: The Planets and Their',
+      title: 'Level 1: The Planets and Their',
       duration: '20 min 2 sec',
     },
     {
       id: '04',
-      title: 'Level 4: The Ascendant and the Houses',
+      title: 'Level 2: The Ascendant and the ',
       duration: '23 min 8 sec',
     },
     {
       id: '05',
-      title: 'Level 5: The Four Elements',
+      title: 'Level 2: The Four Elements',
       duration: '15 min 5 sec',
     },
     {
@@ -87,6 +87,16 @@ export default function LearnScreen({ onBack }: any) {
       title: 'Level 3: UI/UX Design Tools',
       duration: '19 min 2 sec',
     },
+    {
+      id: '09',
+      title: 'Level 3: UI/UX Design Tools',
+      duration: '19 min 2 sec',
+    },
+    {
+      id: '10',
+      title: 'Level 3: UI/UX Design Tools',
+      duration: '19 min 2 sec',
+    },
   ];
 
   // Fonction pour déterminer si un chapitre est verrouillé
@@ -95,59 +105,57 @@ export default function LearnScreen({ onBack }: any) {
   };
 
   return (
-    <View className="flex-1 justify-center p-2" style={{ backgroundColor }}>
-      <View>
-        {/* Titre */}
-
-        {/* Liste des chapitres */}
-        <View className="mt-8">
-          {chapters.map((chapter) => (
-            <TouchableOpacity
-              key={chapter.id}
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate('AudioBookScreen', {
-                  title: chapter.title,
-                  jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
-                })
-              }
-              className={`mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`}>
-              <View className="flex-row items-center">
-                {/* Numéro du chapitre - centré horizontalement */}
-                <View className="mr-4 w-10 items-center justify-center">
-                  <Text className={`text-aref text-lg font-bold ${textPrimary}`}>{chapter.id}</Text>
-                </View>
-
-                {/* Contenu du chapitre */}
-                <View className="flex-1">
-                  <Text
-                    className={`text-aref whitespace-nowrap text-base font-medium ${textPrimary} mb-1`}>
-                    {chapter.title}
-                  </Text>
-                  <Text className={`text-aref whitespace-nowrap text-sm ${textSecondary}`}>
-                    {chapter.duration}
-                  </Text>
-                </View>
-
-                {/* Bouton play et cadenas */}
-                <View className="ml-3 flex-row items-center">
-                  {/* Cadenas pour Level 2 et 3 */}
-                  {isLocked(chapter.title) && (
-                    <View className="ml-2 h-8 w-8 items-center justify-center">
-                      <MaterialIcons name="lock" size={20} style={{ color: iconColor }} />
+    <View className="flex-1 p-2" style={{ backgroundColor }}>
+      <ScrollView className="mt-20">
+        <View>
+          <View className="mt-8">
+            {chapters.map((chapter) => (
+              <TouchableOpacity
+                key={chapter.id}
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.navigate('AudioBookScreen', {
+                    title: chapter.title,
+                    jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
+                  })
+                }
+                className={`mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`}>
+                <View className="flex-row items-center">
+                  {/* Numéro du chapitre - centré horizontalement */}
+                  <View className="mr-4 w-10 items-center justify-center">
+                    <Text className={`text-aref text-lg font-bold ${textPrimary}`}>
+                      {chapter.id}
+                    </Text>
+                  </View>
+                  {/* Contenu du chapitre */}
+                  <View className="flex-1">
+                    <Text
+                      className={`text-aref whitespace-nowrap text-base font-medium ${textPrimary} mb-1`}>
+                      {chapter.title}
+                    </Text>
+                    <Text className={`text-aref whitespace-nowrap text-sm ${textSecondary}`}>
+                      {chapter.duration}
+                    </Text>
+                  </View>
+                  {/* Bouton play et cadenas */}
+                  <View className="ml-3 flex-row items-center">
+                    {/* Cadenas pour Level 2 et 3 */}
+                    {isLocked(chapter.title) && (
+                      <View className="ml-2 h-8 w-8 items-center justify-center">
+                        <MaterialIcons name="lock" size={20} style={{ color: iconColor }} />
+                      </View>
+                    )}
+                    {/* Icône play */}
+                    <View className="h-10 w-10 items-center justify-center">
+                      <Ionicons name="play-circle" size={32} style={{ color: iconColor }} />
                     </View>
-                  )}
-
-                  {/* Icône play */}
-                  <View className="h-10 w-10 items-center justify-center">
-                    <Ionicons name="play-circle" size={32} style={{ color: iconColor }} />
                   </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }

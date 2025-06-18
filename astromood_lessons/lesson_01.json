@@ -1,22 +1,31 @@
 {
   "title": "Level 1: Introduction to Astrology",
-  "duration": 240,
+  "duration": 20,
+  "totalWords": 47,
   "text": [
     {
       "timestamp": 0,
-      "content": "Astrology is the study of the stars and how they influence our lives."
+      "content": "Astrology is the study of the stars and how they influence our lives.",
+      "wordsCount": 13,
+      "endTimestamp": 5
     },
     {
-      "timestamp": 60,
-      "content": "The zodiac is divided into 12 signs, each representing a segment of the sky."
+      "timestamp": 5,
+      "content": "The zodiac is divided into 12 signs, each representing a segment of the sky.",
+      "wordsCount": 14,
+      "endTimestamp": 10
     },
     {
-      "timestamp": 120,
-      "content": "Each sign has its own characteristics, strengths and weaknesses."
+      "timestamp": 10,
+      "content": "Each sign has its own characteristics, strengths and weaknesses.",
+      "wordsCount": 9,
+      "endTimestamp": 15
     },
     {
-      "timestamp": 180,
-      "content": "Astrology is not a religion but a symbolic language and a tool for self-reflection."
+      "timestamp": 15,
+      "content": "Astrology is not a religion but a symbolic language and a tool for self-reflection.",
+      "wordsCount": 14,
+      "endTimestamp": 20
     }
   ]
 }

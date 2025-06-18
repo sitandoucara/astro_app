@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useLayoutEffect, useState, useEffect } from 'react';
+import { useLayoutEffect, useState, useEffect, useRef } from 'react';
 import { Text, TouchableOpacity, View, Modal, Alert, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { Audio } from 'expo-av';
@@ -15,11 +15,24 @@ export default function AudioBookScreen({ onBack }: any) {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
-  const [currentTime, setCurrentTime] = useState(0); // en secondes
-  const [duration, setDuration] = useState(0); // en secondes
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [allWords, setAllWords] = useState<string[]>([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(-1);
+
+  // Structure pour stocker les mots avec leurs timestamps
+  const [wordsWithTimestamps, setWordsWithTimestamps] = useState<
+    {
+      word: string;
+      startTime: number;
+      endTime: number;
+      blockIndex: number;
+      wordIndex: number;
+    }[]
+  >([]);
+
+  // Utiliser useRef pour avoir une référence stable des mots
+  const wordsRef = useRef<typeof wordsWithTimestamps>([]);
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
@@ -30,20 +43,23 @@ export default function AudioBookScreen({ onBack }: any) {
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
 
   const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
+  const textLecteur = isDarkMode ? '#FFFFFF' : '#281109';
 
   // Couleurs pour le surlignage
-  const highlightBg = '#281109';
-  const highlightText = '#F2EAE0';
+  const highlightBg = isDarkMode ? '#281109' : '#F2EAE0';
+  const highlightText = isDarkMode ? '#F2EAE0' : '#281109';
 
-  const [chapterData, setChapterData] = useState<{
+  // Interface pour typer les données du chapitre
+  interface ChapterData {
     title: string;
     duration: number;
-    text: { timestamp: number; content: string }[];
-  } | null>(null);
+    totalWords?: number;
+    text: TextBlock[];
+  }
+
+  const [chapterData, setChapterData] = useState<ChapterData | null>(null);
 
   const goBack = async () => {
-    // Nettoyer l'audio avant de partir
     if (sound) {
       await sound.unloadAsync();
       setSound(null);
@@ -80,15 +96,99 @@ export default function AudioBookScreen({ onBack }: any) {
 
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
-  // Fonction pour calculer l'index du mot actuel basé sur le temps
-  const calculateCurrentWordIndex = (time: number) => {
-    if (!allWords.length || !duration) return 0;
+  // Interface pour typer les blocs de texte
+  interface TextBlock {
+    timestamp: number;
+    content: string;
+    wordsCount?: number;
+    endTimestamp?: number;
+  }
 
-    // Estimation: un mot toutes les 0.5 secondes (vitesse de lecture normale)
-    const wordsPerSecond = allWords.length / duration;
-    const estimatedIndex = Math.floor(time * wordsPerSecond);
+  // Fonction AMÉLIORÉE pour créer la structure des mots avec timestamps
+  const createWordsWithTimestamps = (textBlocks: TextBlock[], totalDuration: number) => {
+    const words: {
+      word: string;
+      startTime: number;
+      endTime: number;
+      blockIndex: number;
+      wordIndex: number;
+    }[] = [];
 
-    return Math.min(estimatedIndex, allWords.length - 1);
+    console.log('=== CRÉATION DES MOTS AVEC TIMESTAMPS ===');
+    console.log('Durée totale audio:', totalDuration);
+    console.log('Blocs de texte:', textBlocks);
+
+    textBlocks.forEach((block: TextBlock, blockIndex: number) => {
+      const blockWords: string[] = block.content
+        .split(/\s+/)
+        .filter((word: string) => word.trim() !== '');
+      const blockStartTime: number = block.timestamp;
+
+      // Utiliser endTimestamp s'il existe, sinon calculer comme avant
+      const blockEndTime: number =
+        block.endTimestamp ||
+        (blockIndex < textBlocks.length - 1 ? textBlocks[blockIndex + 1].timestamp : totalDuration);
+
+      const blockDuration: number = Math.max(0.5, blockEndTime - blockStartTime);
+
+      console.log(
+        `Bloc ${blockIndex}: ${blockStartTime}s -> ${blockEndTime}s (${blockDuration}s) - ${blockWords.length} mots`
+      );
+
+      // Distribuer le temps équitablement entre les mots du bloc
+      const timePerWord: number = blockWords.length > 0 ? blockDuration / blockWords.length : 0;
+
+      blockWords.forEach((word: string, wordIndex: number) => {
+        const wordStartTime: number = blockStartTime + wordIndex * timePerWord;
+        const wordEndTime: number = wordStartTime + timePerWord;
+
+        words.push({
+          word: word.trim(),
+          startTime: wordStartTime,
+          endTime: wordEndTime,
+          blockIndex,
+          wordIndex,
+        });
+
+        // Log pour les premiers mots de chaque bloc
+        if (wordIndex < 3) {
+          console.log(
+            `  Mot "${word.trim()}": ${wordStartTime.toFixed(2)}s -> ${wordEndTime.toFixed(2)}s`
+          );
+        }
+      });
+    });
+
+    console.log(`Total de ${words.length} mots créés`);
+    return words;
+  };
+
+  // Fonction AMÉLIORÉE pour trouver l'index du mot actuel
+  const findCurrentWordIndex = (time: number, words: typeof wordsWithTimestamps) => {
+    if (!words.length) {
+      console.log('Aucun mot disponible dans findCurrentWordIndex');
+      return -1;
+    }
+
+    // Recherche du mot qui correspond au temps actuel
+    for (let i = 0; i < words.length; i++) {
+      const wordData = words[i];
+      if (time >= wordData.startTime && time < wordData.endTime) {
+        return i;
+      }
+    }
+
+    // Si on est avant le premier mot
+    if (time < words[0].startTime) {
+      return -1;
+    }
+
+    // Si on est après le dernier mot
+    if (time >= words[words.length - 1].endTime) {
+      return words.length - 1;
+    }
+
+    return -1;
   };
 
   const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
@@ -99,37 +199,38 @@ export default function AudioBookScreen({ onBack }: any) {
     if (safeStatus.didJustFinish) {
       setIsPlaying(false);
       setCurrentTime(0);
-      setCurrentWordIndex(0);
+      setCurrentWordIndex(-1);
     } else if (safeStatus.positionMillis !== undefined) {
       const newTime = safeStatus.positionMillis / 1000;
       setCurrentTime(newTime);
 
-      // Mettre à jour l'index du mot actuel seulement si on est en train de jouer
-      if (isPlaying) {
-        setCurrentWordIndex(calculateCurrentWordIndex(newTime));
+      // Utiliser wordsRef.current au lieu de wordsWithTimestamps
+      const newWordIndex = findCurrentWordIndex(newTime, wordsRef.current);
+      if (newWordIndex !== currentWordIndex) {
+        setCurrentWordIndex(newWordIndex);
+        console.log(
+          `Temps: ${newTime.toFixed(2)}s, Mot index: ${newWordIndex}, Mot: ${
+            newWordIndex >= 0 && wordsRef.current[newWordIndex]
+              ? wordsRef.current[newWordIndex].word
+              : 'Aucun'
+          }`
+        );
       }
     }
   };
 
-  // Fonction pour extraire tous les mots du texte
-  const extractAllWords = (textBlocks: { timestamp: number; content: string }[]) => {
-    const words: string[] = [];
-    textBlocks.forEach((block) => {
-      const blockWords = block.content.split(/\s+/).filter((word) => word.trim() !== '');
-      words.push(...blockWords);
-    });
-    return words;
-  };
+  // Fonction CORRIGÉE pour rendre le texte avec surlignage
+  const renderTextWithHighlight = (textBlocks: TextBlock[]) => {
+    let globalWordIndex: number = 0;
 
-  // Fonction pour rendre le texte avec surlignage
-  const renderTextWithHighlight = (textBlocks: { timestamp: number; content: string }[]) => {
-    let globalWordIndex = 0;
+    return textBlocks.map((block: TextBlock, blockIndex: number) => {
+      const words: string[] = block.content
+        .split(/\s+/)
+        .filter((word: string) => word.trim() !== '');
 
-    return textBlocks.map((block, blockIndex) => {
-      const words = block.content.split(/\s+/).filter((word) => word.trim() !== '');
-
-      const renderedWords = words.map((word, wordIndex) => {
-        const isHighlighted = isPlaying && globalWordIndex === currentWordIndex;
+      const renderedWords = words.map((word: string, wordIndex: number) => {
+        const isHighlighted: boolean = currentWordIndex === globalWordIndex;
+        const currentGlobalIndex: number = globalWordIndex;
         globalWordIndex++;
 
         return (
@@ -138,19 +239,19 @@ export default function AudioBookScreen({ onBack }: any) {
             style={{
               backgroundColor: isHighlighted ? highlightBg : 'transparent',
               color: isHighlighted ? highlightText : textColor,
-              borderRadius: 4,
               paddingHorizontal: 2,
               paddingVertical: 1,
             }}>
-            {word}
+            {word.trim()}
             {wordIndex < words.length - 1 ? ' ' : ''}
           </Text>
         );
       });
 
       return (
-        <Text key={blockIndex} className="mb-6 text-base leading-6" style={{ color: textColor }}>
+        <Text className="text-aref" key={blockIndex} style={{ fontSize: 18, lineHeight: 28 }}>
           {renderedWords}
+          {blockIndex < textBlocks.length - 1 ? ' ' : ''}
         </Text>
       );
     });
@@ -161,37 +262,53 @@ export default function AudioBookScreen({ onBack }: any) {
     const loadChapterData = async () => {
       try {
         setLoading(true);
+        console.log('Chargement des données depuis:', jsonUrl);
         const response = await fetch(jsonUrl);
-        const data = await response.json();
-        setChapterData(data);
 
-        // Extraire tous les mots
-        const words = extractAllWords(data.text);
-        setAllWords(words);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Données chargées:', data);
+        setChapterData(data);
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
-        // Données de fallback pour le test
-        const fallbackData = {
-          title: title,
-          duration: 0,
+        // Utiliser les données JSON que vous avez fournies comme fallback
+        const fallbackData: ChapterData = {
+          title: 'Level 1: Introduction to Astrology',
+          duration: 20,
+          totalWords: 47,
           text: [
             {
               timestamp: 0,
-              content:
-                'This is the sum of all that Saba Hafezi remembers from the day her mother and twin sister flew away forever, maybe to America, maybe to somewhere even farther out of reach. If you asked her to recall it, she would cobble all the pieces together as muddled memories within memories, two balmy Gilan days torn out of sequence, floating somewhere in her eleventh summer, and glued back together like this.',
+              content: 'Astrology is the study of the stars and how they influence our lives.',
+              wordsCount: 13,
+              endTimestamp: 5,
             },
             {
-              timestamp: 30,
+              timestamp: 5,
               content:
-                '"Where is Mahtab?" Saba asks again, and fidgets in the backseat of the car. Her father drives, while in the passenger seat her mother searches her purse for passports and plane tickets and all the papers needed to get out of Iran.',
+                'The zodiac is divided into 12 signs, each representing a segment of the sky.',
+              wordsCount: 14,
+              endTimestamp: 10,
+            },
+            {
+              timestamp: 10,
+              content: 'Each sign has its own characteristics, strengths and weaknesses.',
+              wordsCount: 9,
+              endTimestamp: 15,
+            },
+            {
+              timestamp: 15,
+              content:
+                'Astrology is not a religion but a symbolic language and a tool for self-reflection.',
+              wordsCount: 14,
+              endTimestamp: 20,
             },
           ],
         };
         setChapterData(fallbackData);
-
-        // Extraire tous les mots du fallback
-        const words = extractAllWords(fallbackData.text);
-        setAllWords(words);
       } finally {
         setLoading(false);
       }
@@ -200,13 +317,41 @@ export default function AudioBookScreen({ onBack }: any) {
     loadChapterData();
   }, [jsonUrl, title]);
 
+  // Créer la structure des mots avec timestamps quand les données sont chargées ET que l'audio est chargé
+  useEffect(() => {
+    if (chapterData && duration > 0) {
+      console.log('=== EFFET DE CRÉATION DES MOTS ===');
+      console.log('ChapterData:', chapterData);
+      console.log('Duration:', duration);
+
+      const words = createWordsWithTimestamps(chapterData.text, duration);
+      setWordsWithTimestamps(words);
+      // IMPORTANT: Mettre à jour aussi la référence
+      wordsRef.current = words;
+
+      console.log('=== RÉSUMÉ DES MOTS CRÉÉS ===');
+      console.log('Nombre total de mots:', words.length);
+      if (words.length > 0) {
+        console.log('Premier mot:', words[0]);
+        console.log('Dernier mot:', words[words.length - 1]);
+        console.log('Premiers 5 mots:');
+        words.slice(0, 5).forEach((w, i) => {
+          console.log(
+            `  ${i}: "${w.word}" (${w.startTime.toFixed(2)}s - ${w.endTime.toFixed(2)}s)`
+          );
+        });
+      }
+    } else {
+      console.log('Pas de données ou durée = 0:', { chapterData: !!chapterData, duration });
+    }
+  }, [chapterData, duration]);
+
   // Charger l'audio
   useEffect(() => {
     let isMounted = true;
 
     const loadSound = async () => {
       try {
-        // Configuration audio pour iOS/Android
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: false,
           staysActiveInBackground: true,
@@ -221,14 +366,16 @@ export default function AudioBookScreen({ onBack }: any) {
           },
           {
             shouldPlay: false,
-            progressUpdateIntervalMillis: 100, // Mise à jour plus fréquente pour un surlignage fluide
+            progressUpdateIntervalMillis: 100, // Mise à jour toutes les 100ms
           },
           onPlaybackStatusUpdate
         );
 
         if (isMounted && status.isLoaded) {
           setSound(audioSound);
-          setDuration((status.durationMillis ?? 0) / 1000);
+          const audioDuration = (status.durationMillis ?? 0) / 1000;
+          setDuration(audioDuration);
+          console.log('Audio chargé, durée:', audioDuration);
         }
       } catch (error) {
         console.error('Erreur de chargement du son:', error);
@@ -246,26 +393,18 @@ export default function AudioBookScreen({ onBack }: any) {
     };
   }, []);
 
-  // Réinitialiser l'index des mots quand on met en pause
-  useEffect(() => {
-    if (!isPlaying) {
-      // Optionnel: garder le surlignage ou le réinitialiser
-      // setCurrentWordIndex(0);
-    }
-  }, [isPlaying]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
       headerTitle: '',
       headerLeft: () => (
-        <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
-          <View className="flex-row gap-2">
-            <Ionicons name="arrow-back" size={24} style={{ color: textColor }} />
+        <TouchableOpacity onPress={goBack} style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons name="chevron-back" size={24} color={textColor} />
+          <View style={{ marginLeft: 8 }}>
             <Text
-              className="text-aref m-l-2 text-left text-xl font-bold"
-              style={{ color: textColor }}>
+              className="text-aref"
+              style={{ color: textColor, fontSize: 18, fontWeight: '600' }}>
               {title}
             </Text>
           </View>
@@ -275,11 +414,15 @@ export default function AudioBookScreen({ onBack }: any) {
   }, [navigation, title, textColor]);
 
   return (
-    <View className="flex-1" style={{ backgroundColor }}>
-      <ScrollView className="mt-9 flex-1 px-6 pb-6 pt-20">
-        <View className="mx-auto max-w-md">
+    <View style={{ flex: 1, backgroundColor }}>
+      <ScrollView
+        style={{ flex: 1, paddingHorizontal: 20, paddingTop: 100 }}
+        showsVerticalScrollIndicator={false}>
+        <View className="mt-4">
           {loading ? (
-            <Text style={{ color: textColor }} className="text-center">
+            <Text
+              className="text-aref"
+              style={{ color: textColor, fontSize: 18, textAlign: 'center' }}>
               Chargement...
             </Text>
           ) : (
@@ -289,51 +432,128 @@ export default function AudioBookScreen({ onBack }: any) {
       </ScrollView>
 
       {/* Audio Player */}
-      <View className="px-6 py-6" style={{ backgroundColor: isDarkMode ? '#FFFFFF' : '#1F1F1F' }}>
-        <View className="mx-auto max-w-md">
-          {/* Waveform visualization */}
-          <View className="mb-4">
-            <View className="mb-2 h-16 flex-row items-end justify-center">
-              {/* Waveform bars */}
-              {Array.from({ length: 50 }).map((_, i) => {
-                const isPlayed = i < (progressPercentage / 100) * 50;
-                return (
-                  <View
-                    key={i}
-                    className="mx-0.5 w-1 rounded-full"
-                    style={{
-                      height: Math.random() * 40 + 10,
-                      backgroundColor: isPlayed ? '#3B82F6' : '#D1D5DB',
-                    }}
-                  />
-                );
-              })}
-            </View>
-          </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: isDarkMode ? 'rgba(50, 34, 30, 0.95)' : 'rgba(242, 234, 224, 0.95)',
 
-          {/* Time display */}
-          <View className="mb-4 flex-row justify-between">
-            <Text className="text-sm" style={{ color: '#6B7280' }}>
+          paddingHorizontal: 20,
+          paddingVertical: 25,
+          borderTopWidth: 1,
+          borderTopColor: isDarkMode ? '#544A46' : '#D8D3D0',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          elevation: 10,
+        }}>
+        {/* Waveform visualization stylisée */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginBottom: 20,
+            paddingHorizontal: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-end',
+              height: 50,
+              width: '100%',
+              justifyContent: 'space-between',
+            }}>
+            {Array.from({ length: 60 }).map((_, i) => {
+              const isPlayed = i < (progressPercentage / 100) * 60;
+              const height = Math.random() * 35 + 8;
+              return (
+                <View
+                  key={i}
+                  style={{
+                    width: 3,
+                    height: height,
+                    backgroundColor: isPlayed
+                      ? isDarkMode
+                        ? '#F2EAE0'
+                        : '#281109'
+                      : isDarkMode
+                        ? '#544A46'
+                        : '#B8B3B0',
+                    borderRadius: 1.5,
+                    opacity: isPlayed ? 1 : 0.4,
+                    transform: [{ scaleY: isPlayed ? 1 : 0.7 }],
+                  }}
+                />
+              );
+            })}
+          </View>
+        </View>
+        {/* Contrôles audio avec temps */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 20,
+          }}>
+          {/* Temps actuel */}
+          <View style={{ minWidth: 50 }}>
+            <Text
+              className="text-aref"
+              style={{
+                color: textLecteur,
+                fontSize: 16,
+                fontWeight: '600',
+                textAlign: 'center',
+              }}>
               {formatTime(currentTime)}
             </Text>
-            <Text className="text-sm" style={{ color: '#6B7280' }}>
-              {formatTime(duration)}
-            </Text>
           </View>
 
-          {/* Play/Pause button */}
-          <View className="flex-row justify-center">
-            <TouchableOpacity
-              onPress={togglePlayPause}
-              className="flex h-14 w-14 items-center justify-center rounded-full"
-              style={{ backgroundColor: '#3B82F6' }}
-              disabled={!sound}>
-              {isPlaying ? (
-                <Ionicons name="pause" size={24} color="white" />
-              ) : (
-                <Ionicons name="play" size={24} color="white" style={{ marginLeft: 2 }} />
-              )}
-            </TouchableOpacity>
+          {/* Bouton Play/Pause central */}
+          <TouchableOpacity
+            onPress={togglePlayPause}
+            style={{
+              width: 70,
+              height: 70,
+              borderRadius: 35,
+              backgroundColor: isDarkMode ? '#F2EAE0' : '#281109',
+              justifyContent: 'center',
+              alignItems: 'center',
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.3,
+              shadowRadius: 8,
+              elevation: 8,
+              borderWidth: 2,
+              borderColor: isDarkMode ? '#D8D3D0' : '#442F29',
+            }}>
+            {isPlaying ? (
+              <MaterialIcons name="pause" size={36} color={isDarkMode ? '#32221E' : '#F2EAE0'} />
+            ) : (
+              <MaterialIcons
+                name="play-arrow"
+                size={36}
+                color={isDarkMode ? '#32221E' : '#F2EAE0'}
+              />
+            )}
+          </TouchableOpacity>
+
+          {/* Temps total */}
+          <View style={{ minWidth: 50 }}>
+            <Text
+              className="text-aref"
+              style={{
+                color: textLecteur,
+                fontSize: 16,
+                fontWeight: '600',
+                textAlign: 'center',
+              }}>
+              {formatTime(duration)}
+            </Text>
           </View>
         </View>
       </View>
