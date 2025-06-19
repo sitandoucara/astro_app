@@ -37,7 +37,7 @@ export default function MyTabs() {
                 iconName = focused ? 'heart' : 'heart-outline';
                 break;
               case 'Explore':
-                iconName = focused ? 'book' : 'book-outline';
+                iconName = focused ? 'star' : 'star-outline';
                 break;
               case 'Profile':
                 iconName = focused ? 'person' : 'person-outline';

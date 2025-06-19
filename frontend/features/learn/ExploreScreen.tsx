@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'navigation/types';
@@ -39,15 +39,13 @@ export default function ExploreScreen() {
         <View className="  justify-center">
           <View className="h-16 w-16 items-center justify-center ">
             <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
-              <MaterialCommunityIcons name="paperclip" size={20} style={{ color: iconColor }} />
+              <FontAwesome name="book" size={20} style={{ color: iconColor }} />
             </View>
           </View>
 
           <View className="">
             <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>Learn</Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
-              304 Reports delivered today
-            </Text>
+            <Text className={`text-aref text-sm ${textSecondary}`}>Discover Astrology</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -74,7 +72,7 @@ export default function ExploreScreen() {
               Test & Quiz
             </Text>
             <Text className={`text-aref text-sm ${textSecondary}`}>
-              304 Reports delivered today
+              Test Your Astrology Knowlege
             </Text>
           </View>
         </View>
@@ -97,9 +95,7 @@ export default function ExploreScreen() {
             <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
               Mini-books
             </Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
-              304 Reports delivered today
-            </Text>
+            <Text className={`text-aref text-sm ${textSecondary}`}>Know more about Astrology</Text>
           </View>
         </View>
       </TouchableOpacity>

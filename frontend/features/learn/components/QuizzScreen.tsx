@@ -1,10 +1,10 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, Alert, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
 
@@ -39,7 +39,7 @@ export default function QuizzScreen({ onBack }: any) {
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
               style={{ color: textColor }}>
-              Learn Astrology
+              Test Your Astrology Knowlege
             </Text>
           </View>
         </TouchableOpacity>
@@ -50,55 +50,71 @@ export default function QuizzScreen({ onBack }: any) {
   const chapters = [
     {
       id: '01',
-      title: 'Level 1: Introduction to Astrology',
-      duration: '20 sec',
+      title: 'Quess Who Signs ?',
+      duration: 'Test 1',
+      sign: 'aries', // Signe associé à chaque chapitre
     },
     {
       id: '02',
       title: 'Level 1: The Zodiac Signs',
-      duration: '20 sec',
+      duration: 'Test 2',
+      sign: 'taurus',
     },
     {
       id: '03',
       title: 'Level 1: The Planets and Their',
-      duration: '20 sec',
+      duration: 'Test 3',
+      sign: 'gemini',
     },
     {
       id: '04',
       title: 'Level 2: The Ascendant ',
       duration: '',
+      sign: 'cancer',
     },
     {
       id: '05',
       title: 'Level 2: The Four Elements',
       duration: '',
+      sign: 'leo',
     },
     {
       id: '06',
       title: 'Level 2: Planetary Aspects',
       duration: '',
+      sign: 'virgo',
     },
     {
       id: '07',
       title: 'Level 3: Birth Chart Interpretation',
       duration: '',
+      sign: 'libra',
     },
     {
       id: '08',
       title: 'Level 3: Synastry and Compatibility',
       duration: '',
+      sign: 'scorpio',
     },
     {
       id: '09',
       title: 'Level 3: Planetary Transits',
       duration: '',
+      sign: 'sagittarius',
     },
     {
       id: '10',
       title: 'Level 3: Retrogrades ',
       duration: '',
+      sign: 'capricorn',
     },
   ];
+
+  // Fonction pour obtenir l'URL de l'image du signe
+  const getSignImageUrl = (signName: string) => {
+    const theme = isDarkMode ? 'dark' : 'light'; // Inverse car isDarkMode est inversé dans votre logique
+    return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName}_${theme}.png`;
+  };
 
   // Fonction pour déterminer si un chapitre est verrouillé
   const isLocked = (chapter: (typeof chapters)[0]) => {
@@ -167,15 +183,17 @@ export default function QuizzScreen({ onBack }: any) {
                     className={cardStyle.className}
                     style={{ opacity: cardStyle.opacity }}>
                     <View className="flex-row items-center">
-                      {/* Numéro du chapitre - centré horizontalement */}
-                      <View className="mr-4 w-10 items-center justify-center">
-                        <Text
-                          className={getTextStyle(
-                            chapter,
-                            `text-aref text-lg font-bold ${textPrimary}`
-                          )}>
-                          {chapter.id}
-                        </Text>
+                      {/* Image du signe astrologique */}
+                      <View className="mr-4 h-12 w-12 items-center justify-center">
+                        <Image
+                          source={{ uri: getSignImageUrl(chapter.sign) }}
+                          style={{
+                            width: 40,
+                            height: 40,
+                            opacity: locked ? 0.6 : 1,
+                          }}
+                          resizeMode="contain"
+                        />
                       </View>
 
                       {/* Contenu du chapitre */}
@@ -196,8 +214,8 @@ export default function QuizzScreen({ onBack }: any) {
                         </Text>
                       </View>
 
-                      {/* Bouton play et cadenas */}
-                      <View className="ml-3 flex-row items-center">
+                      {/* Numéro du chapitre et bouton play/cadenas */}
+                      <View className="ml-3 flex-row items-center gap-3">
                         {/* Cadenas pour les leçons verrouillées */}
                         {locked ? (
                           <View className="h-10 w-10 items-center justify-center">
@@ -210,7 +228,11 @@ export default function QuizzScreen({ onBack }: any) {
                         ) : (
                           /* Icône play pour les leçons disponibles */
                           <View className="h-10 w-10 items-center justify-center">
-                            <Ionicons name="play-circle" size={32} style={{ color: iconColor }} />
+                            <MaterialCommunityIcons
+                              name="gamepad-variant"
+                              size={32}
+                              style={{ color: iconColor }}
+                            />
                           </View>
                         )}
                       </View>

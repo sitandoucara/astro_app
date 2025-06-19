@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthHomeScreen from 'features/auth/AuthHomeScreen';
-import { setUser, clearUser } from 'features/auth/AuthSlice'; // Assurez-vous d'avoir clearUser
+import { setUser, clearUser } from 'features/auth/AuthSlice';
 import SignInScreen from 'features/auth/SignInScreen';
 import SignUpScreen from 'features/auth/SignUpScreen';
 import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
@@ -9,7 +9,7 @@ import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSi
 import AudioBookScreen from 'features/learn/components/AudioBookScreen';
 import GuessWhoGame from 'features/learn/components/GuessWhoGame';
 import LearnScreen from 'features/learn/components/LearnScreen';
-import QuizzScreen from 'features/learn/components/TestScreen';
+import QuizzScreen from 'features/learn/components/QuizzScreen';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
