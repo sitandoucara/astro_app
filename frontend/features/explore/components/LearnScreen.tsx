@@ -100,17 +100,13 @@ export default function LearnScreen({ onBack }: any) {
     },
   ];
 
-  // Fonction pour déterminer si un chapitre est verrouillé
   const isLocked = (chapter: (typeof chapters)[0]) => {
-    // Les leçons 01, 02, 03 sont disponibles - les autres sont verrouillées
     const availableLessons = ['01', '02', '03'];
     return !availableLessons.includes(chapter.id);
   };
 
-  // Fonction pour gérer le clic sur un chapitre
   const handleChapterPress = (chapter: (typeof chapters)[0]) => {
     if (isLocked(chapter)) {
-      // Afficher l'alerte pour les leçons verrouillées
       Alert.alert(
         'Coming Soon!',
         `${chapter.title} will be available soon !`,
@@ -123,15 +119,12 @@ export default function LearnScreen({ onBack }: any) {
         { cancelable: true }
       );
     } else {
-      // Naviguer vers l'AudioBookScreen pour les leçons disponibles
       navigation.navigate('AudioBookScreen', {
         title: chapter.title,
         jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
       });
     }
   };
-
-  // Fonction pour obtenir le style visuel des cartes verrouillées
   const getCardStyle = (chapter: (typeof chapters)[0]) => {
     if (isLocked(chapter)) {
       return {
@@ -145,7 +138,6 @@ export default function LearnScreen({ onBack }: any) {
     };
   };
 
-  // Fonction pour obtenir le style du texte selon l'état de verrouillage
   const getTextStyle = (chapter: (typeof chapters)[0], baseStyle: string) => {
     if (isLocked(chapter)) {
       return `${baseStyle} opacity-60`;
@@ -170,7 +162,6 @@ export default function LearnScreen({ onBack }: any) {
                     className={cardStyle.className}
                     style={{ opacity: cardStyle.opacity }}>
                     <View className="flex-row items-center">
-                      {/* Numéro du chapitre - centré horizontalement */}
                       <View className="mr-4 w-10 items-center justify-center">
                         <Text
                           className={getTextStyle(
@@ -181,7 +172,6 @@ export default function LearnScreen({ onBack }: any) {
                         </Text>
                       </View>
 
-                      {/* Contenu du chapitre */}
                       <View className="flex-1">
                         <Text
                           className={getTextStyle(
@@ -199,9 +189,7 @@ export default function LearnScreen({ onBack }: any) {
                         </Text>
                       </View>
 
-                      {/* Bouton play et cadenas */}
                       <View className="ml-3 flex-row items-center">
-                        {/* Cadenas pour les leçons verrouillées */}
                         {locked ? (
                           <View className="h-10 w-10 items-center justify-center">
                             <MaterialIcons
@@ -211,7 +199,6 @@ export default function LearnScreen({ onBack }: any) {
                             />
                           </View>
                         ) : (
-                          /* Icône play pour les leçons disponibles */
                           <View className="h-10 w-10 items-center justify-center">
                             <Ionicons name="play-circle" size={32} style={{ color: iconColor }} />
                           </View>

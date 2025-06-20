@@ -1,16 +1,37 @@
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import { useLayoutEffect, useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, Alert, Image } from 'react-native';
-import { useAppSelector } from 'shared/hooks';
+import { useLayoutEffect } from 'react';
+import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp, FadeInDown, SlideInLeft, SlideInRight } from 'react-native-reanimated';
+import { useAppSelector } from 'shared/hooks';
 
-export default function GuessWhoGame({ onBack }: any) {
+import { useGuessWhoGame } from '../hooks/useGuessWhoGame';
+
+interface GuessWhoGameProps {
+  onBack?: () => void;
+  numberOfQuestions?: number;
+}
+
+export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWhoGameProps) {
   const navigation = useNavigation();
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  // Dynamic colors based on your design
+  const {
+    gameFinished,
+    isLoading,
+    selectedAnswer,
+    showResult,
+    streak,
+    getCurrentQuestion,
+    getGameStats,
+    getEndMessage,
+    getProgress,
+    handleAnswer,
+    restartGame,
+    isAnswerCorrect,
+  } = useGuessWhoGame(numberOfQuestions);
+
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
   const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
@@ -22,190 +43,14 @@ export default function GuessWhoGame({ onBack }: any) {
   const incorrectColor = isDarkMode ? '#DC2626' : '#EF4444';
   const dangerColor = isDarkMode ? '#871515' : '#EF4444';
 
-  // Function to get zodiac sign image URL
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
     return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName}_${theme}.png`;
   };
 
-  // Zodiac signs data with their symbols and English names for images
-  const zodiacSigns = [
-    {
-      name: 'Aries',
-      englishName: 'aries',
-      symbol: '♈',
-      element: 'Fire',
-      dates: 'March 21 - April 19',
-    },
-    {
-      name: 'Taurus',
-      englishName: 'taurus',
-      symbol: '♉',
-      element: 'Earth',
-      dates: 'April 20 - May 20',
-    },
-    {
-      name: 'Gemini',
-      englishName: 'gemini',
-      symbol: '♊',
-      element: 'Air',
-      dates: 'May 21 - June 20',
-    },
-    {
-      name: 'Cancer',
-      englishName: 'cancer',
-      symbol: '♋',
-      element: 'Water',
-      dates: 'June 21 - July 22',
-    },
-    {
-      name: 'Leo',
-      englishName: 'leo',
-      symbol: '♌',
-      element: 'Fire',
-      dates: 'July 23 - August 22',
-    },
-    {
-      name: 'Virgo',
-      englishName: 'virgo',
-      symbol: '♍',
-      element: 'Earth',
-      dates: 'August 23 - September 22',
-    },
-    {
-      name: 'Libra',
-      englishName: 'libra',
-      symbol: '♎',
-      element: 'Air',
-      dates: 'September 23 - October 22',
-    },
-    {
-      name: 'Scorpio',
-      englishName: 'scorpio',
-      symbol: '♏',
-      element: 'Water',
-      dates: 'October 23 - November 21',
-    },
-    {
-      name: 'Sagittarius',
-      englishName: 'sagittarius',
-      symbol: '♐',
-      element: 'Fire',
-      dates: 'November 22 - December 21',
-    },
-    {
-      name: 'Capricorn',
-      englishName: 'capricorn',
-      symbol: '♑',
-      element: 'Earth',
-      dates: 'December 22 - January 19',
-    },
-    {
-      name: 'Aquarius',
-      englishName: 'aquarius',
-      symbol: '♒',
-      element: 'Air',
-      dates: 'January 20 - February 18',
-    },
-    {
-      name: 'Pisces',
-      englishName: 'pisces',
-      symbol: '♓',
-      element: 'Water',
-      dates: 'February 19 - March 20',
-    },
-  ];
-
-  // Game states
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [gameFinished, setGameFinished] = useState(false);
-  const [questions, setQuestions] = useState<any[]>([]);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [showResult, setShowResult] = useState(false);
-  const [streak, setStreak] = useState(0);
-  const [maxStreak, setMaxStreak] = useState(0);
-
   const goBack = () => {
     if (onBack) onBack();
     else navigation.goBack();
-  };
-
-  // Generate random questions
-  const generateQuestions = () => {
-    const shuffled = [...zodiacSigns].sort(() => Math.random() - 0.5);
-    const gameQuestions = shuffled.slice(0, 8).map((sign) => {
-      // Create 3 random wrong answers
-      const wrongAnswers = zodiacSigns
-        .filter((s) => s.name !== sign.name)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
-        .map((s) => s.name);
-
-      // Shuffle all answers
-      const allAnswers = [sign.name, ...wrongAnswers].sort(() => Math.random() - 0.5);
-
-      return {
-        ...sign,
-        answers: allAnswers,
-      };
-    });
-
-    setQuestions(gameQuestions);
-  };
-
-  // Initialize game
-  useEffect(() => {
-    generateQuestions();
-  }, []);
-
-  // Handle answer selection
-  const handleAnswer = (answer: string) => {
-    if (showResult) return;
-
-    setSelectedAnswer(answer);
-    setShowResult(true);
-
-    const isCorrect = answer === questions[currentQuestion].name;
-
-    if (isCorrect) {
-      setScore(score + 1);
-      setStreak(streak + 1);
-      setMaxStreak(Math.max(maxStreak, streak + 1));
-    } else {
-      setStreak(0);
-    }
-
-    // Move to next question after 1.5 seconds
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelectedAnswer(null);
-        setShowResult(false);
-      } else {
-        setGameFinished(true);
-      }
-    }, 1500);
-  };
-
-  // Restart game
-  const restartGame = () => {
-    setCurrentQuestion(0);
-    setScore(0);
-    setGameFinished(false);
-    setSelectedAnswer(null);
-    setShowResult(false);
-    setStreak(0);
-    generateQuestions();
-  };
-
-  // Get end message based on score
-  const getEndMessage = () => {
-    const percentage = (score / questions.length) * 100;
-    if (percentage === 100) return 'Perfect! Master astrologer!';
-    if (percentage >= 75) return 'Excellent! Great knowledge!';
-    if (percentage >= 50) return 'Well done! Keep learning!';
-    return 'Not bad! A little more practice!';
   };
 
   useLayoutEffect(() => {
@@ -228,7 +73,7 @@ export default function GuessWhoGame({ onBack }: any) {
     });
   }, [navigation, textColor]);
 
-  if (questions.length === 0) {
+  if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center" style={{ backgroundColor }}>
         <Text className="text-aref text-lg" style={{ color: textColor }}>
@@ -239,11 +84,13 @@ export default function GuessWhoGame({ onBack }: any) {
   }
 
   if (gameFinished) {
+    const stats = getGameStats();
+
     return (
       <View className="flex-1" style={{ backgroundColor }}>
         <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
           <Animated.View entering={FadeInUp.duration(600)} className="mt-8 items-center">
-            {/* Final score */}
+            {/* score final */}
             <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-6`}>
               <View className="mb-4">
                 <MaterialCommunityIcons name="trophy-award" size={64} color={iconColor} />
@@ -255,19 +102,19 @@ export default function GuessWhoGame({ onBack }: any) {
                 {getEndMessage()}
               </Text>
 
-              {/* Detailed statistics */}
+              {/* statistics detaillé */}
               <View className="w-full">
                 <View className="mb-3 flex-row items-center justify-between">
                   <Text className={`text-aref text-base ${textSecondary}`}>Final Score</Text>
                   <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
-                    {score}/{questions.length}
+                    {stats.score}/{getProgress().total}
                   </Text>
                 </View>
 
                 <View className="mb-3 flex-row items-center justify-between">
                   <Text className={`text-aref text-base ${textSecondary}`}>Percentage</Text>
                   <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
-                    {Math.round((score / questions.length) * 100)}%
+                    {stats.percentage}%
                   </Text>
                 </View>
 
@@ -275,7 +122,7 @@ export default function GuessWhoGame({ onBack }: any) {
                   <Text className={`text-aref text-base ${textSecondary}`}>Best Streak</Text>
                   <View className="flex-row items-center">
                     <Text className={`text-aref text-xl font-bold ${textPrimary} mr-2`}>
-                      {maxStreak}
+                      {stats.maxStreak}
                     </Text>
                     <MaterialCommunityIcons name="fire" size={20} color="#F97316" />
                   </View>
@@ -299,7 +146,7 @@ export default function GuessWhoGame({ onBack }: any) {
 
               <TouchableOpacity
                 onPress={goBack}
-                className={`w-full items-center rounded-2xl border-2 p-4`}
+                className="w-full items-center rounded-2xl border-2 p-4"
                 style={{ borderColor: textColor }}
                 activeOpacity={0.8}>
                 <Text className={`text-aref text-lg font-semibold ${textPrimary}`}>
@@ -313,7 +160,9 @@ export default function GuessWhoGame({ onBack }: any) {
     );
   }
 
-  const currentSign = questions[currentQuestion];
+  const currentSign = getCurrentQuestion();
+  const progress = getProgress();
+  const stats = getGameStats();
 
   return (
     <View className="flex-1" style={{ backgroundColor }}>
@@ -322,10 +171,12 @@ export default function GuessWhoGame({ onBack }: any) {
         <Animated.View entering={FadeInDown.duration(400)} className="mb-8">
           <View className="mb-4 flex-row items-center justify-between">
             <Text className={`text-aref text-lg ${textSecondary}`}>
-              Question {currentQuestion + 1}/{questions.length}
+              Question {progress.current}/{progress.total}
             </Text>
             <View className="flex-row items-center">
-              <Text className={`text-aref text-lg font-bold ${textPrimary} mr-2`}>{score}</Text>
+              <Text className={`text-aref text-lg font-bold ${textPrimary} mr-2`}>
+                {stats.score}
+              </Text>
               <MaterialIcons name="star" size={20} color={iconColor} />
               {streak > 1 && (
                 <View className="ml-2 flex-row items-center">
@@ -343,7 +194,7 @@ export default function GuessWhoGame({ onBack }: any) {
             <View
               className="h-full rounded-full"
               style={{
-                width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+                width: `${progress.percentage}%`,
                 backgroundColor: isDarkMode ? '#32221E' : '#F2EAE0',
               }}
             />
@@ -387,7 +238,7 @@ export default function GuessWhoGame({ onBack }: any) {
               let textStyle = `text-aref text-lg font-medium ${textPrimary}`;
 
               if (showResult && selectedAnswer === answer) {
-                if (answer === currentSign.name) {
+                if (isAnswerCorrect(answer)) {
                   buttonStyle = `w-full mt-2 rounded-2xl p-4 border-2`;
                   buttonStyle += ` border-green-500 bg-green-500/20`;
                 } else {
@@ -395,7 +246,7 @@ export default function GuessWhoGame({ onBack }: any) {
                 }
               }
 
-              if (showResult && answer === currentSign.name && selectedAnswer !== answer) {
+              if (showResult && isAnswerCorrect(answer) && selectedAnswer !== answer) {
                 buttonStyle = `w-full mt-2 rounded-2xl p-4 border-2 border-green-500 bg-green-500/10`;
               }
 
@@ -406,16 +257,16 @@ export default function GuessWhoGame({ onBack }: any) {
                     disabled={showResult}
                     activeOpacity={0.8}
                     className={buttonStyle}>
-                    <View className="flex-row  items-center justify-between">
+                    <View className="flex-row items-center justify-between">
                       <Text className={textStyle}>{answer}</Text>
                       {showResult && selectedAnswer === answer && (
                         <MaterialCommunityIcons
-                          name={answer === currentSign.name ? 'check-circle' : 'close-circle'}
+                          name={isAnswerCorrect(answer) ? 'check-circle' : 'close-circle'}
                           size={24}
-                          color={answer === currentSign.name ? correctColor : dangerColor}
+                          color={isAnswerCorrect(answer) ? correctColor : dangerColor}
                         />
                       )}
-                      {showResult && answer === currentSign.name && selectedAnswer !== answer && (
+                      {showResult && isAnswerCorrect(answer) && selectedAnswer !== answer && (
                         <MaterialCommunityIcons
                           name="check-circle"
                           size={24}
@@ -436,13 +287,13 @@ export default function GuessWhoGame({ onBack }: any) {
             <View
               className={`rounded-2xl p-4 ${cardBg} border ${borderColor} flex-row items-center`}>
               <MaterialCommunityIcons
-                name={selectedAnswer === currentSign.name ? 'party-popper' : 'close-circle-outline'}
+                name={isAnswerCorrect(selectedAnswer!) ? 'party-popper' : 'close-circle-outline'}
                 size={24}
-                color={selectedAnswer === currentSign.name ? correctColor : dangerColor}
+                color={isAnswerCorrect(selectedAnswer!) ? correctColor : dangerColor}
                 style={{ marginRight: 8 }}
               />
               <Text className={`text-aref text-center ${textPrimary} flex-1`}>
-                {selectedAnswer === currentSign.name
+                {isAnswerCorrect(selectedAnswer!)
                   ? `Correct! It's ${currentSign.name}`
                   : `Incorrect. It was ${currentSign.name}`}
               </Text>
