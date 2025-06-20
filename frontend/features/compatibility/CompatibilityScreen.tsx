@@ -75,7 +75,7 @@ export default function CompatibilityScreen() {
               Zodiac Sign Compatibility
             </Text>
             <Text className={`text-aref text-sm ${textSecondary}`}>
-              304 Reports delivered today
+              Know your Zodiac sign compability
             </Text>
           </View>
         </View>

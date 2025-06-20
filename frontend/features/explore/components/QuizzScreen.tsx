@@ -39,7 +39,7 @@ export default function QuizzScreen({ onBack }: any) {
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
               style={{ color: textColor }}>
-              Test Your Astrology Knowlege
+              Test your knowledge of Astrology
             </Text>
           </View>
         </TouchableOpacity>
@@ -52,61 +52,13 @@ export default function QuizzScreen({ onBack }: any) {
       id: '01',
       title: 'Quess Who Signs ?',
       duration: 'Test 1',
-      sign: 'aries', // Signe associé à chaque chapitre
+      sign: 'aries',
     },
     {
       id: '02',
-      title: 'Level 1: The Zodiac Signs',
+      title: 'Zodiac Memory',
       duration: 'Test 2',
       sign: 'taurus',
-    },
-    {
-      id: '03',
-      title: 'Level 1: The Planets and Their',
-      duration: 'Test 3',
-      sign: 'gemini',
-    },
-    {
-      id: '04',
-      title: 'Level 2: The Ascendant ',
-      duration: '',
-      sign: 'cancer',
-    },
-    {
-      id: '05',
-      title: 'Level 2: The Four Elements',
-      duration: '',
-      sign: 'leo',
-    },
-    {
-      id: '06',
-      title: 'Level 2: Planetary Aspects',
-      duration: '',
-      sign: 'virgo',
-    },
-    {
-      id: '07',
-      title: 'Level 3: Birth Chart Interpretation',
-      duration: '',
-      sign: 'libra',
-    },
-    {
-      id: '08',
-      title: 'Level 3: Synastry and Compatibility',
-      duration: '',
-      sign: 'scorpio',
-    },
-    {
-      id: '09',
-      title: 'Level 3: Planetary Transits',
-      duration: '',
-      sign: 'sagittarius',
-    },
-    {
-      id: '10',
-      title: 'Level 3: Retrogrades ',
-      duration: '',
-      sign: 'capricorn',
     },
   ];
 
@@ -118,8 +70,8 @@ export default function QuizzScreen({ onBack }: any) {
 
   // Fonction pour déterminer si un chapitre est verrouillé
   const isLocked = (chapter: (typeof chapters)[0]) => {
-    // Les leçons 01, 02, 03 sont disponibles - les autres sont verrouillées
-    const availableLessons = ['01', '02', '03'];
+    // Seule la leçon 01 est disponible - la 02 est verrouillée
+    const availableLessons = ['01'];
     return !availableLessons.includes(chapter.id);
   };
 

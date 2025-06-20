@@ -3,19 +3,32 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 import { useState, useLayoutEffect } from 'react';
-import { Text, TextInput, TouchableOpacity, View, Modal, Alert } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, Modal } from 'react-native';
+import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
 
-export default function ZodiacSignsCompatibility({ onBack }: any) {
-  const [username, setUsername] = useState('');
-  const [gender, setGender] = useState<string | null>(null);
-  const [showDateModal, setShowDateModal] = useState(false);
-  const [date, setDate] = useState(new Date());
+import CompatibilityResults from './CompatibilityResults';
+import { useZodiacCompatibility } from '../hooks/useZodiacCompatibility';
 
-  const formatDate = (d: Date) => d.toLocaleDateString();
+export default function ZodiacSignsCompatibility({ onBack }: any) {
+  const [showDateModal, setShowDateModal] = useState(false);
+
+  const {
+    username,
+    setUsername,
+    gender,
+    setGender,
+    date,
+    setDate,
+    showCompatibility,
+    partnerSign,
+    userSign,
+    compatibilityData,
+    handleCheckCompatibility,
+    resetCompatibility,
+  } = useZodiacCompatibility();
 
   const navigation = useNavigation();
-
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
@@ -34,6 +47,8 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
   const modalText = isDarkMode ? '#ffffff' : '#281109';
   const modalTint = isDarkMode ? 'dark' : 'light';
 
+  const formatDate = (d: Date) => d.toLocaleDateString();
+
   const goBack = () => {
     if (onBack) onBack();
     else navigation.goBack();
@@ -46,58 +61,76 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
       headerTitle: '',
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
-          <View className="flex-row gap-2">
-            <Ionicons name="arrow-back" size={24} style={{ color: textColor }} />
+          <View className="flex-row items-center gap-2">
+            <Ionicons name="chevron-back" size={24} color={textColor} />
             <Text
-              className="text-aref m-l-2 text-left text-xl font-bold"
+              className="text-aref ml-2 text-left text-xl font-bold"
               style={{ color: textColor }}>
-              Tell us about your beloved
+              {showCompatibility ? 'Compatibility Results' : 'Tell us about your beloved'}
             </Text>
           </View>
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, textColor, showCompatibility]);
+
+  // Affichage des résultats
+  if (showCompatibility && userSign && partnerSign) {
+    return (
+      <CompatibilityResults
+        userSign={userSign}
+        partnerSign={partnerSign}
+        username={username}
+        compatibilityData={compatibilityData}
+        onTryAnother={resetCompatibility}
+      />
+    );
+  }
 
   return (
     <View className="flex-1 items-center justify-center p-10" style={{ backgroundColor }}>
       <View className="flex-1 items-center justify-center gap-2">
         {/* Input Username */}
-        <TextInput
-          placeholder="Username"
-          placeholderTextColor={isDarkMode ? '#281109' : '#ffffff'}
-          value={username}
-          onChangeText={setUsername}
-          className={`text-aref w-64 rounded-lg border ${inputBg} ${textPrimary} ${borderColor} px-5 py-3`}
-        />
+        <Animated.View entering={SlideInLeft.duration(500)}>
+          <TextInput
+            placeholder="Username"
+            placeholderTextColor={isDarkMode ? '#281109' : '#ffffff'}
+            value={username}
+            onChangeText={setUsername}
+            className={`text-aref w-64 rounded-lg border ${inputBg} ${textPrimary} ${borderColor} px-5 py-3`}
+          />
+        </Animated.View>
 
         {/* Gender */}
-        <View className="mt-4 flex-row justify-center gap-4">
-          {['Male', 'Female', 'Other'].map((option) => {
-            const iconName =
-              option === 'Female'
-                ? 'female-sharp'
-                : option === 'Other'
-                  ? 'male-female-sharp'
-                  : 'male';
-            const isSelected = gender === option;
-            return (
-              <TouchableOpacity
-                key={option}
-                onPress={() => setGender(option)}
-                className={`rounded-md border px-4 py-2 ${isSelected ? buttonBg : inputBg} items-center`}>
-                <Ionicons name={iconName} size={40} color={isSelected ? '#BFB0A7' : 'white'} />
-                <Text
-                  className={`text-aref mt-1 font-bold ${isSelected ? 'text-[#BFB0A7]' : 'text-white'}`}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <Animated.View entering={SlideInRight.duration(600)} className="mt-4">
+          <View className="flex-row justify-center gap-4">
+            {['Male', 'Female', 'Other'].map((option, index) => {
+              const iconName =
+                option === 'Female'
+                  ? 'female-sharp'
+                  : option === 'Other'
+                    ? 'male-female-sharp'
+                    : 'male';
+              const isSelected = gender === option;
+              return (
+                <Animated.View key={option} entering={FadeInUp.delay(index * 100).duration(400)}>
+                  <TouchableOpacity
+                    onPress={() => setGender(option)}
+                    className={`rounded-md border px-4 py-2 ${isSelected ? buttonBg : inputBg} items-center`}>
+                    <Ionicons name={iconName} size={40} color={isSelected ? '#BFB0A7' : 'white'} />
+                    <Text
+                      className={`text-aref mt-1 font-bold ${isSelected ? 'text-[#BFB0A7]' : 'text-white'}`}>
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                </Animated.View>
+              );
+            })}
+          </View>
+        </Animated.View>
 
         {/* Date of birth */}
-        <View className="mt-6">
+        <Animated.View entering={SlideInLeft.duration(700)} className="mt-6">
           <TouchableOpacity
             className={`w-64 rounded-lg border ${cardBg} ${borderColor} px-5 py-3`}
             onPress={() => setShowDateModal(true)}>
@@ -105,20 +138,22 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
               {formatDate(date)}
             </Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
 
         {/* Confirm Button */}
-        <View className="mt-4 rounded-full border-2 border-stone-600 p-2">
-          <TouchableOpacity
-            onPress={() => Alert.alert('coming soon!')}
-            activeOpacity={0.8}
-            className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${buttonBg} py-2 shadow-md shadow-light-text2`}>
-            <Text
-              className={`text-aref text-center text-base font-bold tracking-wide ${buttonText}`}>
-              Confirm
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Animated.View entering={FadeInUp.duration(800)} className="mt-4">
+          <View className="rounded-full border-2 border-stone-600 p-2">
+            <TouchableOpacity
+              onPress={handleCheckCompatibility}
+              activeOpacity={0.8}
+              className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${buttonBg} py-2 shadow-md shadow-light-text2`}>
+              <Text
+                className={`text-aref text-center text-base font-bold tracking-wide ${buttonText}`}>
+                Check Compatibility
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
       </View>
 
       {/* Modal Date Picker */}
@@ -127,7 +162,7 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
           <View className="rounded-t-2xl p-4" style={{ backgroundColor: modalBg }}>
             <View className="flex-row items-center justify-between">
               <Text className="text-lg font-bold" style={{ color: modalText }}>
-                Choose Your Date of Birth
+                Choose Date of Birth
               </Text>
               <TouchableOpacity onPress={() => setShowDateModal(false)}>
                 <Text className="text-xl" style={{ color: modalText }}>
@@ -146,7 +181,7 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
               style={{ backgroundColor: modalBg }}
             />
             <TouchableOpacity
-              className={`my-2 items-center rounded-full  py-3 ${bgButton} ${buttonTextColor}`}
+              className={`my-2 items-center rounded-full py-3 ${bgButton} ${buttonTextColor}`}
               onPress={() => setShowDateModal(false)}>
               <Text className="font-bold text-[#281109]">Confirm</Text>
             </TouchableOpacity>
