@@ -43,7 +43,10 @@ export default function SignUpScreen({ navigation }: any) {
     try {
       const lat = selectedPlace.lat;
       const lon = selectedPlace.lon;
-      const res = await fetch(`http://localhost:4000/api/timezone?lat=${lat}&lon=${lon}`);
+      const res = await fetch(
+        `https://astro-app-eight-chi.vercel.app/api/timezone?lat=${lat}&lon=${lon}`
+      );
+
       const tzData = await res.json();
       if (!res.ok) throw new Error(tzData.error || 'Failed to get timezone');
       const { name: timezoneName, timezone: timezoneOffset } = tzData;

@@ -105,7 +105,7 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
             <TouchableOpacity
               className={`my-2 items-center rounded-full  py-3 ${bgButton} ${buttonTextColor}`}
               onPress={() => setShowDateModal(false)}>
-              <Text className="font-bold text-[#281109]">Confirm</Text>
+              <Text className={`font-bold  ${textSecondary}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>
@@ -140,7 +140,7 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
             <TouchableOpacity
               className={`my-2 items-center rounded-full  py-3 ${bgButton} ${buttonTextColor}`}
               onPress={() => setShowTimeModal(false)}>
-              <Text className="font-bold text-[#281109]">Confirm</Text>
+              <Text className={`font-bold  ${textSecondary}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>

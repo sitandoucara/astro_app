@@ -22,7 +22,7 @@ export const generateChart = async (user: UserAstroData) => {
 
     console.log('Generating chart for user:', user.id);
 
-    const response = await fetch('http://localhost:4000/api/chart/generate-complete', {
+    const response = await fetch('https://astro-app-eight-chi.vercel.app/api/generate-complete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user),
