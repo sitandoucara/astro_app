@@ -1,6 +1,14 @@
-import { supabase } from 'shared/lib/supabase';
-import { clearUser, setUser } from './AuthSlice';
 import { AppDispatch } from 'app/store';
+import { generateChart } from 'features/chart/services/GenerateChart';
+import { supabase } from 'shared/lib/supabase';
+
+import {
+  clearUser,
+  setUser,
+  setLoading,
+  setGeneratingChart,
+  updateUserMetadata,
+} from './AuthSlice';
 
 export const signUp = async (
   email: string,
@@ -33,7 +41,7 @@ export const signUp = async (
     },
   });
 
-  console.log('📤 Signup payload:', {
+  console.log('Signup payload:', {
     username,
     dateOfBirth: dateOfBirth.toISOString(),
     timeOfBirth: timeOfBirth.toISOString(),
@@ -55,38 +63,90 @@ export const signUp = async (
 };
 
 export const signIn = async (email: string, password: string, dispatch: AppDispatch) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  try {
+    dispatch(setLoading(true));
 
-  if (data?.session && data.user) {
-    const metadata = data.user.user_metadata || {};
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    dispatch(
-      setUser({
-        user: {
+    if (error) {
+      dispatch(setLoading(false));
+      return { data, error };
+    }
+
+    if (data?.session && data.user) {
+      const metadata = data.user.user_metadata || {};
+
+      dispatch(
+        setUser({
+          user: {
+            id: data.user.id,
+            email: data.user.email ?? '',
+            username: metadata.username ?? '',
+            dateOfBirth: metadata.dateOfBirth,
+            timeOfBirth: metadata.timeOfBirth,
+            birthplace: metadata.birthplace,
+            latitude: metadata.latitude,
+            longitude: metadata.longitude,
+            timezoneName: metadata.timezoneName,
+            timezoneOffset: metadata.timezoneOffset,
+            gender: metadata.gender,
+            birthChartUrl: metadata.birthChartUrl,
+            planets: metadata.planets,
+            ascendant: metadata.ascendant,
+          },
+          token: data.session.access_token,
+        })
+      );
+
+      if (!metadata.birthChartUrl) {
+        console.log('BirthChart manquant, génération en cours...');
+        dispatch(setGeneratingChart(true));
+
+        const chartPayload = {
           id: data.user.id,
-          email: data.user.email ?? '',
-          username: metadata.username ?? '',
           dateOfBirth: metadata.dateOfBirth,
           timeOfBirth: metadata.timeOfBirth,
-          birthplace: metadata.birthplace,
           latitude: metadata.latitude,
           longitude: metadata.longitude,
-          timezoneName: metadata.timezoneName,
           timezoneOffset: metadata.timezoneOffset,
-          gender: metadata.gender,
-          birthChartUrl: metadata.birthChartUrl,
-          planets: metadata.planets,
-          ascendant: metadata.ascendant,
-        },
-        token: data.session.access_token,
-      })
-    );
-  }
+        };
 
-  return { data, error };
+        try {
+          await generateChart(chartPayload);
+
+          console.log('Chart généré, rafraîchissement des données...');
+
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          const { data: refreshedSession } = await supabase.auth.refreshSession();
+
+          if (refreshedSession?.user) {
+            const updatedMetadata = refreshedSession.user.user_metadata || {};
+
+            dispatch(
+              updateUserMetadata({
+                birthChartUrl: updatedMetadata.birthChartUrl,
+                planets: updatedMetadata.planets,
+                ascendant: updatedMetadata.ascendant,
+              })
+            );
+          }
+        } catch (chartError: any) {
+          console.error('Erreur génération chart:', chartError.message);
+        } finally {
+          dispatch(setGeneratingChart(false));
+        }
+      }
+    }
+
+    return { data, error };
+  } catch (error: any) {
+    dispatch(setLoading(false));
+    return { data: null, error };
+  }
 };
 
 export const logout = async (dispatch: AppDispatch) => {

@@ -33,6 +33,10 @@ export default function SessionGate() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const dispatch = useDispatch();
 
+  // Récupérer les états de loading depuis Redux
+  const authLoading = useAppSelector((state) => state.auth.isLoading);
+  const isGeneratingChart = useAppSelector((state) => state.auth.isGeneratingChart);
+
   useEffect(() => {
     AppState.addEventListener('change', (state) => {
       if (state === 'active') {
@@ -141,7 +145,7 @@ export default function SessionGate() {
     };
   }, [dispatch]);
 
-  if (loading) {
+  if (loading || authLoading || isGeneratingChart) {
     return <LoadingScreen />;
   }
 

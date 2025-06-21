@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { generateChart } from 'features/chart/GenerateChart';
+import { setLoading, setGeneratingChart } from 'features/auth/AuthSlice';
+import { generateChart } from 'features/chart/services/GenerateChart';
 import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -32,10 +33,14 @@ export default function SignInScreen({ navigation }: any) {
 
   const handleLogin = async () => {
     console.log('Connexion en cours...');
+    dispatch(setLoading(true));
+
     const { data, error } = await signIn(email, password, dispatch);
 
     if (error) {
       console.log('Erreur de connexion:', error.message);
+
+      dispatch(setLoading(false));
       alert(error.message);
       return;
     }
@@ -45,8 +50,9 @@ export default function SignInScreen({ navigation }: any) {
 
     if (user && !user.user_metadata?.birthChartUrl) {
       console.log('BirthChart manquant, génération...');
-      const metadata = user.user_metadata;
+      dispatch(setGeneratingChart(true));
 
+      const metadata = user.user_metadata;
       const chartPayload = {
         id: user.id,
         dateOfBirth: metadata.dateOfBirth,
@@ -56,8 +62,21 @@ export default function SignInScreen({ navigation }: any) {
         timezoneOffset: metadata.timezoneOffset,
       };
 
-      await generateChart(chartPayload);
+      try {
+        await generateChart(chartPayload);
+        console.log('Chart généré avec succès');
+
+        await supabase.auth.refreshSession();
+      } catch (chartError: any) {
+        console.error('Erreur génération chart:', chartError.message);
+      }
     }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    dispatch(setLoading(false));
+    dispatch(setGeneratingChart(false));
+
     await supabase.auth.getSession();
   };
 

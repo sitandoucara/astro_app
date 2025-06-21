@@ -1,11 +1,9 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function ChartScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
