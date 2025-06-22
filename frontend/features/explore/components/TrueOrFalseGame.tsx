@@ -1,0 +1,341 @@
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import { useLayoutEffect } from 'react';
+import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import Animated, {
+  FadeInUp,
+  FadeInDown,
+  SlideInLeft,
+  SlideInRight,
+  BounceIn,
+} from 'react-native-reanimated';
+import { useAppSelector } from 'shared/hooks';
+
+import { useTrueOrFalseGame } from '../hooks/useTrueOrFalseGame';
+
+interface TrueOrFalseGameProps {
+  onBack?: () => void;
+  numberOfQuestions?: number;
+}
+
+export default function TrueOrFalseGame({ onBack, numberOfQuestions = 10 }: TrueOrFalseGameProps) {
+  const navigation = useNavigation();
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const {
+    gameFinished,
+    isLoading,
+    selectedAnswer,
+    showResult,
+    streak,
+    getCurrentQuestion,
+    getGameStats,
+    getEndMessage,
+    getProgress,
+    handleAnswer,
+    restartGame,
+    isAnswerCorrect,
+  } = useTrueOrFalseGame(numberOfQuestions);
+
+  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
+  const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
+  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
+  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
+  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
+  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
+  const correctColor = isDarkMode ? '#16A34A' : '#22C55E';
+  const dangerColor = isDarkMode ? '#871515' : '#EF4444';
+
+  const goBack = () => {
+    if (onBack) onBack();
+    else navigation.goBack();
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTransparent: true,
+      headerTitle: '',
+      headerLeft: () => (
+        <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
+          <View className="flex-row items-center gap-2">
+            <Ionicons name="chevron-back" size={24} color={textColor} />
+            <Text
+              className="text-aref ml-2 text-left text-xl font-bold"
+              style={{ color: textColor }}>
+              True or False
+            </Text>
+          </View>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, textColor]);
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 items-center justify-center" style={{ backgroundColor }}>
+        <Animated.View entering={BounceIn.duration(800)}>
+          <MaterialCommunityIcons name="star-four-points" size={48} color={iconColor} />
+        </Animated.View>
+        <Text className="text-aref mt-4 text-lg" style={{ color: textColor }}>
+          Preparing questions...
+        </Text>
+      </View>
+    );
+  }
+
+  if (gameFinished) {
+    const stats = getGameStats();
+
+    return (
+      <View className="flex-1" style={{ backgroundColor }}>
+        <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
+          <Animated.View entering={FadeInUp.duration(600)} className="mt-8 items-center">
+            {/* Final score */}
+            <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-6`}>
+              <Animated.View entering={BounceIn.delay(200).duration(800)} className="mb-4">
+                <MaterialCommunityIcons name="trophy-award" size={64} color={iconColor} />
+              </Animated.View>
+              <Text className={`text-aref mb-2 text-2xl font-bold ${textPrimary}`}>
+                Game Complete!
+              </Text>
+              <Text className={`text-aref mb-4 text-lg ${textSecondary} text-center`}>
+                {getEndMessage()}
+              </Text>
+
+              {/* Detailed statistics */}
+              <View className="w-full">
+                <View className="mb-3 flex-row items-center justify-between">
+                  <Text className={`text-aref text-base ${textSecondary}`}>Final Score</Text>
+                  <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
+                    {stats.score}/{getProgress().total}
+                  </Text>
+                </View>
+
+                <View className="mb-3 flex-row items-center justify-between">
+                  <Text className={`text-aref text-base ${textSecondary}`}>Percentage</Text>
+                  <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
+                    {stats.percentage}%
+                  </Text>
+                </View>
+
+                <View className="mb-3 flex-row items-center justify-between">
+                  <Text className={`text-aref text-base ${textSecondary}`}>Best Streak</Text>
+                  <View className="flex-row items-center">
+                    <Text className={`text-aref text-xl font-bold ${textPrimary} mr-2`}>
+                      {stats.maxStreak}
+                    </Text>
+                    <MaterialCommunityIcons name="fire" size={20} color="#F97316" />
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            {/* Btn action */}
+            <View className="w-full space-y-4">
+              <Animated.View entering={SlideInLeft.delay(400).duration(500)}>
+                <TouchableOpacity
+                  onPress={restartGame}
+                  className={`w-full items-center rounded-2xl p-4 ${cardBg} border ${borderColor}`}
+                  activeOpacity={0.8}>
+                  <View className="flex-row items-center">
+                    <MaterialIcons name="refresh" size={24} color={iconColor} />
+                    <Text className={`text-aref ml-3 text-lg font-semibold ${textPrimary}`}>
+                      Play Again
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </Animated.View>
+
+              <Animated.View entering={SlideInRight.delay(500).duration(500)}>
+                <TouchableOpacity
+                  onPress={goBack}
+                  className="w-full items-center rounded-2xl border-2 p-4"
+                  style={{ borderColor: textColor }}
+                  activeOpacity={0.8}>
+                  <Text className={`text-aref text-lg font-semibold ${textPrimary}`}>
+                    Back to Menu
+                  </Text>
+                </TouchableOpacity>
+              </Animated.View>
+            </View>
+          </Animated.View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  const currentQuestion = getCurrentQuestion();
+  const progress = getProgress();
+  const stats = getGameStats();
+
+  return (
+    <View className="flex-1" style={{ backgroundColor }}>
+      <ScrollView className="mt-4 flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
+        {/* Header with progression */}
+        <Animated.View entering={FadeInDown.duration(400)} className="mb-8">
+          <View className="mb-4 flex-row items-center justify-between">
+            <Text className={`text-aref text-lg ${textPrimary}`}>
+              Question {progress.current}/{progress.total}
+            </Text>
+            <View className="flex-row items-center">
+              <Text className={`text-aref text-lg font-bold ${textPrimary} mr-2`}>
+                {stats.score}
+              </Text>
+              <MaterialIcons name="star" size={20} color={iconColor} />
+              {streak > 1 && (
+                <Animated.View
+                  entering={BounceIn.duration(300)}
+                  className="ml-2 flex-row items-center">
+                  <MaterialCommunityIcons name="fire" size={16} color="#F97316" />
+                  <Text className={`text-aref ml-1 text-sm ${textPrimary}`}>{streak}</Text>
+                </Animated.View>
+              )}
+            </View>
+          </View>
+
+          {/* Progress bar */}
+          <View
+            className={`h-2 w-full rounded-full border ${borderColor}`}
+            style={{ backgroundColor: isDarkMode ? '#D8D3D0' : '#544A46' }}>
+            <Animated.View
+              className="h-full rounded-full"
+              style={{
+                width: `${progress.percentage}%`,
+                backgroundColor: isDarkMode ? '#32221E' : '#F2EAE0',
+              }}
+            />
+          </View>
+        </Animated.View>
+
+        {/* Main question */}
+        <Animated.View entering={SlideInLeft.duration(500)} className="mb-8">
+          <View className={`rounded-3xl p-8 ${cardBg} border ${borderColor}`}>
+            <View className="mb-6 items-center">
+              <MaterialCommunityIcons
+                name="help-circle-outline"
+                size={48}
+                color={iconColor}
+                style={{ marginBottom: 16 }}
+              />
+            </View>
+
+            <Text className={`text-aref text-xl font-medium ${textPrimary} text-center leading-7`}>
+              {currentQuestion.question}
+            </Text>
+
+            {/* Category */}
+            <View className="mt-4 items-center">
+              <View className={`rounded-full px-3 py-1 ${cardBg} border ${borderColor}`}>
+                <Text className={`text-aref text-xs ${textSecondary} uppercase tracking-wide`}>
+                  {currentQuestion.category}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </Animated.View>
+
+        {/* Btns True/False */}
+        <Animated.View entering={SlideInRight.duration(500)} className="mb-8">
+          <View className="space-y-4">
+            {/* Btn TRUE */}
+            <Animated.View entering={FadeInUp.delay(100).duration(400)}>
+              <TouchableOpacity
+                onPress={() => handleAnswer(true)}
+                disabled={showResult}
+                activeOpacity={0.8}
+                className={`mb-2 w-full rounded-2xl border p-6 ${borderColor} ${
+                  showResult && selectedAnswer === true
+                    ? isAnswerCorrect(true)
+                      ? 'border-green-500 bg-green-500/20'
+                      : 'border-red-500 bg-red-500/20'
+                    : showResult && currentQuestion.answer === true
+                      ? 'border-green-500 bg-green-500/10'
+                      : cardBg
+                }`}>
+                <View className="flex-row items-center justify-center">
+                  <Text className={`text-aref text-2xl font-bold ${textPrimary}`}>TRUE</Text>
+                  {showResult && selectedAnswer === true && (
+                    <Animated.View entering={BounceIn.duration(300)} style={{ marginLeft: 12 }}>
+                      <MaterialCommunityIcons
+                        name={isAnswerCorrect(true) ? 'check-circle' : 'close-circle'}
+                        size={24}
+                        color={isAnswerCorrect(true) ? correctColor : dangerColor}
+                      />
+                    </Animated.View>
+                  )}
+                  {showResult && currentQuestion.answer === true && selectedAnswer !== true && (
+                    <Animated.View entering={BounceIn.duration(300)} style={{ marginLeft: 12 }}>
+                      <MaterialCommunityIcons name="check-circle" size={24} color={correctColor} />
+                    </Animated.View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </Animated.View>
+
+            {/* Btn FALSE */}
+            <Animated.View entering={FadeInUp.delay(200).duration(400)}>
+              <TouchableOpacity
+                onPress={() => handleAnswer(false)}
+                disabled={showResult}
+                activeOpacity={0.8}
+                className={`w-full rounded-2xl border p-6 ${borderColor} ${
+                  showResult && selectedAnswer === false
+                    ? isAnswerCorrect(false)
+                      ? 'border-green-500 bg-green-500/20'
+                      : 'border-red-500 bg-red-500/20'
+                    : showResult && currentQuestion.answer === false
+                      ? 'border-green-500 bg-green-500/10'
+                      : cardBg
+                }`}>
+                <View className="flex-row items-center justify-center">
+                  <Text className={`text-aref text-2xl font-bold ${textPrimary}`}>FALSE</Text>
+                  {showResult && selectedAnswer === false && (
+                    <Animated.View entering={BounceIn.duration(300)} style={{ marginLeft: 12 }}>
+                      <MaterialCommunityIcons
+                        name={isAnswerCorrect(false) ? 'check-circle' : 'close-circle'}
+                        size={24}
+                        color={isAnswerCorrect(false) ? correctColor : dangerColor}
+                      />
+                    </Animated.View>
+                  )}
+                  {showResult && currentQuestion.answer === false && selectedAnswer !== false && (
+                    <Animated.View entering={BounceIn.duration(300)} style={{ marginLeft: 12 }}>
+                      <MaterialCommunityIcons name="check-circle" size={24} color={correctColor} />
+                    </Animated.View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
+        </Animated.View>
+
+        {/* Msg feedback */}
+        {showResult && (
+          <Animated.View entering={FadeInUp.duration(300)} className="mb-8">
+            <View className={`rounded-2xl p-4 ${cardBg} border ${borderColor}`}>
+              <View className="flex-row items-start">
+                <MaterialCommunityIcons
+                  name={isAnswerCorrect(selectedAnswer!) ? 'party-popper' : 'information-outline'}
+                  size={24}
+                  color={isAnswerCorrect(selectedAnswer!) ? correctColor : iconColor}
+                  style={{ marginRight: 12, marginTop: 2 }}
+                />
+                <View className="flex-1">
+                  <Text className={`text-aref font-semibold ${textPrimary} mb-2`}>
+                    {isAnswerCorrect(selectedAnswer!) ? 'Correct!' : 'Incorrect!'}
+                  </Text>
+                  <Text className={`text-aref ${textSecondary} leading-5`}>
+                    {currentQuestion.explanation}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Animated.View>
+        )}
+      </ScrollView>
+    </View>
+  );
+}

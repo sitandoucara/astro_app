@@ -126,7 +126,7 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
       const wrongAnswers = zodiacSigns
         .filter((s) => s.name !== sign.name)
         .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
+        .slice(0, 2)
         .map((s) => s.name);
 
       const allAnswers = [sign.name, ...wrongAnswers].sort(() => Math.random() - 0.5);
@@ -175,7 +175,6 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
     }, 1500);
   };
 
-  // Restart le jeu
   const restartGame = () => {
     setCurrentQuestion(0);
     setScore(0);
@@ -186,7 +185,6 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
     generateQuestions();
   };
 
-  // Calculate game statistics
   const getGameStats = (): GameStats => ({
     score,
     streak,
@@ -194,7 +192,6 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
     percentage: questions.length > 0 ? Math.round((score / questions.length) * 100) : 0,
   });
 
-  // Get end message based on score
   const getEndMessage = () => {
     const percentage = getGameStats().percentage;
     if (percentage === 100) return 'Perfect! Master astrologer!';
@@ -203,15 +200,12 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
     return 'Not bad! A little more practice!';
   };
 
-  // Get current question data
   const getCurrentQuestion = () => questions[currentQuestion];
 
-  // Check if answer is correct
   const isAnswerCorrect = (answer: string) => {
     return answer === questions[currentQuestion]?.name;
   };
 
-  // Game progress
   const getProgress = () => ({
     current: currentQuestion + 1,
     total: questions.length,

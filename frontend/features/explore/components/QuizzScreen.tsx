@@ -50,28 +50,37 @@ export default function QuizzScreen({ onBack }: any) {
   const chapters = [
     {
       id: '01',
-      title: 'Quess Who Signs ?',
+      title: 'Guess Who Signs ?',
       duration: 'Test 1',
       sign: 'aries',
+      icon: 'gamepad-variant',
     },
     {
       id: '02',
-      title: 'Zodiac Memory',
+      title: 'True or False',
       duration: 'Test 2',
       sign: 'taurus',
+      icon: 'help-circle',
+    },
+    {
+      id: '03',
+      title: 'Astro Memory',
+      duration: 'Test 3',
+      sign: 'gemini',
+      icon: 'cards',
     },
   ];
 
   // Fonction pour obtenir l'URL de l'image du signe
   const getSignImageUrl = (signName: string) => {
-    const theme = isDarkMode ? 'dark' : 'light'; // Inverse car isDarkMode est inversé dans votre logique
+    const theme = isDarkMode ? 'dark' : 'light';
     return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName}_${theme}.png`;
   };
 
   // Fonction pour déterminer si un chapitre est verrouillé
   const isLocked = (chapter: (typeof chapters)[0]) => {
-    // Seule la leçon 01 est disponible - la 02 est verrouillée
-    const availableLessons = ['01'];
+    // Les leçons 01 et 02 sont disponibles - la 03 est verrouillée
+    const availableLessons = ['01', '02'];
     return !availableLessons.includes(chapter.id);
   };
 
@@ -91,8 +100,12 @@ export default function QuizzScreen({ onBack }: any) {
         { cancelable: true }
       );
     } else {
-      // Naviguer vers l'AudioBookScreen pour les leçons disponibles
-      navigation.navigate('GuessWhoGame');
+      // Naviguer vers le bon jeu selon l'ID
+      if (chapter.id === '01') {
+        navigation.navigate('GuessWhoGame');
+      } else if (chapter.id === '02') {
+        navigation.navigate('TrueOrFalseGame');
+      }
     }
   };
 

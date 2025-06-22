@@ -10,6 +10,7 @@ import AudioBookScreen from 'features/explore/components/AudioBookScreen';
 import GuessWhoGame from 'features/explore/components/GuessWhoGame';
 import LearnScreen from 'features/explore/components/LearnScreen';
 import QuizzScreen from 'features/explore/components/QuizzScreen';
+import TrueOrFalseGame from 'features/explore/components/TrueOrFalseGame';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
@@ -163,6 +164,7 @@ export default function SessionGate() {
               <Stack.Screen name="AudioBookScreen" component={AudioBookScreen} />
               <Stack.Screen name="GuessWhoGame" component={GuessWhoGame} />
               <Stack.Screen name="QuizzScreen" component={QuizzScreen} />
+              <Stack.Screen name="TrueOrFalseGame" component={TrueOrFalseGame} />
             </>
           ) : (
             <>

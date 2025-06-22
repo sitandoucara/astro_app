@@ -35,13 +35,11 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
 
   const wordsRef = useRef<WordWithTimestamp[]>([]);
 
-  // Fonction pour extraire l'ID de la leçon depuis l'URL JSON
   const extractLessonId = (jsonUrl: string): string => {
     const match = jsonUrl.match(/lesson_(\d+)\.json/);
     return match ? match[1] : '01';
   };
 
-  // Fonction pour construire l'URL audio dynamiquement
   const getAudioUrl = (jsonUrl: string): string => {
     const lessonId = extractLessonId(jsonUrl);
     const baseUrl =
@@ -49,7 +47,6 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
     return `${baseUrl}lesson_${lessonId}_female.mp3`;
   };
 
-  // Fonction pour créer la structure des mots avec timestamps
   const createWordsWithTimestamps = (textBlocks: TextBlock[], totalDuration: number) => {
     const words: WordWithTimestamp[] = [];
     const lessonId = extractLessonId(jsonUrl);
@@ -85,7 +82,6 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
     return words;
   };
 
-  // Fonction pour trouver l'index du mot actuel
   const findCurrentWordIndex = (time: number, words: WordWithTimestamp[]) => {
     if (!words.length) return -1;
 
@@ -148,7 +144,6 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
     }
   };
 
-  // Créer la structure des mots avec timestamps
   useEffect(() => {
     if (chapterData && duration > 0) {
       const words = createWordsWithTimestamps(chapterData.text, duration);
@@ -157,7 +152,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
     }
   }, [chapterData, duration, jsonUrl]);
 
-  // Charger l'audio
+  // load sound
   useEffect(() => {
     let isMounted = true;
 

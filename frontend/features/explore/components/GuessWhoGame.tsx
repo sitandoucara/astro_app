@@ -166,11 +166,11 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
 
   return (
     <View className="flex-1" style={{ backgroundColor }}>
-      <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
+      <ScrollView className="mt-4 flex-1  px-5 pt-24" showsVerticalScrollIndicator={false}>
         {/* Header with progress */}
         <Animated.View entering={FadeInDown.duration(400)} className="mb-8">
           <View className="mb-4 flex-row items-center justify-between">
-            <Text className={`text-aref text-lg ${textSecondary}`}>
+            <Text className={`text-aref text-lg ${textPrimary}`}>
               Question {progress.current}/{progress.total}
             </Text>
             <View className="flex-row items-center">

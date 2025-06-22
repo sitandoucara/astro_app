@@ -10,4 +10,5 @@ export type RootStackParamList = {
   AudioBookScreen: { title: string; jsonUrl: string };
   GuessWhoGame: undefined;
   QuizzScreen: undefined;
+  TrueOrFalseGame: undefined;
 };
