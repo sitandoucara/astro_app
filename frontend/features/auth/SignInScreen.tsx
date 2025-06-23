@@ -47,7 +47,6 @@ export default function SignInScreen({ navigation }: any) {
   const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
-    console.log('Connexion en cours...');
     dispatch(setLoading(true));
 
     const { data, error } = await signIn(email, password, dispatch);
@@ -61,10 +60,10 @@ export default function SignInScreen({ navigation }: any) {
     }
 
     const user = data?.user;
-    console.log('Connexion réussie:', user);
+    console.log('Connection successful:', user);
 
     if (user && !user.user_metadata?.birthChartUrl) {
-      console.log('BirthChart manquant, génération...');
+      console.log('Missing BirthChart, generation...');
       dispatch(setGeneratingChart(true));
 
       const metadata = user.user_metadata;
@@ -79,11 +78,11 @@ export default function SignInScreen({ navigation }: any) {
 
       try {
         await generateChart(chartPayload);
-        console.log('Chart généré avec succès');
+        console.log('Chart generated successfully');
 
         await supabase.auth.refreshSession();
       } catch (chartError: any) {
-        console.error('Erreur génération chart:', chartError.message);
+        console.error('Chart generation error:', chartError.message);
       }
     }
 

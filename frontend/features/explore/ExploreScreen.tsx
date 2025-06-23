@@ -32,6 +32,7 @@ export default function ExploreScreen() {
 
   return (
     <View className="flex-1 items-center justify-center px-2" style={{ backgroundColor }}>
+      {/* Learn */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('LearnScreen')}
@@ -43,19 +44,19 @@ export default function ExploreScreen() {
             </View>
           </View>
 
-          <View className="">
+          <View>
             <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>Learn</Text>
             <Text className={`text-aref text-sm ${textSecondary}`}>Discover Astrology</Text>
           </View>
         </View>
       </TouchableOpacity>
 
+      {/* Test & Quiz */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('QuizzScreen')}
         className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
-        <View className="  justify-center">
-          {/* Header avec les 2 grandes icones */}
+        <View className="justify-center">
           <View className="h-16 w-16 items-center justify-center ">
             <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
               <MaterialCommunityIcons
@@ -65,9 +66,7 @@ export default function ExploreScreen() {
               />
             </View>
           </View>
-
-          {/* Texte centré */}
-          <View className="">
+          <View>
             <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
               Test & Quiz
             </Text>
@@ -78,20 +77,19 @@ export default function ExploreScreen() {
         </View>
       </TouchableOpacity>
 
+      {/*Mini books */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
         className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
-        <View className="  justify-center">
-          {/* Header avec les 2 grandes icones */}
+        <View className="justify-center">
           <View className="h-16 w-16 items-center justify-center ">
             <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
               <MaterialCommunityIcons name="book" size={20} style={{ color: iconColor }} />
             </View>
           </View>
 
-          {/* Texte centré */}
-          <View className="">
+          <View>
             <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
               Mini-books
             </Text>

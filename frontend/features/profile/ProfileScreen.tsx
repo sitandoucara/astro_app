@@ -33,7 +33,6 @@ export default function ProfileScreen() {
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  // Utilisation du hook pour récupérer le signe
   const { userSign } = useZodiacCompatibility();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -62,14 +61,12 @@ export default function ProfileScreen() {
     },
   };
 
-  // Fonction pour récupérer l'image du signe dynamiquement
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
     return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName.toLowerCase()}_${theme}.png`;
   };
 
-  // Image du signe de l'utilisateur (fallback sur virgo si pas de signe)
-  const currentUserSign = userSign || 'Virgo'; // Utilisation du userSign du hook
+  const currentUserSign = userSign || 'Virgo';
   const signImage = getSignImageUrl(currentUserSign);
 
   type SettingItemProps = {

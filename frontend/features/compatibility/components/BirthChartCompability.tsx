@@ -47,9 +47,6 @@ export default function BirthChartCompability({ onBack }: any) {
 
   return (
     <View className="flex-1 items-center justify-center p-10" style={{ backgroundColor }}>
-      {/* Header */}
-
-      {/* Form */}
       <View className="mb-8">
         <View className="items-center">
           <View className="mt-5 p-2">
@@ -57,9 +54,7 @@ export default function BirthChartCompability({ onBack }: any) {
           </View>
         </View>
         <View className="mb-8">
-          <Text
-            className={`text-aref text-sm" text-center
-                        ${textSecondary} `}>
+          <Text className={`text-aref text-sm" text-center ${textSecondary} `}>
             To unlock the horoscope, subscribe
           </Text>
         </View>

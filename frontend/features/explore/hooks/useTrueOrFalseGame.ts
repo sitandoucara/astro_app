@@ -260,7 +260,7 @@ export const useTrueOrFalseGame = (numberOfQuestions: number = 10) => {
   });
 
   return {
-    // État du jeu
+    // Game state
     currentQuestion,
     score,
     gameFinished,
@@ -271,18 +271,18 @@ export const useTrueOrFalseGame = (numberOfQuestions: number = 10) => {
     maxStreak,
     isLoading,
 
-    // Données du jeu
+    // Game data
     getCurrentQuestion,
     getGameStats,
     getEndMessage,
     getProgress,
 
-    // Actions du jeu
+    // Game actions
     handleAnswer,
     restartGame,
     isAnswerCorrect,
 
-    // Constantes
+    // Constants
     astroQuestions,
   };
 };

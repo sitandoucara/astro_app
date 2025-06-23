@@ -15,7 +15,6 @@ export default function EditProfile({ onBack }: any) {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const user = useAppSelector((state) => state.auth.user);
 
-  // États pour les données du formulaire
   const [username, setUsername] = useState(user?.username || '');
   const [birthplace, setBirthplace] = useState(user?.birthplace || '');
   const [gender, setGender] = useState(user?.gender || '');
@@ -48,7 +47,6 @@ export default function EditProfile({ onBack }: any) {
     }
   }, [user]);
 
-  // Styles selon le thème
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
   const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
@@ -111,7 +109,7 @@ export default function EditProfile({ onBack }: any) {
       });
 
       if (error) {
-        console.error('Erreur lors de la mise à jour:', error);
+        console.error('Error while updating:', error);
         Alert.alert('Error', 'Unable to update profile');
         return;
       }
@@ -131,7 +129,7 @@ export default function EditProfile({ onBack }: any) {
             birthplace: updatedMetadata.birthplace ?? birthplace.trim(),
             dateOfBirth: updatedMetadata.dateOfBirth ?? date.toISOString(),
             timeOfBirth: updatedMetadata.timeOfBirth ?? timeOfBirth.toISOString(),
-            // Conserver les autres propriétés existantes
+            // Keep other existing properties
             timezoneName: updatedMetadata.timezoneName ?? user?.timezoneName ?? '',
             timezoneOffset: updatedMetadata.timezoneOffset ?? user?.timezoneOffset ?? 0,
             latitude: updatedMetadata.latitude ?? user?.latitude ?? null,
@@ -155,12 +153,12 @@ export default function EditProfile({ onBack }: any) {
 
       setIsEditing(false);
       Alert.alert('Success', 'Profile successfully updated');
-      console.log('Profil mis à jour dans Redux:', {
+      console.log('Updated profile in Redux:', {
         username: username.trim(),
         birthplace: birthplace.trim(),
       });
     } catch (error) {
-      console.error('Erreur inattendue:', error);
+      console.error('Unexpected error:', error);
       Alert.alert('Error', 'An unexpected error has occurred');
     } finally {
       setIsLoading(false);
@@ -202,7 +200,7 @@ export default function EditProfile({ onBack }: any) {
           />
         </Animated.View>
 
-        {/* Gender (non modifiable) */}
+        {/* Gender (not editable) */}
         <Animated.View entering={SlideInRight.duration(650)} className="mt-2">
           <View className="flex-row justify-center gap-4">
             {['Male', 'Female', 'Other'].map((option, index) => {
@@ -256,7 +254,7 @@ export default function EditProfile({ onBack }: any) {
         {/* Buttons */}
         <Animated.View entering={FadeInUp.duration(800)} className="mt-6">
           {!isEditing ? (
-            // Bouton Edit
+            // Edit button
             <View className="rounded-full border-2 border-stone-600 p-2">
               <TouchableOpacity
                 onPress={handleEdit}
@@ -269,7 +267,7 @@ export default function EditProfile({ onBack }: any) {
               </TouchableOpacity>
             </View>
           ) : (
-            // Boutons Save et Cancel
+            // Save and Cancel buttons
             <View className="flex-row gap-4">
               <View className="rounded-full border-2 border-stone-600 p-1">
                 <TouchableOpacity

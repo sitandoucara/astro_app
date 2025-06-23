@@ -74,23 +74,20 @@ export default function QuizzScreen({ onBack }: any) {
     },
   ];
 
-  // Fonction pour obtenir l'URL de l'image du signe
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
     return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName}_${theme}.png`;
   };
 
-  // Fonction pour déterminer si un chapitre est verrouillé
+  // Function to determine if a chapter is locked
   const isLocked = (chapter: (typeof chapters)[0]) => {
-    // Les leçons 01 et 02 sont disponibles - la 03 est verrouillée
     const availableLessons = ['01', '02'];
     return !availableLessons.includes(chapter.id);
   };
 
-  // Fonction pour gérer le clic sur un chapitre
+  // Function to manage clicking on a chapter
   const handleChapterPress = (chapter: (typeof chapters)[0]) => {
     if (isLocked(chapter)) {
-      // Afficher l'alerte pour les leçons verrouillées
       Alert.alert(
         'Coming Soon!',
         `${chapter.title} will be available soon !`,
@@ -103,7 +100,6 @@ export default function QuizzScreen({ onBack }: any) {
         { cancelable: true }
       );
     } else {
-      // Naviguer vers le bon jeu selon l'ID
       if (chapter.id === '01') {
         navigation.navigate('GuessWhoGame');
       } else if (chapter.id === '02') {
@@ -112,7 +108,7 @@ export default function QuizzScreen({ onBack }: any) {
     }
   };
 
-  // Fonction pour obtenir le style visuel des cartes verrouillées
+  // Function to get the visual style of locked cards
   const getCardStyle = (chapter: (typeof chapters)[0]) => {
     if (isLocked(chapter)) {
       return {
@@ -126,7 +122,7 @@ export default function QuizzScreen({ onBack }: any) {
     };
   };
 
-  // Fonction pour obtenir le style du texte selon l'état de verrouillage
+  // Function to get the text style according to the lock state
   const getTextStyle = (chapter: (typeof chapters)[0], baseStyle: string) => {
     if (isLocked(chapter)) {
       return `${baseStyle} opacity-60`;
@@ -151,7 +147,7 @@ export default function QuizzScreen({ onBack }: any) {
                     className={cardStyle.className}
                     style={{ opacity: cardStyle.opacity }}>
                     <View className="flex-row items-center">
-                      {/* Image du signe astrologique */}
+                      {/* Image of the astrological sign */}
                       <View className="mr-4 h-12 w-12 items-center justify-center">
                         <Image
                           source={{ uri: getSignImageUrl(chapter.sign) }}
@@ -164,7 +160,7 @@ export default function QuizzScreen({ onBack }: any) {
                         />
                       </View>
 
-                      {/* Contenu du chapitre */}
+                      {/* Chapter Content */}
                       <View className="flex-1">
                         <Text
                           className={getTextStyle(
@@ -181,10 +177,8 @@ export default function QuizzScreen({ onBack }: any) {
                           {chapter.duration}
                         </Text>
                       </View>
-
-                      {/* Numéro du chapitre et bouton play/cadenas */}
+                      {/* Padlock  or game icon */}
                       <View className="ml-3 flex-row items-center gap-3">
-                        {/* Cadenas pour les leçons verrouillées */}
                         {locked ? (
                           <View className="h-10 w-10 items-center justify-center">
                             <MaterialIcons
@@ -194,7 +188,6 @@ export default function QuizzScreen({ onBack }: any) {
                             />
                           </View>
                         ) : (
-                          /* Icône play pour les leçons disponibles */
                           <View className="h-10 w-10 items-center justify-center">
                             <MaterialCommunityIcons
                               name="gamepad-variant"

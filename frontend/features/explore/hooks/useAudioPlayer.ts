@@ -133,7 +133,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
         }
       }
     } catch (error) {
-      console.error('Erreur lors du toggle play/pause:', error);
+      console.error('Error while toggling play/pause:', error);
     }
   };
 
@@ -174,7 +174,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
         const audioUrl = getAudioUrl(jsonUrl);
         const lessonId = extractLessonId(jsonUrl);
 
-        console.log(`Chargement de l'audio pour la lesson ${lessonId}: ${audioUrl}`);
+        console.log(`Loading audio for the lesson ${lessonId}: ${audioUrl}`);
 
         const { sound: audioSound, status } = await Audio.Sound.createAsync(
           { uri: audioUrl },
@@ -189,14 +189,14 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
           setSound(audioSound);
           const audioDuration = (status.durationMillis ?? 0) / 1000;
           setDuration(audioDuration);
-          console.log(`Audio chargé pour la lesson ${lessonId}, durée: ${audioDuration}s`);
+          console.log(`Audio loaded for the lesson ${lessonId}, duration: ${audioDuration}s`);
         }
       } catch (error) {
-        console.error('Erreur de chargement du son:', error);
+        console.error('Error loading sound:', error);
         const lessonId = extractLessonId(jsonUrl);
         Alert.alert(
-          'Erreur Audio',
-          `Impossible de charger le fichier audio pour la lesson ${lessonId}. Vérifiez que le fichier existe.`
+          'Audio Error',
+          `Unable to load audio file for lesson ${lessonId}. Check that the file exists.`
         );
       }
     };

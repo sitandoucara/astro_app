@@ -40,7 +40,6 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
   const correctColor = isDarkMode ? '#16A34A' : '#22C55E';
-  const incorrectColor = isDarkMode ? '#DC2626' : '#EF4444';
   const dangerColor = isDarkMode ? '#871515' : '#EF4444';
 
   const getSignImageUrl = (signName: string) => {
@@ -93,7 +92,7 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
       <View className="flex-1" style={{ backgroundColor }}>
         <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
           <Animated.View entering={FadeInUp.duration(600)} className="mt-8 items-center">
-            {/* score final */}
+            {/* final score */}
             <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-6`}>
               <View className="mb-4">
                 <MaterialCommunityIcons name="trophy-award" size={64} color={iconColor} />
@@ -105,7 +104,7 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
                 {getEndMessage()}
               </Text>
 
-              {/* statistics detaillé */}
+              {/* detailed statistics */}
               <View className="w-full">
                 <View className="mb-3 flex-row items-center justify-between">
                   <Text className={`text-aref text-base ${textSecondary}`}>Final Score</Text>

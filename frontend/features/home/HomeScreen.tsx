@@ -6,6 +6,8 @@ import { ScrollView, Text, TouchableOpacity, View, Image, Alert } from 'react-na
 import { useAppSelector } from 'shared/hooks';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
+import { HoroscopeSection } from './components/HoroscopeSectionProps';
+
 interface TimeTab {
   id: string;
   label: string;
@@ -29,9 +31,7 @@ export default function HomeScreen() {
   const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
-  const textthree = isDarkMode ? 'text-[#ffff]' : 'text-[#ffffff]';
 
-  // Fonction pour récupérer l'image du signe dynamiquement
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
     return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName.toLowerCase()}_${theme}.png`;
@@ -140,7 +140,7 @@ export default function HomeScreen() {
               {getFormattedDate(activeTab)}
             </Text>
 
-            <Text className={`text-aref mt-1 text-sm ${textSecondary} `}>Horoscope Date</Text>
+            <Text className={`text-aref mt-1 text-sm ${textSecondary}`}>Horoscope Date</Text>
           </View>
           <View className="items-end">
             <Text className={`text-aref mt-1 text-xl font-light ${textSecondary} `}>
@@ -243,24 +243,15 @@ export default function HomeScreen() {
               </View>
             </View>
 
-            <View className={`mb-8 rounded-xl border p-6 ${borderColor} ${cardBg}`}>
-              <Text className={`text-aref mb-3 text-lg font-medium ${textPrimary}`}>
-                Affirmation
-              </Text>
-              <Text className={`text-aref ${textthree}`} style={{ lineHeight: 24 }}>
-                I can be a masterpiece and a work in progress at the same time
-              </Text>
-            </View>
+            {/* Horoscope Component */}
+            <HoroscopeSection activeTab={activeTab} isPremiumTab={isPremiumTab} />
 
             <View className="mb-8">
               <Text className={`text-aref mb-4 text-lg font-medium ${textPrimary}`}>
-                Your today's horoscope
+                Affirmation
               </Text>
               <Text className={`text-aref text-sm ${textSecondary}`} style={{ lineHeight: 20 }}>
-                Today, you can see how your daily routine has changed your life. Your physical and
-                mental health is directly related to your personal transformation. Making sure that
-                you are taken care of - body and mind - should be part of your schedule. That is
-                just
+                I can be a masterpiece and a work in progress at the same time
               </Text>
             </View>
           </>

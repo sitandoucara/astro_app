@@ -102,7 +102,7 @@ export const signIn = async (email: string, password: string, dispatch: AppDispa
       );
 
       if (!metadata.birthChartUrl) {
-        console.log('BirthChart manquant, génération en cours...');
+        console.log('Missing BirthChart, current generation...');
         dispatch(setGeneratingChart(true));
 
         const chartPayload = {
@@ -117,7 +117,7 @@ export const signIn = async (email: string, password: string, dispatch: AppDispa
         try {
           await generateChart(chartPayload);
 
-          console.log('Chart généré, rafraîchissement des données...');
+          console.log('Chart generated, data refresh...');
 
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -135,7 +135,7 @@ export const signIn = async (email: string, password: string, dispatch: AppDispa
             );
           }
         } catch (chartError: any) {
-          console.error('Erreur génération chart:', chartError.message);
+          console.error('Chart generation error:', chartError.message);
         } finally {
           dispatch(setGeneratingChart(false));
         }

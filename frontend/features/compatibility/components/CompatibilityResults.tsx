@@ -34,7 +34,7 @@ export default function CompatibilityResults({
   return (
     <View className="flex-1" style={{ backgroundColor }}>
       <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
-        {/* Header avec les deux signes */}
+        {/* Header with the two signs */}
         <Animated.View entering={FadeInDown.duration(500)} className="mb-4 mt-8 items-center">
           <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-2`}>
             <View className="mb-3 flex-row items-center justify-center">
@@ -78,7 +78,7 @@ export default function CompatibilityResults({
           </View>
         </Animated.View>
 
-        {/* Résultats de compatibilité */}
+        {/* Compatibility results */}
         <Animated.View entering={SlideInLeft.duration(600)}>
           <View>
             {Object.entries(compatibilityData).map(([key, info]: [string, any], index) => (
@@ -102,7 +102,7 @@ export default function CompatibilityResults({
                   </Text>
                 </View>
 
-                {/* Barre de progression */}
+                {/* Progress bar */}
                 <View
                   className={`mb-3 h-2 w-full rounded-full ${isDarkMode ? 'bg-[#D8D3D0]' : 'bg-[#544A46]'}`}>
                   <View
@@ -119,7 +119,7 @@ export default function CompatibilityResults({
           </View>
         </Animated.View>
 
-        {/* Bouton pour recommencer */}
+        {/* Button to start again */}
         <Animated.View entering={SlideInRight.duration(700)} className="mb-8 mt-8">
           <TouchableOpacity
             onPress={onTryAnother}

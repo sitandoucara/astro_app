@@ -70,9 +70,9 @@ export const AudioPlayerControls: React.FC<AudioPlayerControlsProps> = ({
         </View>
       </View>
 
-      {/* Contrôles audio avec temps */}
+      {/* Audio controls with time */}
       <View className="mb-5 flex-row items-center justify-between">
-        {/* Temps actuel */}
+        {/* Current weather */}
         <View className="min-w-12">
           <Text
             className="text-aref text-center text-base font-semibold"
@@ -81,7 +81,7 @@ export const AudioPlayerControls: React.FC<AudioPlayerControlsProps> = ({
           </Text>
         </View>
 
-        {/* Bouton Play/Pause central */}
+        {/* Central Play/Pause button */}
         <TouchableOpacity
           onPress={onTogglePlayPause}
           disabled={!sound || loading}
@@ -111,7 +111,7 @@ export const AudioPlayerControls: React.FC<AudioPlayerControlsProps> = ({
           )}
         </TouchableOpacity>
 
-        {/* Temps total */}
+        {/* Total time */}
         <View className="min-w-12">
           <Text
             className="text-aref text-center text-base font-semibold"

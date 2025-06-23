@@ -40,7 +40,7 @@ export default function AuthHomeScreen({ navigation }: any) {
             </Text>
           </View>
 
-          {/*inscription*/}
+          {/* registration */}
           <Animated.View entering={FadeInUp.delay(300).duration(1000)}>
             <View className="w-full flex-row items-center justify-center gap-2">
               <View className="flex-row items-center" style={{ gap: 8 }}>
@@ -63,7 +63,8 @@ export default function AuthHomeScreen({ navigation }: any) {
                 <View className={`h-3 w-3 rounded-full   ${bgButton}  `} />
               </View>
             </View>
-            {/*connexion*/}
+
+            {/*connection*/}
             <View className="mt-4 w-full flex-row items-center justify-center gap-2">
               <View className="flex-row items-center" style={{ gap: 8 }}>
                 <View className={`h-1 w-8 rounded-full  ${bgButton2}  `} />

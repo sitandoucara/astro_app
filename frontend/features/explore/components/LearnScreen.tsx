@@ -103,11 +103,13 @@ export default function LearnScreen({ onBack }: any) {
     },
   ];
 
+  // Function to determine if a chapter is locked
   const isLocked = (chapter: (typeof chapters)[0]) => {
     const availableLessons = ['01', '02', '03'];
     return !availableLessons.includes(chapter.id);
   };
 
+  // Function to manage clicking on a chapter
   const handleChapterPress = (chapter: (typeof chapters)[0]) => {
     if (isLocked(chapter)) {
       Alert.alert(
@@ -128,6 +130,8 @@ export default function LearnScreen({ onBack }: any) {
       });
     }
   };
+
+  // Function to get the visual style of locked cards
   const getCardStyle = (chapter: (typeof chapters)[0]) => {
     if (isLocked(chapter)) {
       return {
@@ -141,6 +145,7 @@ export default function LearnScreen({ onBack }: any) {
     };
   };
 
+  // Function to get the text style according to the lock state
   const getTextStyle = (chapter: (typeof chapters)[0], baseStyle: string) => {
     if (isLocked(chapter)) {
       return `${baseStyle} opacity-60`;
@@ -166,6 +171,7 @@ export default function LearnScreen({ onBack }: any) {
                     style={{ opacity: cardStyle.opacity }}>
                     <View className="flex-row items-center">
                       <View className="mr-4 w-10 items-center justify-center">
+                        {/* Chapter number */}
                         <Text
                           className={getTextStyle(
                             chapter,
@@ -192,6 +198,7 @@ export default function LearnScreen({ onBack }: any) {
                         </Text>
                       </View>
 
+                      {/* Padlock  or play icon */}
                       <View className="ml-3 flex-row items-center">
                         {locked ? (
                           <View className="h-10 w-10 items-center justify-center">

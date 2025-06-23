@@ -117,7 +117,7 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
   const [maxStreak, setMaxStreak] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // questions random
+  // random questions
   const generateQuestions = () => {
     setIsLoading(true);
 
@@ -146,7 +146,7 @@ export const useGuessWhoGame = (numberOfQuestions: number = 8) => {
     generateQuestions();
   }, [numberOfQuestions]);
 
-  // Gerer les reponses
+  // Manage responses
   const handleAnswer = (answer: string) => {
     if (showResult || isLoading) return;
 

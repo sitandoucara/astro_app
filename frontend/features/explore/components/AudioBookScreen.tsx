@@ -31,7 +31,7 @@ export default function AudioBookScreen({ onBack }: any) {
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  // Utilisation du hook personnalisé
+  // Using the custom hook
   const {
     isPlaying,
     sound,
@@ -43,7 +43,6 @@ export default function AudioBookScreen({ onBack }: any) {
     extractLessonId,
   } = useAudioPlayer(jsonUrl, chapterData);
 
-  // Couleurs dynamiques
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
   const highlightBg = isDarkMode ? '#281109' : '#F2EAE0';
@@ -90,7 +89,7 @@ export default function AudioBookScreen({ onBack }: any) {
     });
   };
 
-  // Charger les données JSON
+  // Load the JSON data
   useEffect(() => {
     const loadChapterData = async () => {
       try {
@@ -104,7 +103,7 @@ export default function AudioBookScreen({ onBack }: any) {
         const data = await response.json();
         setChapterData(data);
       } catch (error) {
-        console.error('Erreur lors du chargement des données:', error);
+        console.error('Error loading data:', error);
       } finally {
         setLoading(false);
       }
@@ -140,12 +139,12 @@ export default function AudioBookScreen({ onBack }: any) {
           {loading ? (
             <View className="items-center justify-center py-10">
               <Text className="text-aref mb-2 text-center text-lg" style={{ color: textColor }}>
-                Chargement de la lesson {extractLessonId(jsonUrl)}...
+                Loading the lesson {extractLessonId(jsonUrl)}...
               </Text>
               <Text
                 className="text-aref text-center text-sm opacity-70"
                 style={{ color: textColor }}>
-                Préparation du texte et de l'audio
+                Preparation of text and audio
               </Text>
             </View>
           ) : (
@@ -156,7 +155,7 @@ export default function AudioBookScreen({ onBack }: any) {
         </View>
       </ScrollView>
 
-      {/* Composant AudioPlayerControls */}
+      {/* AudioPlayerControls component */}
       <AudioPlayerControls
         isPlaying={isPlaying}
         currentTime={currentTime}
