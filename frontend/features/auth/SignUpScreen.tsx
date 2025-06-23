@@ -65,7 +65,7 @@ export default function SignUpScreen({ navigation }: any) {
       );
       if (error) {
         console.error('Signup error:', error);
-        alert(error.message);
+        //alert(error.message);
       } else {
         alert('Account created!');
         navigation.navigate('SignIn');
@@ -105,7 +105,7 @@ export default function SignUpScreen({ navigation }: any) {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, step, iconColor, textColor]);
+  }, [navigation, step]);
 
   return (
     <View className="flex-1" style={{ backgroundColor }}>

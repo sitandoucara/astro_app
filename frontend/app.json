@@ -2,7 +2,7 @@
   "expo": {
     "name": "my-expo-app",
     "slug": "my-expo-app",
-    "version": "1.0.0",
+    "version": "1.0.9",
     "web": {
       "bundler": "metro",
       "favicon": "./assets/favicon.png"
@@ -21,7 +21,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sigraph.astromood",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

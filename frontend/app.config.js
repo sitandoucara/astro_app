@@ -2,14 +2,21 @@ export default () => ({
   expo: {
     name: 'AstroMood',
     slug: 'astromood',
-    version: '1.0.0',
+    version: '1.0.9',
     icon: './assets/icon.png',
     userInterfaceStyle: 'automatic',
+    supportsTablet: false,
     ios: {
+      buildNumber: '11',
+      supportsTablet: false,
       bundleIdentifier: 'com.sigraph.astromood',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },
+    },
+    android: {
+      package: 'com.sigraph.astromood',
+      supportsTablet: false,
     },
     extra: {
       supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,

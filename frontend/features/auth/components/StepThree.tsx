@@ -9,6 +9,7 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
 
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
+  const textThird = isDarkMode ? 'text-[#ffffff]' : 'text-[#281109]';
   const border = isDarkMode ? 'border-[#281109]' : 'border-[#F2EAE0]';
   const bgInput = isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]';
   const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
@@ -44,7 +45,6 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
         </View>
 
         <View className="mb-36 items-center justify-between">
-          {/* Date of Birth */}
           <TouchableOpacity
             className={`w-64 rounded-lg border ${border} ${bgInput} px-5 py-3`}
             onPress={() => setShowDateModal(true)}>
@@ -53,7 +53,6 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
             </Text>
           </TouchableOpacity>
 
-          {/* Time of Birth */}
           <TouchableOpacity
             className={`mt-2 w-64 rounded-lg border ${border} ${bgInput} px-5 py-3`}
             onPress={() => setShowTimeModal(true)}>
@@ -62,7 +61,6 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
             </Text>
           </TouchableOpacity>
 
-          {/* Confirm button */}
           <View className="mt-4 rounded-full border-2 border-stone-600 p-2">
             <TouchableOpacity
               onPress={onSubmit}
@@ -77,7 +75,6 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
         </View>
       </View>
 
-      {/* Date Modal */}
       <Modal transparent visible={showDateModal} animationType="fade">
         <BlurView
           intensity={40}
@@ -105,13 +102,12 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
             <TouchableOpacity
               className={`my-2 items-center rounded-full  py-3 ${bgButton} ${buttonTextColor}`}
               onPress={() => setShowDateModal(false)}>
-              <Text className={`font-bold  ${textSecondary}`}>Confirm</Text>
+              <Text className={`font-bold ${textThird}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>
       </Modal>
 
-      {/* Time Modal */}
       <Modal transparent visible={showTimeModal} animationType="fade">
         <BlurView
           intensity={40}
@@ -138,9 +134,9 @@ export default function StepThree({ formData, updateForm, onBack, onSubmit }: an
               style={{ backgroundColor: modalBg }}
             />
             <TouchableOpacity
-              className={`my-2 items-center rounded-full  py-3 ${bgButton} ${buttonTextColor}`}
+              className={`my-2 items-center rounded-full  py-3 ${bgButton} `}
               onPress={() => setShowTimeModal(false)}>
-              <Text className={`font-bold  ${textSecondary}`}>Confirm</Text>
+              <Text className={`font-bold ${textThird}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>
