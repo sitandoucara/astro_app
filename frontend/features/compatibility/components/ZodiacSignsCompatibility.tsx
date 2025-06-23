@@ -7,8 +7,8 @@ import { Text, TextInput, TouchableOpacity, View, Modal } from 'react-native';
 import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
 
+import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 import CompatibilityResults from './CompatibilityResults';
-import { useZodiacCompatibility } from '../hooks/useZodiacCompatibility';
 
 export default function ZodiacSignsCompatibility({ onBack }: any) {
   const [showDateModal, setShowDateModal] = useState(false);
@@ -59,6 +59,9 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
       headerShown: true,
       headerTransparent: true,
       headerTitle: '',
+      headerStyle: {
+        backgroundColor,
+      },
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row items-center gap-2">

@@ -4,13 +4,13 @@ import AuthHomeScreen from 'features/auth/AuthHomeScreen';
 import { setUser, clearUser } from 'features/auth/AuthSlice';
 import SignInScreen from 'features/auth/SignInScreen';
 import SignUpScreen from 'features/auth/SignUpScreen';
+import EditProfile from 'features/profile/components/EditProfile';
 import BirthChartCompability from 'features/compatibility/components/BirthChartCompability';
 import ZodiacSignsCompatibility from 'features/compatibility/components/ZodiacSignsCompatibility';
 import AudioBookScreen from 'features/explore/components/AudioBookScreen';
 import GuessWhoGame from 'features/explore/components/GuessWhoGame';
 import LearnScreen from 'features/explore/components/LearnScreen';
 import QuizzScreen from 'features/explore/components/QuizzScreen';
-import TrueOrFalseGame from 'features/explore/components/TrueOrFalseGame';
 import { RootStackParamList } from 'navigation/types';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
@@ -20,6 +20,7 @@ import MyTabs from 'shared/components/mytabs';
 import { useAppSelector } from 'shared/hooks';
 
 import { supabase } from './supabase';
+import TrueOrFalseGame from 'features/explore/components/TrueOrFalseGame';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,10 +34,6 @@ export default function SessionGate() {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const dispatch = useDispatch();
-
-  // Récupérer les états de loading depuis Redux
-  const authLoading = useAppSelector((state) => state.auth.isLoading);
-  const isGeneratingChart = useAppSelector((state) => state.auth.isGeneratingChart);
 
   useEffect(() => {
     AppState.addEventListener('change', (state) => {
@@ -146,7 +143,7 @@ export default function SessionGate() {
     };
   }, [dispatch]);
 
-  if (loading || authLoading || isGeneratingChart) {
+  if (loading) {
     return <LoadingScreen />;
   }
 
@@ -158,6 +155,7 @@ export default function SessionGate() {
           {isAuthenticated ? (
             <>
               <Stack.Screen name="App" component={MyTabs} />
+              <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
               <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
               <Stack.Screen name="LearnScreen" component={LearnScreen} />

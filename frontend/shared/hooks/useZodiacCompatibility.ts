@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 
 export const useZodiacCompatibility = () => {
@@ -16,6 +16,11 @@ export const useZodiacCompatibility = () => {
       },
     },
   };
+
+  useEffect(() => {
+    const initialUserSign = mockUser.raw_user_meta_data.planets.Sun;
+    setUserSign(initialUserSign);
+  }, []);
 
   const getZodiacSign = (birthDate: Date) => {
     const month = birthDate.getMonth() + 1;
@@ -80,7 +85,6 @@ export const useZodiacCompatibility = () => {
   const resetCompatibility = () => {
     setShowCompatibility(false);
     setPartnerSign(null);
-    setUserSign(null);
   };
 
   return {

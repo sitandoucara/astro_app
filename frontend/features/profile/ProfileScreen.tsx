@@ -23,6 +23,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
+import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 import { toggleDarkMode } from 'shared/theme/themeSlice';
 
 export default function ProfileScreen() {
@@ -31,6 +32,9 @@ export default function ProfileScreen() {
   const user = useAppSelector((state) => state.auth.user);
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  // Utilisation du hook pour récupérer le signe
+  const { userSign } = useZodiacCompatibility();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -58,12 +62,15 @@ export default function ProfileScreen() {
     },
   };
 
-  // Images zodiac selon thème
-  const lightSignUrl =
-    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
-  const darkSignUrl =
-    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_dark.png';
-  const signImage = isDarkMode ? darkSignUrl : lightSignUrl;
+  // Fonction pour récupérer l'image du signe dynamiquement
+  const getSignImageUrl = (signName: string) => {
+    const theme = isDarkMode ? 'dark' : 'light';
+    return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName.toLowerCase()}_${theme}.png`;
+  };
+
+  // Image du signe de l'utilisateur (fallback sur virgo si pas de signe)
+  const currentUserSign = userSign || 'Virgo'; // Utilisation du userSign du hook
+  const signImage = getSignImageUrl(currentUserSign);
 
   type SettingItemProps = {
     icon: React.ReactNode;
@@ -154,27 +161,31 @@ export default function ProfileScreen() {
   return (
     <>
       <ScrollView className={`flex-1 ${colors.tailwind.background} p-4`}>
-        {/*<View className="flex-1 items-center justify-center space-y-6 bg-[#F2EAE0]">*/}
         {user && (
           <View>
-            <View className="mb-8 flex-row items-center justify-between pt-4">
-              <View className="flex-row items-center gap-2">
-                <View className={`rounded-full p-2 ${colors.tailwind.cardBg}`}>
-                  <Image source={{ uri: signImage }} className="h-12 w-12" />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('EditProfile')}>
+              <View className="mb-8 flex-row items-center justify-between pt-4">
+                <View className="flex-row items-center gap-2">
+                  <View>
+                    <Image source={{ uri: signImage }} className="h-14 w-14" />
+                  </View>
+                  <View>
+                    <Text
+                      className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
+                      {user.username}{' '}
+                      {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
+                    </Text>
+                    <Text className={`text-aref text-sm ${colors.tailwind.textSecondary}`}>
+                      {user.email}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text
-                    className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
-                    {user.username}{' '}
-                    {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
-                  </Text>
-                  <Text className={`text-aref text-sm ${colors.tailwind.textSecondary}`}>
-                    {user.email}
-                  </Text>
-                </View>
+
+                <Feather name="chevron-right" size={24} color={colors.raw.icon} />
               </View>
-              <Feather name="chevron-right" size={24} color={colors.raw.icon} />
-            </View>
+            </TouchableOpacity>
           </View>
         )}
         {/* Appearance & Language */}

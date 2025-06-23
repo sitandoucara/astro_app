@@ -1,12 +1,9 @@
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
-import { Text, TouchableOpacity, View, Image, Alert } from 'react-native';
+import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'navigation/types';
 
 export default function CompatibilityScreen() {

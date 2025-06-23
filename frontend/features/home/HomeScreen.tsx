@@ -1,10 +1,10 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { format, addDays, subDays } from 'date-fns';
 import { useLayoutEffect, useState, useMemo } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useAppSelector } from 'shared/hooks';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
 interface TimeTab {
   id: string;
@@ -17,10 +17,10 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
+  const { userSign } = useZodiacCompatibility();
+
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
   const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const titleColor = isDarkMode ? '#7B635A' : '#D8C8B4';
-
   const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
   const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
 
@@ -31,14 +31,17 @@ export default function HomeScreen() {
   const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
   const textthree = isDarkMode ? 'text-[#ffff]' : 'text-[#ffffff]';
 
-  // Images zodiac selon thème
-  const lightSignUrl =
-    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
-  const darkSignUrl =
-    'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_dark.png';
-  const signImage = isDarkMode ? darkSignUrl : lightSignUrl;
+  // Fonction pour récupérer l'image du signe dynamiquement
+  const getSignImageUrl = (signName: string) => {
+    const theme = isDarkMode ? 'dark' : 'light';
+    return `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/${signName.toLowerCase()}_${theme}.png`;
+  };
+
+  const currentUserSign = userSign || 'Cancer';
+  const signImage = getSignImageUrl(currentUserSign);
 
   useLayoutEffect(() => {
+    console.log('HomeScreen - User data updated:', user?.username);
     navigation.setOptions({
       headerTitle: () => (
         <View className="flex-row gap-2">
@@ -53,7 +56,7 @@ export default function HomeScreen() {
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, isDarkMode]);
+  }, [navigation, isDarkMode, signImage, user?.username]);
 
   const [activeTab, setActiveTab] = useState<string>('TODAY');
 
@@ -100,6 +103,10 @@ export default function HomeScreen() {
     setActiveTab(tabId);
   };
 
+  const capitalizeFirst = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <ScrollView className="flex-1" style={{ backgroundColor }}>
       <ScrollView horizontal className="mt-8" showsHorizontalScrollIndicator={false}>
@@ -137,7 +144,7 @@ export default function HomeScreen() {
           </View>
           <View className="items-end">
             <Text className={`text-aref mt-1 text-xl font-light ${textSecondary} `}>
-              {isPremiumTab(activeTab) ? 'Cancer' : 'Waning Gibbous'}
+              {isPremiumTab(activeTab) ? capitalizeFirst(currentUserSign) : 'Waning Gibbous'}
             </Text>
             <Text className={`text-aref mt-1 text-sm ${textSecondary} `}>
               {isPremiumTab(activeTab) ? 'Sun sign' : 'Moon Phase'}
@@ -223,7 +230,9 @@ export default function HomeScreen() {
               </View>
               <View className="mt-4 flex-row items-end justify-between">
                 <View>
-                  <Text className={`text-aref font-medium" text-lg ${textPrimary} `}>Cancer</Text>
+                  <Text className={`text-aref font-medium" text-lg ${textPrimary} `}>
+                    {capitalizeFirst(currentUserSign)}
+                  </Text>
                   <Text className={`text-sm  ${textSecondary}`}>Sun sign</Text>
                 </View>
                 <View className="items-end">

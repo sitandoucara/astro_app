@@ -183,3 +183,75 @@ export const deleteAccount = async (dispatch: AppDispatch) => {
     return { error: { message: 'Unexpected error during account deletion' } };
   }
 };
+
+export const updateProfile = async (
+  dispatch: AppDispatch,
+  updates: {
+    username?: string;
+    email?: string;
+    birthplace?: string;
+    dateOfBirth?: Date;
+  }
+) => {
+  try {
+    const {
+      data: { user: currentUser },
+      error: getUserError,
+    } = await supabase.auth.getUser();
+
+    if (getUserError || !currentUser) {
+      return { error: getUserError || { message: 'No user logged in' } };
+    }
+
+    const updateData: any = {
+      data: {
+        ...currentUser.user_metadata,
+        ...(updates.username && { username: updates.username }),
+        ...(updates.birthplace && { birthplace: updates.birthplace }),
+        ...(updates.dateOfBirth && { dateOfBirth: updates.dateOfBirth.toISOString() }),
+      },
+    };
+
+    if (updates.email && updates.email !== currentUser.email) {
+      updateData.email = updates.email;
+    }
+
+    const { data, error } = await supabase.auth.updateUser(updateData);
+
+    if (error) {
+      console.error('Update profile error:', error);
+      return { error };
+    }
+
+    if (data.user) {
+      const metadata = data.user.user_metadata || {};
+
+      dispatch(
+        setUser({
+          user: {
+            id: data.user.id,
+            email: data.user.email ?? '',
+            username: metadata.username ?? '',
+            dateOfBirth: metadata.dateOfBirth,
+            timeOfBirth: metadata.timeOfBirth,
+            birthplace: metadata.birthplace,
+            latitude: metadata.latitude,
+            longitude: metadata.longitude,
+            timezoneName: metadata.timezoneName,
+            timezoneOffset: metadata.timezoneOffset,
+            gender: metadata.gender,
+            birthChartUrl: metadata.birthChartUrl,
+            planets: metadata.planets,
+            ascendant: metadata.ascendant,
+          },
+          token: currentUser.app_metadata?.token || '',
+        })
+      );
+    }
+
+    return { data };
+  } catch (error) {
+    console.error('Unexpected error updating profile:', error);
+    return { error: { message: 'Unexpected error updating profile' } };
+  }
+};

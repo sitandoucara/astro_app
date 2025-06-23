@@ -5,7 +5,7 @@ import CompatibilityScreen from 'features/compatibility/CompatibilityScreen';
 import ExploreScreen from 'features/explore/ExploreScreen';
 import HomeScreen from 'features/home/HomeScreen';
 import ProfileScreen from 'features/profile/ProfileScreen';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 
 const Tab = createBottomTabNavigator();
@@ -45,6 +45,15 @@ export default function MyTabs() {
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarLabel: ({ focused, color }) => {
+            return (
+              <Text
+                className="text-aref text-xs"
+                style={{ color, fontWeight: focused ? 'bold' : 'normal' }}>
+                {route.name}
+              </Text>
+            );
           },
           tabBarActiveTintColor: textColor,
           tabBarInactiveTintColor: textColor + '80',

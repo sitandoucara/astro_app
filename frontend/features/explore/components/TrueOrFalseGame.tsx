@@ -58,6 +58,9 @@ export default function TrueOrFalseGame({ onBack, numberOfQuestions = 10 }: True
       headerShown: true,
       headerTransparent: true,
       headerTitle: '',
+      headerStyle: {
+        backgroundColor,
+      },
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row items-center gap-2">

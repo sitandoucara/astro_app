@@ -11,4 +11,5 @@ export type RootStackParamList = {
   GuessWhoGame: undefined;
   QuizzScreen: undefined;
   TrueOrFalseGame: undefined;
+  EditProfile: undefined;
 };

@@ -32,8 +32,11 @@ export default function QuizzScreen({ onBack }: any) {
       headerShown: true,
       headerTransparent: true,
       headerTitle: '',
+      headerStyle: {
+        backgroundColor,
+      },
       headerLeft: () => (
-        <TouchableOpacity style={{ marginLeft: 16, backgroundColor }} onPress={goBack}>
+        <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row gap-2">
             <Ionicons name="arrow-back" size={24} style={{ color: textColor }} />
             <Text
