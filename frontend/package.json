@@ -25,6 +25,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "expo": "^52.0.41",
+    "expo-av": "~15.0.2",
     "expo-blur": "~14.0.3",
     "expo-font": "~13.0.4",
     "expo-status-bar": "~2.0.1",
@@ -43,8 +44,7 @@
     "react-navigation": "^5.0.0",
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
-    "vector-icons": "^0.1.0",
-    "expo-av": "~15.0.2"
+    "vector-icons": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -54,6 +54,7 @@
     "@types/lodash.debounce": "^4.0.9",
     "@types/react": "~18.3.12",
     "@types/react-native": "^0.72.8",
+    "@types/redux-mock-store": "^1.5.0",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "eslint": "^8.57.0",
@@ -62,6 +63,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react-test-renderer": "^18.3.1",
+    "redux-mock-store": "^1.5.5",
     "tailwindcss": "^3.4.0",
     "typescript": "~5.3.3"
   },

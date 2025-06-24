@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750730400821" clover="3.2.0">
-  <project timestamp="1750730400821" name="All files">
-    <metrics statements="112" coveredstatements="91" conditionals="84" coveredconditionals="45" methods="37" coveredmethods="23" elements="233" coveredelements="159" complexity="0" loc="112" ncloc="112" packages="7" files="8" classes="8"/>
+<coverage generated="1750794043515" clover="3.2.0">
+  <project timestamp="1750794043515" name="All files">
+    <metrics statements="113" coveredstatements="92" conditionals="84" coveredconditionals="45" methods="37" coveredmethods="23" elements="234" coveredelements="160" complexity="0" loc="113" ncloc="113" packages="7" files="8" classes="8"/>
     <package name="app">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="store.ts" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/app/store.ts">
@@ -14,22 +14,23 @@
       </file>
     </package>
     <package name="features.auth">
-      <metrics statements="28" coveredstatements="16" conditionals="20" coveredconditionals="9" methods="9" coveredmethods="4"/>
+      <metrics statements="29" coveredstatements="17" conditionals="20" coveredconditionals="9" methods="9" coveredmethods="4"/>
       <file name="AuthHomeScreen.tsx" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/auth/AuthHomeScreen.tsx">
-        <metrics statements="13" coveredstatements="13" conditionals="18" coveredconditionals="9" methods="4" coveredmethods="4"/>
-        <line num="6" count="6" type="stmt"/>
-        <line num="8" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="9" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="10" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="11" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="12" count="3" type="cond" truecount="1" falsecount="1"/>
+        <metrics statements="14" coveredstatements="14" conditionals="18" coveredconditionals="9" methods="4" coveredmethods="4"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
         <line num="13" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="17" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="19" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="23" count="3" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="75" count="1" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
       </file>
       <file name="AuthSlice.ts" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/auth/AuthSlice.ts">
         <metrics statements="15" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>

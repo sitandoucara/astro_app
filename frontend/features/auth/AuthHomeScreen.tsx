@@ -1,8 +1,13 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'navigation/types';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
 
-export default function AuthHomeScreen({ navigation }: any) {
+export default function AuthHomeScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const textPrimary = isDarkMode ? 'text-light-text1' : 'text-[#F6D5C1]';
@@ -11,9 +16,7 @@ export default function AuthHomeScreen({ navigation }: any) {
   const textButton2 = isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]';
   const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
   const bgButton2 = isDarkMode ? 'bg-[#281109]' : 'bg-[#F6D5C1]';
-
   const border = isDarkMode ? 'border-[#281109]' : 'border-[#F2EAE0]';
-
   const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
 
   const logoSource = isDarkMode
