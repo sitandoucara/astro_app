@@ -1,0 +1,373 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExploreScreen Tests A - Explore screen renders correctly (snapshot) 1`] = `
+<View
+  className="flex-1 items-center justify-center px-2"
+  style={
+    {
+      "backgroundColor": "#281109",
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      className="  justify-center"
+    >
+      <View
+        className="h-16 w-16 items-center justify-center "
+      >
+        <View
+          className="mr-3 h-10 w-10 items-center justify-center rounded-full  bg-dark-border"
+        />
+      </View>
+      <View>
+        <Text
+          className="text-aref text-xl font-semibold text-dark-text1 mb-2"
+        >
+          Learn
+        </Text>
+        <Text
+          className="text-aref text-sm text-[#D9D5D4]"
+        >
+          Discover Astrology
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      className="justify-center"
+    >
+      <View
+        className="h-16 w-16 items-center justify-center "
+      >
+        <View
+          className="mr-3 h-10 w-10 items-center justify-center rounded-full  bg-dark-border"
+        />
+      </View>
+      <View>
+        <Text
+          className="text-aref text-xl font-semibold text-dark-text1 mb-2"
+        >
+          Test & Quiz
+        </Text>
+        <Text
+          className="text-aref text-sm text-[#D9D5D4]"
+        >
+          Test Your Astrology Knowlege
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      className="justify-center"
+    >
+      <View
+        className="h-16 w-16 items-center justify-center "
+      >
+        <View
+          className="mr-3 h-10 w-10 items-center justify-center rounded-full  bg-dark-border"
+        />
+      </View>
+      <View>
+        <Text
+          className="text-aref text-xl font-semibold text-dark-text1 mb-2"
+        >
+          Mini-books
+        </Text>
+        <Text
+          className="text-aref text-sm text-[#D9D5D4]"
+        >
+          Know more about Astrology
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ExploreScreen Tests A - L'écran Explore s'affiche sans crash (snapshot) 1`] = `
+<View
+  className="flex-1 items-center justify-center px-2"
+  style={
+    {
+      "backgroundColor": "#281109",
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      className="  justify-center"
+    >
+      <View
+        className="h-16 w-16 items-center justify-center "
+      >
+        <View
+          className="mr-3 h-10 w-10 items-center justify-center rounded-full  bg-dark-border"
+        />
+      </View>
+      <View>
+        <Text
+          className="text-aref text-xl font-semibold text-dark-text1 mb-2"
+        >
+          Learn
+        </Text>
+        <Text
+          className="text-aref text-sm text-[#D9D5D4]"
+        >
+          Discover Astrology
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      className="justify-center"
+    >
+      <View
+        className="h-16 w-16 items-center justify-center "
+      >
+        <View
+          className="mr-3 h-10 w-10 items-center justify-center rounded-full  bg-dark-border"
+        />
+      </View>
+      <View>
+        <Text
+          className="text-aref text-xl font-semibold text-dark-text1 mb-2"
+        >
+          Test & Quiz
+        </Text>
+        <Text
+          className="text-aref text-sm text-[#D9D5D4]"
+        >
+          Test Your Astrology Knowlege
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      className="justify-center"
+    >
+      <View
+        className="h-16 w-16 items-center justify-center "
+      >
+        <View
+          className="mr-3 h-10 w-10 items-center justify-center rounded-full  bg-dark-border"
+        />
+      </View>
+      <View>
+        <Text
+          className="text-aref text-xl font-semibold text-dark-text1 mb-2"
+        >
+          Mini-books
+        </Text>
+        <Text
+          className="text-aref text-sm text-[#D9D5D4]"
+        >
+          Know more about Astrology
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

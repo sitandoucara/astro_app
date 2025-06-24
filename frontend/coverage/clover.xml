@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1750730400821" clover="3.2.0">
+  <project timestamp="1750730400821" name="All files">
+    <metrics statements="112" coveredstatements="91" conditionals="84" coveredconditionals="45" methods="37" coveredmethods="23" elements="233" coveredelements="159" complexity="0" loc="112" ncloc="112" packages="7" files="8" classes="8"/>
+    <package name="app">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="store.ts" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/app/store.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.auth">
+      <metrics statements="28" coveredstatements="16" conditionals="20" coveredconditionals="9" methods="9" coveredmethods="4"/>
+      <file name="AuthHomeScreen.tsx" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/auth/AuthHomeScreen.tsx">
+        <metrics statements="13" coveredstatements="13" conditionals="18" coveredconditionals="9" methods="4" coveredmethods="4"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="11" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+      </file>
+      <file name="AuthSlice.ts" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/auth/AuthSlice.ts">
+        <metrics statements="15" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="52" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="66" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.compatibility">
+      <metrics statements="19" coveredstatements="16" conditionals="22" coveredconditionals="11" methods="6" coveredmethods="3"/>
+      <file name="CompatibilityScreen.tsx" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/compatibility/CompatibilityScreen.tsx">
+        <metrics statements="19" coveredstatements="16" conditionals="22" coveredconditionals="11" methods="6" coveredmethods="3"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.explore">
+      <metrics statements="17" coveredstatements="16" conditionals="16" coveredconditionals="8" methods="7" coveredmethods="6"/>
+      <file name="ExploreScreen.tsx" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/explore/ExploreScreen.tsx">
+        <metrics statements="17" coveredstatements="16" conditionals="16" coveredconditionals="8" methods="7" coveredmethods="6"/>
+        <line num="10" count="8" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="13" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="features.explore.components">
+      <metrics statements="36" coveredstatements="33" conditionals="26" coveredconditionals="17" methods="11" coveredmethods="9"/>
+      <file name="LearnScreen.tsx" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/features/explore/components/LearnScreen.tsx">
+        <metrics statements="36" coveredstatements="33" conditionals="26" coveredconditionals="17" methods="11" coveredmethods="9"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="107" count="3" type="stmt"/>
+        <line num="108" count="152" type="stmt"/>
+        <line num="109" count="152" type="stmt"/>
+        <line num="113" count="3" type="stmt"/>
+        <line num="114" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="135" count="3" type="stmt"/>
+        <line num="136" count="30" type="cond" truecount="2" falsecount="0"/>
+        <line num="137" count="21" type="stmt"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="150" count="90" type="cond" truecount="2" falsecount="0"/>
+        <line num="151" count="63" type="stmt"/>
+        <line num="153" count="27" type="stmt"/>
+        <line num="156" count="3" type="stmt"/>
+        <line num="162" count="30" type="stmt"/>
+        <line num="163" count="30" type="stmt"/>
+        <line num="165" count="30" type="stmt"/>
+        <line num="169" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="shared">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="hooks.ts" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/shared/hooks.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="shared.theme">
+      <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="themeSlice.ts" path="/Users/sitan/Desktop/Site fin d'annee/Dev3_new/AstroMood_app/frontend/shared/theme/themeSlice.ts">
+        <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

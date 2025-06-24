@@ -1,0 +1,1761 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearnScreen Tests A - L'écran Learn s'affiche sans crash 1`] = `
+<View
+  className="flex-1 p-2"
+  style={
+    {
+      "backgroundColor": "#281109",
+    }
+  }
+>
+  <RCTScrollView
+    className="mt-20"
+  >
+    <View>
+      <View>
+        <View
+          className="mt-8"
+        >
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 0,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1"
+                  >
+                    01
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1"
+                  >
+                    Level 1: Introduction to Astrology
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4]"
+                  >
+                    20 sec
+                  </Text>
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 50,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1"
+                  >
+                    02
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1"
+                  >
+                    Level 1: The Zodiac Signs
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4]"
+                  >
+                    20 sec
+                  </Text>
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 100,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1"
+                  >
+                    03
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1"
+                  >
+                    Level 1: The Planets and Their
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4]"
+                  >
+                    20 sec
+                  </Text>
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 150,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    04
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 2: The Ascendant 
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 200,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    05
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 2: The Four Elements
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 250,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    06
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 2: Planetary Aspects
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 300,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    07
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Birth Chart Interpretation
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 350,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    08
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Synastry and Compatibility
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 400,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    09
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Planetary Transits
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 450,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    10
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Retrogrades 
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`LearnScreen Tests A - Learn screen renders correctly (snapshot) 1`] = `
+<View
+  className="flex-1 p-2"
+  style={
+    {
+      "backgroundColor": "#281109",
+    }
+  }
+>
+  <RCTScrollView
+    className="mt-20"
+  >
+    <View>
+      <View>
+        <View
+          className="mt-8"
+        >
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 0,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1"
+                  >
+                    01
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1"
+                  >
+                    Level 1: Introduction to Astrology
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4]"
+                  >
+                    20 sec
+                  </Text>
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 50,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1"
+                  >
+                    02
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1"
+                  >
+                    Level 1: The Zodiac Signs
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4]"
+                  >
+                    20 sec
+                  </Text>
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 100,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1"
+                  >
+                    03
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1"
+                  >
+                    Level 1: The Planets and Their
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4]"
+                  >
+                    20 sec
+                  </Text>
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 150,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    04
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 2: The Ascendant 
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 200,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    05
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 2: The Four Elements
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 250,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    06
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 2: Planetary Aspects
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 300,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    07
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Birth Chart Interpretation
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 350,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    08
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Synastry and Compatibility
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 400,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    09
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Planetary Transits
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            collapsable={false}
+            entering={
+              FadeInUp {
+                "build": [Function],
+                "delayV": 450,
+                "durationV": 400,
+                "randomizeDelay": false,
+                "reduceMotionV": "system",
+              }
+            }
+            jestAnimatedStyle={
+              {
+                "value": {},
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 0.6,
+                }
+              }
+            >
+              <View
+                className="flex-row items-center"
+              >
+                <View
+                  className="mr-4 w-10 items-center justify-center"
+                >
+                  <Text
+                    className="text-aref text-lg font-bold text-dark-text1 opacity-60"
+                  >
+                    10
+                  </Text>
+                </View>
+                <View
+                  className="flex-1"
+                >
+                  <Text
+                    className="text-aref whitespace-nowrap text-base font-medium text-dark-text1 mb-1 opacity-60"
+                  >
+                    Level 3: Retrogrades 
+                  </Text>
+                  <Text
+                    className="text-aref whitespace-nowrap text-sm text-[#D9D5D4] opacity-60"
+                  />
+                </View>
+                <View
+                  className="ml-3 flex-row items-center"
+                >
+                  <View
+                    className="h-10 w-10 items-center justify-center"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

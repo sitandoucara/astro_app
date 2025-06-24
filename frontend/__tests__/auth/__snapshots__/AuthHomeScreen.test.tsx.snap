@@ -1,0 +1,242 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthHomeScreen Tests A - AuthHomeScreen renders correctly (snapshot) 1`] = `
+<View
+  className="flex-1 p-16"
+  style={
+    {
+      "backgroundColor": "#281109",
+    }
+  }
+>
+  <View
+    className="mt-10 flex-1 justify-between"
+  >
+    <View
+      className="mt-5 items-center"
+      collapsable={false}
+      entering={
+        FadeInUp {
+          "build": [Function],
+          "durationV": 1000,
+          "randomizeDelay": false,
+          "reduceMotionV": "system",
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {},
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source=""
+        style={
+          {
+            "height": 280,
+            "width": 280,
+          }
+        }
+      />
+    </View>
+    <View
+      className="mb-5 mt-10 "
+    >
+      <View
+        className="mb-8"
+      >
+        <Text
+          className="text-aref mb-4 text-center text-4xl font-medium text-[#F6D5C1]"
+        >
+          Welcome
+        </Text>
+        <Text
+          className="text-aref text-center text-sm text-[#7B635A] text-[#ffffff]"
+          style={
+            {
+              "lineHeight": 20,
+            }
+          }
+        >
+          You are on the path to discovering yourself. LunaFlame will help you live in harmony with the Universe.
+        </Text>
+      </View>
+      <View
+        collapsable={false}
+        entering={
+          FadeInUp {
+            "build": [Function],
+            "delayV": 300,
+            "durationV": 1000,
+            "randomizeDelay": false,
+            "reduceMotionV": "system",
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {},
+          }
+        }
+      >
+        <View
+          className="w-full flex-row items-center justify-center gap-2"
+        >
+          <View
+            className="flex-row items-center"
+            style={
+              {
+                "gap": 8,
+              }
+            }
+          >
+            <View
+              className="h-3 w-3 rounded-full bg-[#F2EAE0]  "
+            />
+            <View
+              className="h-4 w-4 rounded-full   bg-[#F2EAE0]  "
+            />
+          </View>
+          <View
+            className="rounded-full border-2 border-[#F2EAE0]  p-2 "
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                className="text-aref text-center text-xl font-bold tracking-wide   text-[#281109]"
+              >
+                Create Account
+              </Text>
+            </View>
+          </View>
+          <View
+            className="flex-row items-center"
+            style={
+              {
+                "gap": 8,
+              }
+            }
+          >
+            <View
+              className="h-4 w-4 rounded-full  bg-[#F2EAE0]  "
+            />
+            <View
+              className="h-3 w-3 rounded-full   bg-[#F2EAE0]  "
+            />
+          </View>
+        </View>
+        <View
+          className="mt-4 w-full flex-row items-center justify-center gap-2"
+        >
+          <View
+            className="flex-row items-center"
+            style={
+              {
+                "gap": 8,
+              }
+            }
+          >
+            <View
+              className="h-1 w-8 rounded-full  bg-[#F6D5C1]  "
+            />
+            <View
+              className="h-4 w-4 rounded-full   bg-[#F6D5C1]  "
+            />
+          </View>
+          <View
+            className="rounded-full border-2 border-[#F2EAE0]   p-2 "
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                className="text-aref text-center text-base font-bold tracking-wide  text-[#281109] "
+              >
+                Already have an account
+              </Text>
+            </View>
+          </View>
+          <View
+            className="flex-row items-center"
+            style={
+              {
+                "gap": 8,
+              }
+            }
+          >
+            <View
+              className="h-4 w-4 rounded-full  bg-[#F6D5C1]  "
+            />
+            <View
+              className="h-1 w-8 rounded-full   bg-[#F6D5C1]  "
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
