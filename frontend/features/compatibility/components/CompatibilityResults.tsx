@@ -2,6 +2,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp, FadeInDown, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 interface CompatibilityResultsProps {
   userSign: string;
@@ -20,11 +21,7 @@ export default function CompatibilityResults({
 }: CompatibilityResultsProps) {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
+  const colors = useThemeColors();
 
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
@@ -32,11 +29,12 @@ export default function CompatibilityResults({
   };
 
   return (
-    <View className="flex-1" style={{ backgroundColor }}>
+    <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
         {/* Header with the two signs */}
         <Animated.View entering={FadeInDown.duration(500)} className="mb-4 mt-8 items-center">
-          <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-2`}>
+          <View
+            className={`items-center rounded-3xl p-8 ${colors.cardBg} border ${colors.borderColor} mb-2`}>
             <View className="mb-3 flex-row items-center justify-center">
               <View className="items-center">
                 <Image
@@ -44,17 +42,13 @@ export default function CompatibilityResults({
                   style={{ width: 60, height: 60 }}
                   resizeMode="contain"
                 />
-                <Text className={`text-aref mt-2 text-sm font-bold ${textPrimary}`}>
+                <Text className={`text-aref mt-2 text-sm font-bold ${colors.textPrimary}`}>
                   You ({userSign})
                 </Text>
               </View>
 
               <View className="mx-8">
-                <MaterialCommunityIcons
-                  name="heart"
-                  size={32}
-                  color={isDarkMode ? '#32221E' : '#F2EAE0'}
-                />
+                <MaterialCommunityIcons name="heart" size={32} color={colors.textColor} />
               </View>
 
               <View className="items-center">
@@ -63,16 +57,16 @@ export default function CompatibilityResults({
                   style={{ width: 60, height: 60 }}
                   resizeMode="contain"
                 />
-                <Text className={`text-aref mt-2 text-sm font-bold ${textPrimary}`}>
+                <Text className={`text-aref mt-2 text-sm font-bold ${colors.textPrimary}`}>
                   {username} ({partnerSign})
                 </Text>
               </View>
             </View>
 
-            <Text className={`text-aref text-lg font-semibold ${textPrimary} text-center`}>
+            <Text className={`text-aref text-lg font-semibold ${colors.textPrimary} text-center`}>
               Compatibility Analysis
             </Text>
-            <Text className={`text-aref text-sm ${textSecondary} mt-1 text-center`}>
+            <Text className={`text-aref text-sm ${colors.textSecondaryAlt} mt-1 text-center`}>
               {userSign} × {partnerSign}
             </Text>
           </View>
@@ -85,19 +79,19 @@ export default function CompatibilityResults({
               <Animated.View
                 key={key}
                 entering={FadeInUp.delay(index * 150).duration(500)}
-                className={`mt-2 rounded-3xl border ${cardBg} ${borderColor} p-6`}>
+                className={`mt-2 rounded-3xl border ${colors.cardBg} ${colors.borderColor} p-6`}>
                 <View className="mb-3 flex-row items-center justify-between">
                   <View className="flex-row items-center">
                     <MaterialCommunityIcons
                       name={info.icon as any}
                       size={24}
-                      color={isDarkMode ? '#32221E' : '#F2EAE0'}
+                      color={colors.textColor}
                     />
-                    <Text className={`text-aref ml-3 text-lg font-bold ${textPrimary}`}>
+                    <Text className={`text-aref ml-3 text-lg font-bold ${colors.textPrimary}`}>
                       {info.title}
                     </Text>
                   </View>
-                  <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
+                  <Text className={`text-aref text-xl font-bold ${colors.textPrimary}`}>
                     {info.compatibility}%
                   </Text>
                 </View>
@@ -113,7 +107,9 @@ export default function CompatibilityResults({
                   />
                 </View>
 
-                <Text className={`text-aref text-sm ${textSecondary}`}>{info.description}</Text>
+                <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
+                  {info.description}
+                </Text>
               </Animated.View>
             ))}
           </View>
@@ -123,11 +119,11 @@ export default function CompatibilityResults({
         <Animated.View entering={SlideInRight.duration(700)} className="mb-8 mt-8">
           <TouchableOpacity
             onPress={onTryAnother}
-            className={`w-full items-center rounded-2xl p-4 ${cardBg} border ${borderColor}`}
+            className={`w-full items-center rounded-2xl p-4 ${colors.cardBg} border ${colors.borderColor}`}
             activeOpacity={0.8}>
             <View className="flex-row items-center">
-              <MaterialIcons name="refresh" size={24} color={isDarkMode ? '#32221E' : '#F2EAE0'} />
-              <Text className={`text-aref ml-3 text-lg font-semibold ${textPrimary}`}>
+              <MaterialIcons name="refresh" size={24} color={colors.textColor} />
+              <Text className={`text-aref ml-3 text-lg font-semibold ${colors.textPrimary}`}>
                 Try Another Person
               </Text>
             </View>

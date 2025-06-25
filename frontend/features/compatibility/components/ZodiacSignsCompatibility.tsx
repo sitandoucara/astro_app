@@ -5,7 +5,8 @@ import { BlurView } from 'expo-blur';
 import { useState, useLayoutEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View, Modal } from 'react-native';
 import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
-import { useAppSelector } from 'shared/hooks';
+//import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
 import CompatibilityResults from './CompatibilityResults';
@@ -29,23 +30,9 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
   } = useZodiacCompatibility();
 
   const navigation = useNavigation();
-  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonTextColor = isDarkMode ? 'text-dark-text1' : 'text-[#FFFFF]';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-
-  const inputBg = isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]';
-  const buttonBg = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonText = isDarkMode ? 'text-dark-text1' : 'text-light-text1';
-
-  const modalBg = isDarkMode ? '#0F0A0A' : '#ffffff';
-  const modalText = isDarkMode ? '#ffffff' : '#281109';
-  const modalTint = isDarkMode ? 'dark' : 'light';
+  const colors = useThemeColors();
 
   const formatDate = (d: Date) => d.toLocaleDateString();
 
@@ -60,22 +47,22 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
       headerTransparent: true,
       headerTitle: '',
       headerStyle: {
-        backgroundColor,
+        backgroundColor: colors.backgroundColor,
       },
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="chevron-back" size={24} color={textColor} />
+            <Ionicons name="chevron-back" size={24} color={colors.textColor} />
             <Text
               className="text-aref ml-2 text-left text-xl font-bold"
-              style={{ color: textColor }}>
+              style={{ color: colors.textColor }}>
               {showCompatibility ? 'Compatibility Results' : 'Tell us about your beloved'}
             </Text>
           </View>
         </TouchableOpacity>
       ),
     });
-  }, [navigation, textColor, showCompatibility]);
+  }, [navigation, colors.textColor, showCompatibility]);
 
   // Display results
   if (showCompatibility && userSign && partnerSign) {
@@ -91,16 +78,18 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
   }
 
   return (
-    <View className="flex-1 items-center justify-center p-10" style={{ backgroundColor }}>
+    <View
+      className="flex-1 items-center justify-center p-10"
+      style={{ backgroundColor: colors.backgroundColor }}>
       <View className="flex-1 items-center justify-center gap-2">
         {/* Input Username */}
         <Animated.View entering={SlideInLeft.duration(500)}>
           <TextInput
             placeholder="Username"
-            placeholderTextColor={isDarkMode ? '#281109' : '#ffffff'}
+            placeholderTextColor={colors.placeholderColor}
             value={username}
             onChangeText={setUsername}
-            className={`text-aref w-64 rounded-lg border ${inputBg} ${textPrimary} ${borderColor} px-5 py-3`}
+            className={`text-aref w-64 rounded-lg border ${colors.inputBg} ${colors.textPrimary} ${colors.borderColor} px-5 py-3`}
           />
         </Animated.View>
 
@@ -119,7 +108,7 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
                 <Animated.View key={option} entering={FadeInUp.delay(index * 100).duration(400)}>
                   <TouchableOpacity
                     onPress={() => setGender(option)}
-                    className={`rounded-md border px-4 py-2 ${isSelected ? buttonBg : inputBg} items-center`}>
+                    className={`rounded-md border px-4 py-2 ${isSelected ? colors.buttonBg : colors.inputBg} items-center`}>
                     <Ionicons name={iconName} size={40} color={isSelected ? '#BFB0A7' : 'white'} />
                     <Text
                       className={`text-aref mt-1 font-bold ${isSelected ? 'text-[#BFB0A7]' : 'text-white'}`}>
@@ -135,9 +124,9 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
         {/* Date of birth */}
         <Animated.View entering={SlideInLeft.duration(700)} className="mt-6">
           <TouchableOpacity
-            className={`w-64 rounded-lg border ${cardBg} ${borderColor} px-5 py-3`}
+            className={`w-64 rounded-lg border ${colors.cardBg} ${colors.borderColor} px-5 py-3`}
             onPress={() => setShowDateModal(true)}>
-            <Text className={`text-aref text-center font-bold ${textPrimary}`}>
+            <Text className={`text-aref text-center font-bold ${colors.textPrimary}`}>
               {formatDate(date)}
             </Text>
           </TouchableOpacity>
@@ -149,9 +138,9 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
             <TouchableOpacity
               onPress={handleCheckCompatibility}
               activeOpacity={0.8}
-              className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${buttonBg} py-2 shadow-md shadow-light-text2`}>
+              className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${colors.buttonBg} py-2 shadow-md shadow-light-text2`}>
               <Text
-                className={`text-aref text-center text-base font-bold tracking-wide ${buttonText}`}>
+                className={`text-aref text-center text-base font-bold tracking-wide ${colors.buttonText}`}>
                 Check Compatibility
               </Text>
             </TouchableOpacity>
@@ -161,14 +150,14 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
 
       {/* Modal Date Picker */}
       <Modal transparent visible={showDateModal} animationType="fade">
-        <BlurView intensity={40} tint={modalTint} className="flex-1 justify-end">
-          <View className="rounded-t-2xl p-4" style={{ backgroundColor: modalBg }}>
+        <BlurView intensity={40} tint={colors.modalTint} className="flex-1 justify-end">
+          <View className="rounded-t-2xl p-4" style={{ backgroundColor: colors.modalBg }}>
             <View className="flex-row items-center justify-between">
-              <Text className="text-lg font-bold" style={{ color: modalText }}>
+              <Text className="text-lg font-bold" style={{ color: colors.modalText }}>
                 Choose Date of Birth
               </Text>
               <TouchableOpacity onPress={() => setShowDateModal(false)}>
-                <Text className="text-xl" style={{ color: modalText }}>
+                <Text className="text-xl" style={{ color: colors.modalText }}>
                   ×
                 </Text>
               </TouchableOpacity>
@@ -177,16 +166,16 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
               value={date}
               mode="date"
               display="spinner"
-              textColor={modalText}
+              textColor={colors.modalText}
               onChange={(_, selected) => {
                 if (selected) setDate(selected);
               }}
-              style={{ backgroundColor: modalBg }}
+              style={{ backgroundColor: colors.modalBg }}
             />
             <TouchableOpacity
-              className={`my-2 items-center rounded-full py-3 ${bgButton} ${buttonTextColor}`}
+              className={`my-2 items-center rounded-full py-3 ${colors.bgButton}`}
               onPress={() => setShowDateModal(false)}>
-              <Text className="font-bold text-[#281109]">Confirm</Text>
+              <Text className={`font-bold ${colors.textThird}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>

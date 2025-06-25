@@ -7,20 +7,13 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Alert, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function QuizzScreen({ onBack }: any) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-
-  const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
+  const colors = useThemeColors();
 
   const goBack = () => {
     if (onBack) onBack();
@@ -33,15 +26,15 @@ export default function QuizzScreen({ onBack }: any) {
       headerTransparent: true,
       headerTitle: '',
       headerStyle: {
-        backgroundColor,
+        backgroundColor: colors.backgroundColor,
       },
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row gap-2">
-            <Ionicons name="arrow-back" size={24} style={{ color: textColor }} />
+            <Ionicons name="arrow-back" size={24} style={{ color: colors.textColor }} />
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
-              style={{ color: textColor }}>
+              style={{ color: colors.textColor }}>
               Test your knowledge of Astrology
             </Text>
           </View>
@@ -113,12 +106,12 @@ export default function QuizzScreen({ onBack }: any) {
     if (isLocked(chapter)) {
       return {
         opacity: 0.6,
-        className: `mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`,
+        className: `mt-4 w-full rounded-3xl p-4 ${colors.cardBg} border ${colors.borderColor}`,
       };
     }
     return {
       opacity: 1,
-      className: `mt-4 w-full rounded-3xl p-4 ${cardBg} border ${borderColor}`,
+      className: `mt-4 w-full rounded-3xl p-4 ${colors.cardBg} border ${colors.borderColor}`,
     };
   };
 
@@ -131,7 +124,7 @@ export default function QuizzScreen({ onBack }: any) {
   };
 
   return (
-    <View className="flex-1 p-2" style={{ backgroundColor }}>
+    <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
       <ScrollView className="mt-20">
         <View>
           <View className="mt-8">
@@ -165,14 +158,14 @@ export default function QuizzScreen({ onBack }: any) {
                         <Text
                           className={getTextStyle(
                             chapter,
-                            `text-aref whitespace-nowrap text-base font-medium ${textPrimary} mb-1`
+                            `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
                           )}>
                           {chapter.title}
                         </Text>
                         <Text
                           className={getTextStyle(
                             chapter,
-                            `text-aref whitespace-nowrap text-sm ${textSecondary}`
+                            `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
                           )}>
                           {chapter.duration}
                         </Text>
@@ -184,7 +177,7 @@ export default function QuizzScreen({ onBack }: any) {
                             <MaterialIcons
                               name="lock"
                               size={24}
-                              style={{ color: iconColor, opacity: 0.7 }}
+                              style={{ color: colors.iconColorAlt2, opacity: 0.7 }}
                             />
                           </View>
                         ) : (
@@ -192,7 +185,7 @@ export default function QuizzScreen({ onBack }: any) {
                             <MaterialCommunityIcons
                               name="gamepad-variant"
                               size={32}
-                              style={{ color: iconColor }}
+                              style={{ color: colors.iconColorAlt2 }}
                             />
                           </View>
                         )}

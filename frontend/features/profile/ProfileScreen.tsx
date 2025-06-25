@@ -23,6 +23,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 import { toggleDarkMode } from 'shared/theme/themeSlice';
 
@@ -32,34 +33,12 @@ export default function ProfileScreen() {
   const user = useAppSelector((state) => state.auth.user);
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  const colors = useThemeColors();
 
   const { userSign } = useZodiacCompatibility();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const colors = {
-    tailwind: {
-      background: isDarkMode ? 'bg-[#F2EAE0]' : 'bg-[#281109]',
-      cardBg: isDarkMode ? 'bg-[#8B7E78]' : 'bg-[#402B25]',
-      itemBg: isDarkMode ? 'bg-[#F5F0ED]' : 'bg-[#5D4B46]',
-      iconBg: isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]',
-      textPrimary: isDarkMode ? 'text-[#281109]' : 'text-[#F2EAE0]',
-      textSecondary: isDarkMode ? 'text-[#A8958C]' : 'text-[#D8C8B4]',
-      textReverse: isDarkMode ? 'text-[#F2EAE0]' : 'text-[#281109]',
-      borderReverse: isDarkMode ? ' border-[#281109] ' : 'border-[#F2EAE0]',
-      textOnCard: isDarkMode ? 'text-[#281109]' : 'text-[#F2EAE0]',
-      modalBg: isDarkMode ? 'bg-[#F2EAE0]' : 'bg-[#402B25]',
-    },
-    raw: {
-      icon: isDarkMode ? '#281109' : '#F2EAE0',
-      thumb: isDarkMode ? '#F2EAE0' : '#32221E',
-      trackOff: '#32221E',
-      trackOn: '#F2EAE0',
-      modalBg: isDarkMode ? '#F2EAE0' : '#402B25',
-      danger: isDarkMode ? '#871515' : '#EF4444',
-    },
-  };
 
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
@@ -85,7 +64,7 @@ export default function ProfileScreen() {
     isDanger = false,
   }) => (
     <TouchableOpacity
-      className={`mb-3 flex-row items-center justify-between border-b-[0.2px] p-4 ${colors.tailwind.borderReverse}`}
+      className={`mb-3 flex-row items-center justify-between border-b-[0.2px] p-4 ${colors.colors.tailwind.borderReverse}`}
       onPress={onPress}>
       <View className="flex-row items-center space-x-3">
         <View>{icon}</View>
@@ -95,7 +74,7 @@ export default function ProfileScreen() {
               ? isDarkMode
                 ? 'text-[#871515]'
                 : 'text-[#EF4444]'
-              : colors.tailwind.textOnCard
+              : colors.colors.tailwind.textOnCard
           }`}>
           {label}
         </Text>
@@ -142,10 +121,12 @@ export default function ProfileScreen() {
         <View className="p-2">
           <Text
             className="text-aref ml-5 text-[18px] font-medium"
-            style={{ color: colors.raw.icon }}>
+            style={{ color: colors.colors.raw.icon }}>
             Your profile ({user?.username ?? 'User'})
           </Text>
-          <Text className="text-aref ml-5 mt-1 text-[14px]" style={{ color: colors.raw.icon }}>
+          <Text
+            className="text-aref ml-5 mt-1 text-[14px]"
+            style={{ color: colors.colors.raw.icon }}>
             {user?.dateOfBirth ? `${user.dateOfBirth.slice(0, 10)}` : ''}
             {user?.timeOfBirth ? ` • ${user.timeOfBirth.slice(11, 16)}` : ''}
           </Text>
@@ -157,7 +138,7 @@ export default function ProfileScreen() {
 
   return (
     <>
-      <ScrollView className={`flex-1 ${colors.tailwind.background} p-4`}>
+      <ScrollView className={`flex-1 ${colors.colors.tailwind.background} p-4`}>
         {user && (
           <View>
             <TouchableOpacity
@@ -170,36 +151,36 @@ export default function ProfileScreen() {
                   </View>
                   <View>
                     <Text
-                      className={`text-aref text-xl font-semibold ${colors.tailwind.textPrimary}`}>
+                      className={`text-aref text-xl font-semibold ${colors.colors.tailwind.textPrimary}`}>
                       {user.username}{' '}
                       {user.gender === 'Male' ? '♂' : user.gender === 'Female' ? '♀' : ''}
                     </Text>
-                    <Text className={`text-aref text-sm ${colors.tailwind.textSecondary}`}>
+                    <Text className={`text-aref text-sm ${colors.colors.tailwind.textSecondary}`}>
                       {user.email}
                     </Text>
                   </View>
                 </View>
 
-                <Feather name="chevron-right" size={24} color={colors.raw.icon} />
+                <Feather name="chevron-right" size={24} color={colors.colors.raw.icon} />
               </View>
             </TouchableOpacity>
           </View>
         )}
         {/* Appearance & Language */}
-        <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+        <View className={`mb-6 rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
             icon={
               isDarkMode ? (
                 <MaterialCommunityIcons
                   name="white-balance-sunny"
                   size={20}
-                  color={colors.raw.icon}
+                  color={colors.colors.raw.icon}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="moon-waning-crescent"
                   size={20}
-                  color={colors.raw.icon}
+                  color={colors.colors.raw.icon}
                 />
               )
             }
@@ -220,68 +201,75 @@ export default function ProfileScreen() {
             onPress={undefined}
           />
           <SettingItem
-            icon={<FontAwesome5 name="globe-americas" size={20} color={colors.raw.icon} />}
+            icon={<FontAwesome5 name="globe-americas" size={20} color={colors.colors.raw.icon} />}
             label=" Change Language"
             rightComponent={
               <View className="flex-row items-center space-x-2">
                 <Text
-                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.colors.tailwind.iconBg} ${colors.colors.tailwind.textReverse} p-4`}>
                   English(US)
                 </Text>
-                <Feather name="chevron-right" size={20} color={colors.raw.icon} />
+                <Feather name="chevron-right" size={20} color={colors.colors.raw.icon} />
               </View>
             }
             onPress={undefined}
           />
           <SettingItem
-            icon={<FontAwesome6 name="crown" size={20} color={colors.raw.icon} />}
+            icon={<FontAwesome6 name="crown" size={20} color={colors.colors.raw.icon} />}
             label=" Subscriptions"
             rightComponent={
               <View className="flex-row items-center space-x-2">
                 <Text
-                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.tailwind.iconBg} ${colors.tailwind.textReverse} p-4`}>
+                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.colors.tailwind.iconBg} ${colors.colors.tailwind.textReverse} p-4`}>
                   Free Plan
                 </Text>
-                <Feather name="chevron-right" size={20} color={colors.raw.icon} />
+                <Feather name="chevron-right" size={20} color={colors.colors.raw.icon} />
               </View>
             }
             onPress={undefined}
           />
         </View>
         {/* Feedback */}
-        <View className={`mb-6 rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+        <View className={`mb-6 rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
-            icon={<FontAwesome6 name="masks-theater" size={20} color={colors.raw.icon} />}
+            icon={<FontAwesome6 name="masks-theater" size={20} color={colors.colors.raw.icon} />}
             label=" Rate us"
             onPress={undefined}
           />
           <SettingItem
-            icon={<MaterialCommunityIcons name="message-badge" size={20} color={colors.raw.icon} />}
+            icon={
+              <MaterialCommunityIcons
+                name="message-badge"
+                size={20}
+                color={colors.colors.raw.icon}
+              />
+            }
             label=" Contact us"
             onPress={undefined}
           />
           <SettingItem
-            icon={<MaterialIcons name="verified" size={20} color={colors.raw.icon} />}
+            icon={<MaterialIcons name="verified" size={20} color={colors.colors.raw.icon} />}
             label=" Follow us"
             onPress={undefined}
           />
         </View>
         {/* Account */}
-        <View className={`rounded-xl p-4 ${colors.tailwind.cardBg}`}>
+        <View className={`rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
-            icon={<Ionicons name="log-out" size={20} color={colors.raw.icon} />}
+            icon={<Ionicons name="log-out" size={20} color={colors.colors.raw.icon} />}
             label=" Log Out"
             rightComponent={undefined}
             onPress={handleLogout}
           />
           <SettingItem
-            icon={<FontAwesome6 name="trash" size={20} color={colors.raw.danger} />}
+            icon={<FontAwesome6 name="trash" size={20} color={colors.colors.raw.danger} />}
             label=" Delete Account"
             rightComponent={undefined}
             onPress={showDeleteConfirmation}
             isDanger
           />
-          <Text className={`text-aref text-center font-medium ${colors.tailwind.textPrimary} p-2`}>
+          <Text
+            className={`text-aref text-center font-medium ${colors.colors.tailwind.textPrimary} p-2`}>
             V1.1.0
           </Text>
         </View>
@@ -294,18 +282,22 @@ export default function ProfileScreen() {
         onRequestClose={() => setShowDeleteModal(false)}>
         <View className="flex-1 items-center justify-center bg-black/50 p-4">
           <View
-            className={`w-full max-w-sm rounded-xl p-6 ${colors.tailwind.modalBg}`}
-            style={{ backgroundColor: colors.raw.modalBg }}>
+            className={`w-full max-w-sm rounded-xl p-6 ${colors.colors.tailwind.modalBg}`}
+            style={{ backgroundColor: colors.colors.raw.modalBg }}>
             <View className="mb-4 items-center">
-              <FontAwesome6 name="triangle-exclamation" size={48} color={colors.raw.danger} />
+              <FontAwesome6
+                name="triangle-exclamation"
+                size={48}
+                color={colors.colors.raw.danger}
+              />
             </View>
 
             <Text
-              className={`text-aref mb-2 text-center text-lg font-bold ${colors.tailwind.textOnCard}`}>
+              className={`text-aref mb-2 text-center text-lg font-bold ${colors.colors.tailwind.textOnCard}`}>
               Delete Your Account
             </Text>
 
-            <Text className={`text-aref mb-6 text-center ${colors.tailwind.textOnCard}`}>
+            <Text className={`text-aref mb-6 text-center ${colors.colors.tailwind.textOnCard}`}>
               This action is irreversible. All your data will be permanently deleted.
               {'\n\n'}
               Are you sure you want to delete your account?
@@ -313,10 +305,11 @@ export default function ProfileScreen() {
 
             <View className="flex-row gap-2">
               <TouchableOpacity
-                className={`flex-1 rounded-lg border p-3 ${colors.tailwind.borderReverse}`}
+                className={`flex-1 rounded-lg border p-3 ${colors.colors.tailwind.borderReverse}`}
                 onPress={() => setShowDeleteModal(false)}
                 disabled={isDeleting}>
-                <Text className={`text-aref text-center font-medium ${colors.tailwind.textOnCard}`}>
+                <Text
+                  className={`text-aref text-center font-medium ${colors.colors.tailwind.textOnCard}`}>
                   Cancel
                 </Text>
               </TouchableOpacity>

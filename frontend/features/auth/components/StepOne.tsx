@@ -10,21 +10,13 @@ import {
   Platform,
 } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
-import { useAppSelector } from 'shared/hooks';
+//import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function StepOne({ formData, updateForm, onNext }: any) {
-  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
-  const border = isDarkMode ? 'border-[#281109]' : 'border-[#F2EAE0]';
-  const bgInput = isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]';
-  const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonTextColor = isDarkMode ? 'text-dark-text1' : 'text-light-text1';
-  const progressColor = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const placeholderColor = isDarkMode ? '#281109' : '#ffffff';
-  const iconColor = isDarkMode ? '#281109' : '#F2EAE0';
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const colors = useThemeColors();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [emailError, setEmailError] = useState('');
@@ -101,17 +93,17 @@ export default function StepOne({ formData, updateForm, onNext }: any) {
   return (
     <KeyboardAvoidingView
       className="flex-1"
-      style={{ backgroundColor }}
+      style={{ backgroundColor: colors.backgroundColor }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View className="flex-1 p-10">
         <View className="mt-20 flex-1 justify-between">
           <View className="mb-4 w-full items-center">
             <View className="mb-2 flex-row gap-2">
-              <View className={`h-1 w-32 rounded-full ${progressColor}`} />
-              <View className={`h-1 w-32 rounded-full ${progressColor} opacity-50`} />
-              <View className={`h-1 w-32 rounded-full ${progressColor} opacity-50`} />
+              <View className={`h-1 w-32 rounded-full ${colors.progressColor}`} />
+              <View className={`h-1 w-32 rounded-full ${colors.progressColor} opacity-50`} />
+              <View className={`h-1 w-32 rounded-full ${colors.progressColor} opacity-50`} />
             </View>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
+            <Text className={`text-aref text-sm ${colors.textSecondary}`}>
               Let's start your cosmic journey
             </Text>
           </View>
@@ -123,23 +115,23 @@ export default function StepOne({ formData, updateForm, onNext }: any) {
             ) : null}
             <TextInput
               placeholder="Email"
-              placeholderTextColor={placeholderColor}
+              placeholderTextColor={colors.placeholderColor}
               value={formData.email}
               onChangeText={onEmailChange}
               onBlur={onEmailBlur}
-              className={`text-aref w-64 rounded-lg border ${border} ${bgInput} px-5 py-3 text-left ${textPrimary}`}
+              className={`text-aref w-64 rounded-lg border ${colors.border} ${colors.bgInput} px-5 py-3 text-left ${colors.textPrimary}`}
               keyboardType="email-address"
               autoCapitalize="none"
             />
             <View className="relative mt-2 w-64">
               <TextInput
                 placeholder="Password"
-                placeholderTextColor={placeholderColor}
+                placeholderTextColor={colors.placeholderColor}
                 secureTextEntry={!isPasswordVisible}
                 value={formData.password}
                 onChangeText={onPasswordChange}
                 onBlur={onPasswordBlur}
-                className={`text-aref w-64 rounded-lg border ${border} ${bgInput} px-5 py-3 ${textPrimary}`}
+                className={`text-aref w-64 rounded-lg border ${colors.border} ${colors.bgInput} px-5 py-3 ${colors.textPrimary}`}
               />
               <TouchableOpacity
                 className="absolute right-4 top-1/2 -translate-y-1/2"
@@ -147,7 +139,7 @@ export default function StepOne({ formData, updateForm, onNext }: any) {
                 <Ionicons
                   name={isPasswordVisible ? 'eye-off' : 'eye'}
                   size={22}
-                  color={iconColor}
+                  color={colors.iconColor}
                 />
               </TouchableOpacity>
             </View>
@@ -157,10 +149,10 @@ export default function StepOne({ formData, updateForm, onNext }: any) {
                 disabled={!isValid}
                 activeOpacity={0.8}
                 className={`shadow-opacity-30 elevation-1 w-64 rounded-full py-2 shadow-md shadow-light-text2 ${
-                  isValid ? bgButton : `${bgButton} opacity-50`
+                  isValid ? colors.bgButton : `${colors.bgButton} opacity-50`
                 }`}>
                 <Text
-                  className={`text-aref text-center text-base font-bold tracking-wide ${buttonTextColor}`}>
+                  className={`text-aref text-center text-base font-bold tracking-wide ${colors.buttonTextColor}`}>
                   Continue
                 </Text>
               </TouchableOpacity>

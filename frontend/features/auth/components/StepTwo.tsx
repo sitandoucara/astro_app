@@ -12,25 +12,15 @@ import {
   FlatList,
 } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
-import { useAppSelector } from 'shared/hooks';
+//import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 import useLocationSearch, { LocationResult } from '../../../shared/hooks/useLocationSearch';
 
 export default function StepTwo({ formData, updateForm, onNext }: any) {
-  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
-  const border = isDarkMode ? 'border-[#281109]' : 'border-[#F2EAE0]';
-  const bgInput = isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]';
-  const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonTextColor = isDarkMode ? 'text-dark-text1' : 'text-light-text1';
-  const progressColor = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const placeholderColor = isDarkMode ? '#281109' : '#ffffff';
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-
-  const modalBg = isDarkMode ? '#F2EAE0' : '#281109';
-  const modalText = isDarkMode ? '#32221E' : '#F2EAE0';
+  const colors = useThemeColors();
 
   const keyboardOffset = useSharedValue(0);
 
@@ -81,17 +71,17 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
   return (
     <KeyboardAvoidingView
       className="flex-1"
-      style={{ backgroundColor }}
+      style={{ backgroundColor: colors.backgroundColor }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View className="flex-1 p-10">
         <View className="mt-20 flex-1 justify-between">
           <View className="mb-2 w-full items-center">
             <View className="mb-2 flex-row gap-2">
-              <View className={`h-1 w-32 rounded-full ${progressColor}`} />
-              <View className={`h-1 w-32 rounded-full ${progressColor}`} />
-              <View className={`h-1 w-32 rounded-full ${progressColor} opacity-50`} />
+              <View className={`h-1 w-32 rounded-full ${colors.progressColor}`} />
+              <View className={`h-1 w-32 rounded-full ${colors.progressColor}`} />
+              <View className={`h-1 w-32 rounded-full ${colors.progressColor} opacity-50`} />
             </View>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
+            <Text className={`text-aref text-sm ${colors.textSecondary}`}>
               Who are you among the stars?
             </Text>
           </View>
@@ -99,10 +89,10 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
           <Animated.View style={inputContainerStyle} className="mb-36 items-center justify-between">
             <TextInput
               placeholder="Username"
-              placeholderTextColor={placeholderColor}
+              placeholderTextColor={colors.placeholderColor}
               value={formData.username}
               onChangeText={(text) => updateForm({ username: text })}
-              className={`text-aref w-64 rounded-lg border ${border} ${bgInput} px-5 py-3 text-left ${textPrimary}`}
+              className={`text-aref w-64 rounded-lg border ${colors.border} ${colors.bgInput} px-5 py-3 text-left ${colors.textPrimary}`}
             />
 
             <View className="mt-4 flex-row justify-center gap-4">
@@ -119,9 +109,7 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
                   <TouchableOpacity
                     key={option}
                     onPress={() => updateForm({ gender: option })}
-                    className={`rounded-md border px-4 py-2 ${
-                      isSelected ? 'bg-[#281109]' : 'bg-[#91837C]'
-                    } items-center`}>
+                    className={`rounded-md border px-4 py-2 ${isSelected ? colors.buttonBg : colors.inputBg} items-center`}>
                     <Ionicons name={iconName} size={40} color={isSelected ? '#BFB0A7' : 'white'} />
                     <Text
                       className={`text-aref mt-1 font-bold ${isSelected ? 'text-[#BFB0A7]' : 'text-white'}`}>
@@ -135,8 +123,8 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
             {/* Select birthplace */}
             <TouchableOpacity
               onPress={() => setShowPlaceModal(true)}
-              className={`mt-8 rounded-lg border ${border} ${bgInput} px-5 py-3`}>
-              <Text className={`text-aref text-center ${textPrimary}`}>
+              className={`mt-8 rounded-lg border ${colors.border} ${colors.bgInput} px-5 py-3`}>
+              <Text className={`text-aref text-center ${colors.textPrimary}`}>
                 {formData.birthplaceQuery || 'Select Birthplace'}
               </Text>
             </TouchableOpacity>
@@ -147,10 +135,10 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
                 disabled={!isValid}
                 activeOpacity={0.8}
                 className={`shadow-opacity-30 elevation-1 w-64 rounded-full py-2 shadow-md shadow-light-text2 ${
-                  isValid ? bgButton : `${bgButton} opacity-50`
+                  isValid ? colors.bgButton : `${colors.bgButton} opacity-50`
                 }`}>
                 <Text
-                  className={`text-aref text-center text-base font-bold tracking-wide ${buttonTextColor}`}>
+                  className={`text-aref text-center text-base font-bold tracking-wide ${colors.buttonTextColor}`}>
                   Continue
                 </Text>
               </TouchableOpacity>
@@ -164,25 +152,25 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
         visible={showPlaceModal}
         animationType="slide"
         onRequestClose={() => setShowPlaceModal(false)}>
-        <View className="flex-1 p-6" style={{ backgroundColor: modalBg }}>
+        <View className="flex-1 p-6" style={{ backgroundColor: colors.modalBgPlace }}>
           <View className="mb-4 mt-14 flex-row items-center justify-between">
-            <Text className="text-aref text-xl font-bold" style={{ color: modalText }}>
+            <Text className="text-aref text-xl font-bold" style={{ color: colors.modalTextPlace }}>
               Choose Birthplace
             </Text>
             <TouchableOpacity onPress={() => setShowPlaceModal(false)}>
-              <Ionicons name="close" size={32} color={modalText} />
+              <Ionicons name="close" size={32} color={colors.modalTextPlace} />
             </TouchableOpacity>
           </View>
 
           <TextInput
             placeholder="Type a city..."
-            placeholderTextColor={placeholderColor}
+            placeholderTextColor={colors.placeholderColor}
             value={query}
             onChangeText={(text) => {
               setQuery(text);
               updateForm({ birthplaceQuery: text, selectedPlace: null });
             }}
-            className={`text-aref mb-4 w-full rounded-lg border ${border} ${bgInput} px-4 py-3 ${textPrimary}`}
+            className={`text-aref mb-4 w-full rounded-lg border ${colors.border} ${colors.bgInput} px-4 py-3 ${colors.textPrimary}`}
           />
 
           <View className="flex-1">
@@ -191,7 +179,10 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
               keyExtractor={(_, idx: Key) => String(idx)}
               style={{ flex: 1 }}
               ItemSeparatorComponent={() => (
-                <View className="border-b-[0.3px]" style={{ borderColor: placeholderColor }} />
+                <View
+                  className="border-b-[0.3px]"
+                  style={{ borderColor: colors.placeholderColor }}
+                />
               )}
               renderItem={({ item }: { item: LocationResult }) => (
                 <TouchableOpacity
@@ -203,7 +194,7 @@ export default function StepTwo({ formData, updateForm, onNext }: any) {
                     setShowPlaceModal(false);
                   }}
                   className="py-3">
-                  <Text className="text-aref" style={{ color: placeholderColor }}>
+                  <Text className="text-aref" style={{ color: colors.placeholderColor }}>
                     {item.display_name}
                   </Text>
                 </TouchableOpacity>

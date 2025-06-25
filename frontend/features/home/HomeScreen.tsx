@@ -4,6 +4,7 @@ import { format, addDays, subDays } from 'date-fns';
 import { useLayoutEffect, useState, useMemo } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
 import { HoroscopeSection } from './components/HoroscopeSectionProps';
@@ -21,16 +22,7 @@ export default function HomeScreen() {
 
   const { userSign } = useZodiacCompatibility();
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
-  const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
-
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
+  const colors = useThemeColors();
 
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
@@ -48,7 +40,7 @@ export default function HomeScreen() {
           <Image source={{ uri: signImage }} className="h-10 w-10" />
 
           <View>
-            <Text className="text-aref text-[20px]" style={{ color: textColor }}>
+            <Text className="text-aref text-[20px]" style={{ color: colors.textColor }}>
               Hi {user?.username ?? 'You'}!
             </Text>
           </View>
@@ -108,7 +100,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView className="flex-1" style={{ backgroundColor }}>
+    <ScrollView className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <ScrollView horizontal className="mt-8" showsHorizontalScrollIndicator={false}>
         {tabs.map((tab, index) => (
           <View key={tab.id} className="flex-row items-center">
@@ -117,14 +109,14 @@ export default function HomeScreen() {
                 className={`text-aref text-sm font-medium tracking-wide ${
                   activeTab === tab.id ? 'underline' : ''
                 }`}
-                style={{ color: activeTab === tab.id ? textColor : '#7F726C' }}>
+                style={{ color: activeTab === tab.id ? colors.textColor : '#7F726C' }}>
                 {tab.label}
               </Text>
 
               {activeTab === tab.id && (
                 <View
                   className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full"
-                  style={{ backgroundColor: textColor }}
+                  style={{ backgroundColor: colors.textColor }}
                 />
               )}
             </TouchableOpacity>
@@ -136,17 +128,17 @@ export default function HomeScreen() {
       <View className="mt-8 flex-1 p-2">
         <View className="mb-8 flex-row items-start justify-between">
           <View>
-            <Text className={`text-aref mt-1 text-xl font-light ${textSecondary} `}>
+            <Text className={`text-aref mt-1 text-xl font-light ${colors.textSecondary}`}>
               {getFormattedDate(activeTab)}
             </Text>
 
-            <Text className={`text-aref mt-1 text-sm ${textSecondary}`}>Horoscope Date</Text>
+            <Text className={`text-aref mt-1 text-sm ${colors.textSecondary}`}>Horoscope Date</Text>
           </View>
           <View className="items-end">
-            <Text className={`text-aref mt-1 text-xl font-light ${textSecondary} `}>
+            <Text className={`text-aref mt-1 text-xl font-light ${colors.textSecondary}`}>
               {isPremiumTab(activeTab) ? capitalizeFirst(currentUserSign) : 'Waning Gibbous'}
             </Text>
-            <Text className={`text-aref mt-1 text-sm ${textSecondary} `}>
+            <Text className={`text-aref mt-1 text-sm ${colors.textSecondary}`}>
               {isPremiumTab(activeTab) ? 'Sun sign' : 'Moon Phase'}
             </Text>
           </View>
@@ -162,38 +154,36 @@ export default function HomeScreen() {
               </View>
               <View className="mb-8">
                 <Text
-                  className={`text-aref font-medium" mb-4 text-center text-lg
-                  ${textPrimary} `}>
+                  className={`text-aref mb-4 text-center text-lg font-medium ${colors.textPrimary}`}>
                   Horoscope for {activeTab}
                 </Text>
-                <Text
-                  className={`text-aref text-sm" text-center
-                  ${textSecondary} `}>
+                <Text className={`text-aref text-center text-sm ${colors.textSecondary}`}>
                   To unlock the horoscope, subscribe
                 </Text>
               </View>
 
               <View className="w-full flex-row items-center justify-center gap-2">
                 <View className="flex-row items-center" style={{ gap: 8 }}>
-                  <View className={`h-3 w-3 rounded-full  ${cardBg} `} />
-                  <View className={`h-4 w-4 rounded-full  ${cardBg} `} />
+                  <View className={`h-3 w-3 rounded-full ${colors.cardBg}`} />
+                  <View className={`h-4 w-4 rounded-full ${colors.cardBg}`} />
                 </View>
 
-                <View className={`rounded-full border-2 p-2  ${borderColor} `}>
+                <View className={`rounded-full border-2 p-2 ${colors.borderColor}`}>
                   <TouchableOpacity
                     onPress={() => Alert.alert('subscribe!')}
                     activeOpacity={0.8}
-                    className="shadow-opacity-30  elevation-1 rounded-full bg-[#BFB0A7] px-12  py-3 shadow-md shadow-light-text2">
+                    className="shadow-opacity-30 elevation-1 rounded-full bg-[#BFB0A7] px-12 py-3 shadow-md shadow-light-text2">
                     <Text
-                      className={`text-aref text-center text-base font-bold tracking-wide  ${iconColor} `}>
+                      className={`text-aref text-center text-base font-bold tracking-wide`}
+                      style={{ color: colors.iconColor }}>
                       Subscribe to unlock
                     </Text>
                   </TouchableOpacity>
                 </View>
 
                 <View className="flex-row items-center" style={{ gap: 8 }}>
-                  <View className={`h-4 w-4 rounded-full  ${cardBg} `} />
-                  <View className={`h-3 w-3 rounded-full  ${cardBg} `} />
+                  <View className={`h-4 w-4 rounded-full ${colors.cardBg}`} />
+                  <View className={`h-3 w-3 rounded-full ${colors.cardBg}`} />
                 </View>
               </View>
             </View>
@@ -203,20 +193,22 @@ export default function HomeScreen() {
             <View className="mb-8">
               <View className="relative items-center">
                 <View className="absolute left-0 z-10" style={{ top: '50%', marginTop: -16 }}>
-                  <View className={`h-8 w-8 items-center justify-center rounded-full ${iconBg} `}>
+                  <View
+                    className={`h-8 w-8 items-center justify-center rounded-full ${colors.iconBg}`}>
                     <MaterialCommunityIcons
                       name="zodiac-capricorn"
                       size={20}
-                      style={{ color: iconColor }}
+                      style={{ color: colors.iconColorAlt }}
                     />
                   </View>
                 </View>
                 <View className="absolute right-0 z-10" style={{ top: '50%', marginTop: -16 }}>
-                  <View className={`h-8 w-8 items-center justify-center rounded-full ${iconBg} `}>
+                  <View
+                    className={`h-8 w-8 items-center justify-center rounded-full ${colors.iconBg}`}>
                     <MaterialCommunityIcons
                       name="zodiac-cancer"
                       size={20}
-                      style={{ color: iconColor }}
+                      style={{ color: colors.iconColorAlt }}
                     />
                   </View>
                 </View>
@@ -230,15 +222,15 @@ export default function HomeScreen() {
               </View>
               <View className="mt-4 flex-row items-end justify-between">
                 <View>
-                  <Text className={`text-aref font-medium" text-lg ${textPrimary} `}>
+                  <Text className={`text-aref text-lg font-medium ${colors.textPrimary}`}>
                     {capitalizeFirst(currentUserSign)}
                   </Text>
-                  <Text className={`text-sm  ${textSecondary}`}>Sun sign</Text>
+                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>Sun sign</Text>
                 </View>
                 <View className="items-end">
-                  <Text className={`text-aref font-medium" text-lg ${textPrimary} `}>Leo</Text>
+                  <Text className={`text-aref text-lg font-medium ${colors.textPrimary}`}>Leo</Text>
 
-                  <Text className={`text-aref text-sm  ${textSecondary} `}>Moon sign</Text>
+                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>Moon sign</Text>
                 </View>
               </View>
             </View>
@@ -247,10 +239,12 @@ export default function HomeScreen() {
             <HoroscopeSection activeTab={activeTab} isPremiumTab={isPremiumTab} />
 
             <View className="mb-8">
-              <Text className={`text-aref mb-4 text-lg font-medium ${textPrimary}`}>
+              <Text className={`text-aref mb-4 text-lg font-medium ${colors.textPrimary}`}>
                 Affirmation
               </Text>
-              <Text className={`text-aref text-sm ${textSecondary}`} style={{ lineHeight: 20 }}>
+              <Text
+                className={`text-aref text-sm ${colors.textSecondary}`}
+                style={{ lineHeight: 20 }}>
                 I can be a masterpiece and a work in progress at the same time
               </Text>
             </View>

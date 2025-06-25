@@ -7,13 +7,16 @@ import { useState, useLayoutEffect, useEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View, Modal, Alert } from 'react-native';
 import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { supabase } from 'shared/lib/supabase';
 
 export default function EditProfile({ onBack }: any) {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const user = useAppSelector((state) => state.auth.user);
+
+  const colors = useThemeColors();
 
   const [username, setUsername] = useState(user?.username || '');
   const [birthplace, setBirthplace] = useState(user?.birthplace || '');
@@ -30,7 +33,6 @@ export default function EditProfile({ onBack }: any) {
 
   const [originalData, setOriginalData] = useState({
     username: user?.username || '',
-
     dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : new Date(),
     timeOfBirth: user?.timeOfBirth ? new Date(user.timeOfBirth) : new Date(),
   });
@@ -39,28 +41,12 @@ export default function EditProfile({ onBack }: any) {
     if (user) {
       const original = {
         username: user.username || '',
-
         dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth) : new Date(),
         timeOfBirth: user.timeOfBirth ? new Date(user.timeOfBirth) : new Date(),
       };
       setOriginalData(original);
     }
   }, [user]);
-
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonTextColor = isDarkMode ? 'text-dark-text1' : 'text-[#FFFFFF]';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#ffffff]' : 'text-[#281109]';
-  const inputBg = isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]';
-  const buttonBg = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonText = isDarkMode ? 'text-dark-text1' : 'text-light-text1';
-  const modalBg = isDarkMode ? '#0F0A0A' : '#ffffff';
-  const modalText = isDarkMode ? '#ffffff' : '#281109';
-  const modalTint = isDarkMode ? 'dark' : 'light';
 
   const formatDate = (d: Date) => d.toLocaleDateString();
   const formatTime = (t: Date) => t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -76,7 +62,6 @@ export default function EditProfile({ onBack }: any) {
 
   const handleCancel = () => {
     setUsername(originalData.username);
-
     setDate(originalData.dateOfBirth);
     setTimeOfBirth(originalData.timeOfBirth);
     setIsEditing(false);
@@ -145,7 +130,6 @@ export default function EditProfile({ onBack }: any) {
 
       const newOriginalData = {
         username: username.trim(),
-
         dateOfBirth: date,
         timeOfBirth: timeOfBirth,
       };
@@ -173,30 +157,32 @@ export default function EditProfile({ onBack }: any) {
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="chevron-back" size={24} color={textColor} />
+            <Ionicons name="chevron-back" size={24} color={colors.textColor} />
             <Text
               className="text-aref ml-2 text-left text-xl font-bold"
-              style={{ color: textColor }}>
+              style={{ color: colors.textColor }}>
               Edit Profile
             </Text>
           </View>
         </TouchableOpacity>
       ),
     });
-  }, [navigation, textColor]);
+  }, [navigation, colors.textColor]);
 
   return (
-    <View className="flex-1 items-center justify-center p-10" style={{ backgroundColor }}>
+    <View
+      className="flex-1 items-center justify-center p-10"
+      style={{ backgroundColor: colors.backgroundColor }}>
       <View className="flex-1 items-center justify-center gap-4">
         {/* Input Username */}
         <Animated.View entering={SlideInLeft.duration(500)}>
           <TextInput
             placeholder="Username"
-            placeholderTextColor={isDarkMode ? '#281109' : '#ffffff'}
+            placeholderTextColor={colors.placeholderColor}
             value={username}
             onChangeText={setUsername}
             editable={isEditing}
-            className={`text-aref w-64 rounded-lg border ${inputBg} ${textPrimary} ${borderColor} px-5 py-3 ${!isEditing ? 'opacity-60' : ''}`}
+            className={`text-aref w-64 rounded-lg border ${colors.inputBg} ${colors.textPrimary} ${colors.borderColor} px-5 py-3 ${!isEditing ? 'opacity-60' : ''}`}
           />
         </Animated.View>
 
@@ -214,7 +200,7 @@ export default function EditProfile({ onBack }: any) {
               return (
                 <Animated.View key={option} entering={FadeInUp.delay(index * 100).duration(400)}>
                   <View
-                    className={`rounded-md border px-4 py-2 ${isSelected ? buttonBg : inputBg} items-center opacity-60`}>
+                    className={`rounded-md border px-4 py-2 ${isSelected ? colors.buttonBg : colors.inputBg} items-center opacity-60`}>
                     <Ionicons name={iconName} size={40} color={isSelected ? '#BFB0A7' : 'white'} />
                     <Text
                       className={`text-aref mt-1 font-bold ${isSelected ? 'text-[#BFB0A7]' : 'text-white'}`}>
@@ -230,10 +216,10 @@ export default function EditProfile({ onBack }: any) {
         {/* Date of birth */}
         <Animated.View entering={SlideInLeft.duration(700)} className="mt-4">
           <TouchableOpacity
-            className={`w-64 rounded-lg border ${cardBg} ${borderColor} px-5 py-3 ${!isEditing ? 'opacity-60' : ''}`}
+            className={`w-64 rounded-lg border ${colors.cardBg} ${colors.borderColor} px-5 py-3 ${!isEditing ? 'opacity-60' : ''}`}
             onPress={() => isEditing && setShowDateModal(true)}
             disabled={!isEditing}>
-            <Text className={`text-aref text-center font-bold ${textPrimary}`}>
+            <Text className={`text-aref text-center font-bold ${colors.textPrimary}`}>
               Date of birth: {formatDate(date)}
             </Text>
           </TouchableOpacity>
@@ -242,10 +228,10 @@ export default function EditProfile({ onBack }: any) {
         {/* Time of birth */}
         <Animated.View entering={SlideInRight.duration(750)} className="mt-2">
           <TouchableOpacity
-            className={`w-64 rounded-lg border ${cardBg} ${borderColor} px-5 py-3 ${!isEditing ? 'opacity-60' : ''}`}
+            className={`w-64 rounded-lg border ${colors.cardBg} ${colors.borderColor} px-5 py-3 ${!isEditing ? 'opacity-60' : ''}`}
             onPress={() => isEditing && setShowTimeModal(true)}
             disabled={!isEditing}>
-            <Text className={`text-aref text-center font-bold ${textPrimary}`}>
+            <Text className={`text-aref text-center font-bold ${colors.textPrimary}`}>
               Time of birth: {formatTime(timeOfBirth)}
             </Text>
           </TouchableOpacity>
@@ -259,9 +245,9 @@ export default function EditProfile({ onBack }: any) {
               <TouchableOpacity
                 onPress={handleEdit}
                 activeOpacity={0.8}
-                className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${buttonBg} py-2 shadow-md shadow-light-text2`}>
+                className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${colors.buttonBg} py-2 shadow-md shadow-light-text2`}>
                 <Text
-                  className={`text-aref text-center text-base font-bold tracking-wide ${buttonText}`}>
+                  className={`text-aref text-center text-base font-bold tracking-wide ${colors.buttonText}`}>
                   Edit
                 </Text>
               </TouchableOpacity>
@@ -298,14 +284,14 @@ export default function EditProfile({ onBack }: any) {
 
       {/* Modal Date Picker */}
       <Modal transparent visible={showDateModal} animationType="fade">
-        <BlurView intensity={40} tint={modalTint} className="flex-1 justify-end">
-          <View className="rounded-t-2xl p-4" style={{ backgroundColor: modalBg }}>
+        <BlurView intensity={40} tint={colors.modalTint} className="flex-1 justify-end">
+          <View className="rounded-t-2xl p-4" style={{ backgroundColor: colors.modalBg }}>
             <View className="flex-row items-center justify-between">
-              <Text className="text-lg font-bold" style={{ color: modalText }}>
+              <Text className="text-lg font-bold" style={{ color: colors.modalText }}>
                 Choose Date of Birth
               </Text>
               <TouchableOpacity onPress={() => setShowDateModal(false)}>
-                <Text className="text-xl" style={{ color: modalText }}>
+                <Text className="text-xl" style={{ color: colors.modalText }}>
                   ×
                 </Text>
               </TouchableOpacity>
@@ -314,16 +300,16 @@ export default function EditProfile({ onBack }: any) {
               value={date}
               mode="date"
               display="spinner"
-              textColor={modalText}
+              textColor={colors.modalText}
               onChange={(_, selected) => {
                 if (selected) setDate(selected);
               }}
-              style={{ backgroundColor: modalBg }}
+              style={{ backgroundColor: colors.modalBg }}
             />
             <TouchableOpacity
-              className={`my-2 items-center rounded-full py-3 ${bgButton} ${buttonTextColor}`}
+              className={`my-2 items-center rounded-full py-3 ${colors.bgButton}`}
               onPress={() => setShowDateModal(false)}>
-              <Text className={`font-bold ${textSecondary}`}>Confirm</Text>
+              <Text className={`font-bold ${colors.textSecondary}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>
@@ -331,14 +317,14 @@ export default function EditProfile({ onBack }: any) {
 
       {/* Modal Time Picker */}
       <Modal transparent visible={showTimeModal} animationType="fade">
-        <BlurView intensity={40} tint={modalTint} className="flex-1 justify-end">
-          <View className="rounded-t-2xl p-4" style={{ backgroundColor: modalBg }}>
+        <BlurView intensity={40} tint={colors.modalTint} className="flex-1 justify-end">
+          <View className="rounded-t-2xl p-4" style={{ backgroundColor: colors.modalBg }}>
             <View className="flex-row items-center justify-between">
-              <Text className="text-lg font-bold" style={{ color: modalText }}>
+              <Text className="text-lg font-bold" style={{ color: colors.modalText }}>
                 Choose Time of Birth
               </Text>
               <TouchableOpacity onPress={() => setShowTimeModal(false)}>
-                <Text className="text-xl" style={{ color: modalText }}>
+                <Text className="text-xl" style={{ color: colors.modalText }}>
                   ×
                 </Text>
               </TouchableOpacity>
@@ -347,16 +333,16 @@ export default function EditProfile({ onBack }: any) {
               value={timeOfBirth}
               mode="time"
               display="spinner"
-              textColor={modalText}
+              textColor={colors.modalText}
               onChange={(_, selected) => {
                 if (selected) setTimeOfBirth(selected);
               }}
-              style={{ backgroundColor: modalBg }}
+              style={{ backgroundColor: colors.modalBg }}
             />
             <TouchableOpacity
-              className={`my-2 items-center rounded-full py-3 ${bgButton} ${buttonTextColor}`}
+              className={`my-2 items-center rounded-full py-3 ${colors.bgButton}`}
               onPress={() => setShowTimeModal(false)}>
-              <Text className={`font-bold ${textSecondary}`}>Confirm</Text>
+              <Text className={`font-bold ${colors.textSecondary}`}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </BlurView>

@@ -8,11 +8,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function LoadingScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const colors = useThemeColors();
 
   const logoSource = isDarkMode
     ? require('../../assets/logo_light.png')
@@ -33,7 +34,9 @@ export default function LoadingScreen() {
   }));
 
   return (
-    <View className="flex-1 items-center justify-center" style={{ backgroundColor }}>
+    <View
+      className="flex-1 items-center justify-center"
+      style={{ backgroundColor: colors.backgroundColor }}>
       <Animated.Image
         source={logoSource}
         style={[{ width: 130, height: 130, maxWidth: '80%' }, animatedStyle]}

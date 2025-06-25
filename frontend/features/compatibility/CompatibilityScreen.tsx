@@ -5,15 +5,12 @@ import { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function CompatibilityScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
-  const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
-
+  const colors = useThemeColors();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const lightSignUrl =
@@ -22,15 +19,10 @@ export default function CompatibilityScreen() {
     'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_dark.png';
   const signImage = isDarkMode ? darkSignUrl : lightSignUrl;
 
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
+        <Text className="text-aref ml-5 text-[20px]" style={{ color: colors.textColor }}>
           Your compability
         </Text>
       ),
@@ -39,33 +31,30 @@ export default function CompatibilityScreen() {
   }, [navigation, isDarkMode]);
 
   return (
-    <View className="flex-1 items-center justify-center p-4" style={{ backgroundColor }}>
+    <View
+      className="flex-1 items-center justify-center p-4"
+      style={{ backgroundColor: colors.backgroundColor }}>
       {/* Zodiac Sign Compatibility */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('ZodiacSignsCompatibility')}
-        className={` w-full rounded-3xl p-8 ${cardBg} border ${borderColor} mb-4`}>
-        <View className=" items-center justify-center">
+        className={`w-full rounded-3xl p-8 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
+        <View className="items-center justify-center">
           <View className="mb-6 flex-row items-center justify-center">
-            <View className="h-16 w-16 items-center justify-center ">
+            <View className="h-16 w-16 items-center justify-center">
               <Image source={{ uri: signImage }} className="h-20 w-20" />
             </View>
-            <Feather
-              name="plus"
-              size={28}
-              color={isDarkMode ? '#281109' : '#F2EAE0'}
-              className="mx-8"
-            />
-            <View className="h-16 w-16 items-center justify-center ">
+            <Feather name="plus" size={28} color={colors.iconColor} className="mx-8" />
+            <View className="h-16 w-16 items-center justify-center">
               <Image source={{ uri: signImage }} className="h-20 w-20" />
             </View>
           </View>
 
           <View className="items-center">
-            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
+            <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
               Zodiac Sign Compatibility
             </Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
+            <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
               Know your Zodiac sign compability
             </Text>
           </View>
@@ -76,85 +65,89 @@ export default function CompatibilityScreen() {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('BirthChartCompability')}
-        className={`relative  w-full rounded-3xl px-6 py-8 ${cardBg} border ${borderColor}`}>
+        className={`relative w-full rounded-3xl px-6 py-8 ${colors.cardBg} border ${colors.borderColor}`}>
         <View
-          className={`absolute right-4 top-2 h-6 w-6 items-center justify-center  rounded-full ${iconBg}`}>
-          <Feather name="lock" size={16} style={{ color: iconColor }} />
+          className={`absolute right-4 top-2 h-6 w-6 items-center justify-center rounded-full ${colors.iconBg}`}>
+          <Feather name="lock" size={16} style={{ color: colors.iconColorAlt }} />
         </View>
 
-        <View className=" items-center justify-center">
-          <View className=" mt-6 flex-row items-center justify-center">
+        <View className="items-center justify-center">
+          <View className="mt-6 flex-row items-center justify-center">
             <View className="mr-6">
               <View className="mb-3 flex-row">
                 <View
-                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-sagittarius"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
-                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                <View
+                  className={`h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-libra"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
               </View>
               <View className="flex-row">
                 <View
-                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-aquarius"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
-                <View className={`h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                <View
+                  className={`h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-capricorn"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
               </View>
             </View>
 
-            <Feather name="plus" size={28} color={isDarkMode ? '#281109' : '#F2EAE0'} />
+            <Feather name="plus" size={28} color={colors.iconColor} />
 
             <View className="ml-6">
               <View className="mb-3 flex-row">
                 <View
-                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-sagittarius"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
-                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                <View
+                  className={`h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-libra"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
               </View>
               <View className="flex-row">
                 <View
-                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                  className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-aquarius"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
-                <View className={` h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+                <View
+                  className={`h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
                   <MaterialCommunityIcons
                     name="zodiac-capricorn"
                     size={20}
-                    style={{ color: iconColor }}
+                    style={{ color: colors.iconColorAlt }}
                   />
                 </View>
               </View>
@@ -162,10 +155,10 @@ export default function CompatibilityScreen() {
           </View>
 
           <View className="mt-2 items-center">
-            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
+            <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
               Birth Charts Compatibility
             </Text>
-            <Text className={`text-aref text-sm ${textSecondary} text-center`}>
+            <Text className={`text-aref text-sm ${colors.textSecondaryAlt} text-center`}>
               Let's see what planets in your charts say{'\n'}about your love match
             </Text>
           </View>

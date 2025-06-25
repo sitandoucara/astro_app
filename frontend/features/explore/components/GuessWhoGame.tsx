@@ -5,6 +5,7 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp, FadeInDown, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 import { useGuessWhoGame } from '../hooks/useGuessWhoGame';
 
@@ -16,6 +17,8 @@ interface GuessWhoGameProps {
 export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWhoGameProps) {
   const navigation = useNavigation();
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
+  const colors = useThemeColors();
 
   const {
     gameFinished,
@@ -31,16 +34,6 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
     restartGame,
     isAnswerCorrect,
   } = useGuessWhoGame(numberOfQuestions);
-
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const iconColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
-  const correctColor = isDarkMode ? '#16A34A' : '#22C55E';
-  const dangerColor = isDarkMode ? '#871515' : '#EF4444';
 
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
@@ -58,27 +51,29 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
       headerTransparent: true,
       headerTitle: '',
       headerStyle: {
-        backgroundColor,
+        backgroundColor: colors.backgroundColor,
       },
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="chevron-back" size={24} color={textColor} />
+            <Ionicons name="chevron-back" size={24} color={colors.textColor} />
             <Text
               className="text-aref ml-2 text-left text-xl font-bold"
-              style={{ color: textColor }}>
+              style={{ color: colors.textColor }}>
               Guess Who
             </Text>
           </View>
         </TouchableOpacity>
       ),
     });
-  }, [navigation, textColor]);
+  }, [navigation, colors.textColor]);
 
   if (isLoading) {
     return (
-      <View className="flex-1 items-center justify-center" style={{ backgroundColor }}>
-        <Text className="text-aref text-lg" style={{ color: textColor }}>
+      <View
+        className="flex-1 items-center justify-center"
+        style={{ backgroundColor: colors.backgroundColor }}>
+        <Text className="text-aref text-lg" style={{ color: colors.textColor }}>
           Preparing game...
         </Text>
       </View>
@@ -89,41 +84,52 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
     const stats = getGameStats();
 
     return (
-      <View className="flex-1" style={{ backgroundColor }}>
+      <View className="flex-1  justify-center" style={{ backgroundColor: colors.backgroundColor }}>
         <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
           <Animated.View entering={FadeInUp.duration(600)} className="mt-8 items-center">
             {/* final score */}
-            <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-6`}>
+            <View
+              className={`mt-6 items-center rounded-3xl p-8 ${colors.cardBg} border ${colors.borderColor} mb-6`}>
               <View className="mb-4">
-                <MaterialCommunityIcons name="trophy-award" size={64} color={iconColor} />
+                <MaterialCommunityIcons
+                  name="trophy-award"
+                  size={64}
+                  color={colors.iconColorAlt2}
+                />
               </View>
-              <Text className={`text-aref mb-2 text-2xl font-bold ${textPrimary}`}>
+              <Text className={`text-aref mb-2 text-2xl font-bold ${colors.textPrimary}`}>
                 Game Complete!
               </Text>
-              <Text className={`text-aref mb-4 text-lg ${textSecondary} text-center`}>
+              <Text className={`text-aref mb-4 text-lg ${colors.textSecondaryAlt} text-center`}>
                 {getEndMessage()}
               </Text>
 
               {/* detailed statistics */}
               <View className="w-full">
                 <View className="mb-3 flex-row items-center justify-between">
-                  <Text className={`text-aref text-base ${textSecondary}`}>Final Score</Text>
-                  <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
+                  <Text className={`text-aref text-base ${colors.textSecondaryAlt}`}>
+                    Final Score
+                  </Text>
+                  <Text className={`text-aref text-xl font-bold ${colors.textPrimary}`}>
                     {stats.score}/{getProgress().total}
                   </Text>
                 </View>
 
                 <View className="mb-3 flex-row items-center justify-between">
-                  <Text className={`text-aref text-base ${textSecondary}`}>Percentage</Text>
-                  <Text className={`text-aref text-xl font-bold ${textPrimary}`}>
+                  <Text className={`text-aref text-base ${colors.textSecondaryAlt}`}>
+                    Percentage
+                  </Text>
+                  <Text className={`text-aref text-xl font-bold ${colors.textPrimary}`}>
                     {stats.percentage}%
                   </Text>
                 </View>
 
                 <View className="mb-3 flex-row items-center justify-between">
-                  <Text className={`text-aref text-base ${textSecondary}`}>Best Streak</Text>
+                  <Text className={`text-aref text-base ${colors.textSecondaryAlt}`}>
+                    Best Streak
+                  </Text>
                   <View className="flex-row items-center">
-                    <Text className={`text-aref text-xl font-bold ${textPrimary} mr-2`}>
+                    <Text className={`text-aref text-xl font-bold ${colors.textPrimary} mr-2`}>
                       {stats.maxStreak}
                     </Text>
                     <MaterialCommunityIcons name="fire" size={20} color="#F97316" />
@@ -133,14 +139,14 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
             </View>
 
             {/* Action buttons */}
-            <View className="w-full space-y-4">
+            <View className="w-full  space-y-4 ">
               <TouchableOpacity
                 onPress={restartGame}
-                className={`w-full items-center rounded-2xl p-4 ${cardBg} border ${borderColor}`}
+                className={`w-full items-center rounded-2xl p-4 ${colors.cardBg} border ${colors.borderColor}`}
                 activeOpacity={0.8}>
                 <View className="flex-row items-center">
-                  <MaterialIcons name="refresh" size={24} color={iconColor} />
-                  <Text className={`text-aref ml-3 text-lg font-semibold ${textPrimary}`}>
+                  <MaterialIcons name="refresh" size={24} color={colors.iconColorAlt2} />
+                  <Text className={`text-aref ml-3 text-lg font-semibold ${colors.textPrimary}`}>
                     Play Again
                   </Text>
                 </View>
@@ -148,10 +154,10 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
 
               <TouchableOpacity
                 onPress={goBack}
-                className="w-full items-center rounded-2xl border-2 p-4"
-                style={{ borderColor: textColor }}
+                className="mt-2 w-full items-center rounded-2xl border-2 p-4"
+                style={{ borderColor: colors.textColor }}
                 activeOpacity={0.8}>
-                <Text className={`text-aref text-lg font-semibold ${textPrimary}`}>
+                <Text className={`text-aref text-lg font-semibold ${colors.textPrimary}`}>
                   Back to Menu
                 </Text>
               </TouchableOpacity>
@@ -167,23 +173,23 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
   const stats = getGameStats();
 
   return (
-    <View className="flex-1" style={{ backgroundColor }}>
-      <ScrollView className="mt-4 flex-1  px-5 pt-24" showsVerticalScrollIndicator={false}>
+    <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
+      <ScrollView className="mt-4 flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
         {/* Header with progress */}
         <Animated.View entering={FadeInDown.duration(400)} className="mb-8">
           <View className="mb-4 flex-row items-center justify-between">
-            <Text className={`text-aref text-lg ${textPrimary}`}>
+            <Text className={`text-aref text-lg ${colors.textPrimary}`}>
               Question {progress.current}/{progress.total}
             </Text>
             <View className="flex-row items-center">
-              <Text className={`text-aref text-lg font-bold ${textPrimary} mr-2`}>
+              <Text className={`text-aref text-lg font-bold ${colors.textPrimary} mr-2`}>
                 {stats.score}
               </Text>
-              <MaterialIcons name="star" size={20} color={iconColor} />
+              <MaterialIcons name="star" size={20} color={colors.iconColorAlt2} />
               {streak > 1 && (
                 <View className="ml-2 flex-row items-center">
                   <MaterialCommunityIcons name="fire" size={16} color="#F97316" />
-                  <Text className={`text-aref ml-1 text-sm ${textPrimary}`}>{streak}</Text>
+                  <Text className={`text-aref ml-1 text-sm ${colors.textPrimary}`}>{streak}</Text>
                 </View>
               )}
             </View>
@@ -191,13 +197,13 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
 
           {/* Progress bar */}
           <View
-            className={`h-2 w-full rounded-full border ${borderColor}`}
+            className={`h-2 w-full rounded-full border ${colors.borderColor}`}
             style={{ backgroundColor: isDarkMode ? '#D8D3D0' : '#544A46' }}>
             <View
               className="h-full rounded-full"
               style={{
                 width: `${progress.percentage}%`,
-                backgroundColor: isDarkMode ? '#32221E' : '#F2EAE0',
+                backgroundColor: colors.textColor,
               }}
             />
           </View>
@@ -205,8 +211,9 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
 
         {/* Main question */}
         <Animated.View entering={SlideInLeft.duration(500)} className="mb-8 items-center">
-          <View className={`items-center rounded-3xl p-8 ${cardBg} border ${borderColor} mb-6`}>
-            <Text className={`text-aref mb-6 text-lg ${textSecondary} text-center`}>
+          <View
+            className={`items-center rounded-3xl p-8 ${colors.cardBg} border ${colors.borderColor} mb-6`}>
+            <Text className={`text-aref mb-6 text-lg ${colors.textSecondaryAlt} text-center`}>
               What is this zodiac sign?
             </Text>
 
@@ -222,10 +229,11 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
                   resizeMode="contain"
                 />
               </View>
-              <Text className={`text-aref text-sm ${textSecondary} text-center`}>
+              <Text className={`text-aref text-sm ${colors.textSecondaryAlt} text-center`}>
                 Element: {currentSign.element}
               </Text>
-              <Text className={`text-aref text-xs ${textSecondary} text-center opacity-70`}>
+              <Text
+                className={`text-aref text-xs ${colors.textSecondaryAlt} text-center opacity-70`}>
                 {currentSign.dates}
               </Text>
             </View>
@@ -234,10 +242,10 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
 
         {/* Answer options */}
         <Animated.View entering={SlideInRight.duration(500)}>
-          <View className="mb-8 ">
+          <View className="mb-8">
             {currentSign.answers.map((answer: string, index: number) => {
-              let buttonStyle = `w-full mt-2 rounded-2xl p-4 border ${borderColor} ${cardBg}`;
-              let textStyle = `text-aref text-lg font-medium ${textPrimary}`;
+              let buttonStyle = `w-full mt-2 rounded-2xl p-4 border ${colors.borderColor} ${colors.cardBg}`;
+              let textStyle = `text-aref text-lg font-medium ${colors.textPrimary}`;
 
               if (showResult && selectedAnswer === answer) {
                 if (isAnswerCorrect(answer)) {
@@ -265,14 +273,14 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
                         <MaterialCommunityIcons
                           name={isAnswerCorrect(answer) ? 'check-circle' : 'close-circle'}
                           size={24}
-                          color={isAnswerCorrect(answer) ? correctColor : dangerColor}
+                          color={isAnswerCorrect(answer) ? colors.correctColor : colors.dangerColor}
                         />
                       )}
                       {showResult && isAnswerCorrect(answer) && selectedAnswer !== answer && (
                         <MaterialCommunityIcons
                           name="check-circle"
                           size={24}
-                          color={correctColor}
+                          color={colors.correctColor}
                         />
                       )}
                     </View>
@@ -287,14 +295,14 @@ export default function GuessWhoGame({ onBack, numberOfQuestions = 8 }: GuessWho
         {showResult && (
           <Animated.View entering={FadeInUp.duration(300)} className="mb-8 items-center">
             <View
-              className={`rounded-2xl p-4 ${cardBg} border ${borderColor} flex-row items-center`}>
+              className={`rounded-2xl p-4 ${colors.cardBg} border ${colors.borderColor} flex-row items-center`}>
               <MaterialCommunityIcons
                 name={isAnswerCorrect(selectedAnswer!) ? 'party-popper' : 'close-circle-outline'}
                 size={24}
-                color={isAnswerCorrect(selectedAnswer!) ? correctColor : dangerColor}
+                color={isAnswerCorrect(selectedAnswer!) ? colors.correctColor : colors.dangerColor}
                 style={{ marginRight: 8 }}
               />
-              <Text className={`text-aref text-center ${textPrimary} flex-1`}>
+              <Text className={`text-aref text-center ${colors.textPrimary} flex-1`}>
                 {isAnswerCorrect(selectedAnswer!)
                   ? `Correct! It's ${currentSign.name}`
                   : `Incorrect. It was ${currentSign.name}`}

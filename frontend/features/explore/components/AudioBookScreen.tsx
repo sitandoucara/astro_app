@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useLayoutEffect, useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 import { AudioPlayerControls } from './AudioPlayerControls';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
@@ -30,6 +31,7 @@ export default function AudioBookScreen({ onBack }: any) {
   const [chapterData, setChapterData] = useState<ChapterData | null>(null);
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  const colors = useThemeColors();
 
   // Using the custom hook
   const {
@@ -43,8 +45,6 @@ export default function AudioBookScreen({ onBack }: any) {
     extractLessonId,
   } = useAudioPlayer(jsonUrl, chapterData);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
   const highlightBg = isDarkMode ? '#281109' : '#F2EAE0';
   const highlightText = isDarkMode ? '#F2EAE0' : '#281109';
 
@@ -72,7 +72,7 @@ export default function AudioBookScreen({ onBack }: any) {
             className="px-0.5 py-0.5"
             style={{
               backgroundColor: isHighlighted ? highlightBg : 'transparent',
-              color: isHighlighted ? highlightText : textColor,
+              color: isHighlighted ? highlightText : colors.textColor,
             }}>
             {word.trim()}
             {wordIndex < words.length - 1 ? ' ' : ''}
@@ -120,9 +120,11 @@ export default function AudioBookScreen({ onBack }: any) {
       headerLeft: () => (
         <TouchableOpacity className="ml-4" onPress={goBack}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="chevron-back" size={24} color={textColor} />
+            <Ionicons name="chevron-back" size={24} color={colors.textColor} />
             <View className="ml-2">
-              <Text className="text-aref text-left text-xl font-bold" style={{ color: textColor }}>
+              <Text
+                className="text-aref text-left text-xl font-bold"
+                style={{ color: colors.textColor }}>
                 {title}
               </Text>
             </View>
@@ -130,20 +132,22 @@ export default function AudioBookScreen({ onBack }: any) {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, title, textColor]);
+  }, [navigation, title, colors.textColor]);
 
   return (
-    <View className="flex-1" style={{ backgroundColor }}>
+    <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <ScrollView className="flex-1 px-5 pt-24" showsVerticalScrollIndicator={false}>
         <View className="mt-4">
           {loading ? (
             <View className="items-center justify-center py-10">
-              <Text className="text-aref mb-2 text-center text-lg" style={{ color: textColor }}>
+              <Text
+                className="text-aref mb-2 text-center text-lg"
+                style={{ color: colors.textColor }}>
                 Loading the lesson {extractLessonId(jsonUrl)}...
               </Text>
               <Text
                 className="text-aref text-center text-sm opacity-70"
-                style={{ color: textColor }}>
+                style={{ color: colors.textColor }}>
                 Preparation of text and audio
               </Text>
             </View>

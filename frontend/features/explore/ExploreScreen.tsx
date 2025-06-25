@@ -5,24 +5,18 @@ import { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function ExploreScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const iconBg = isDarkMode ? 'bg-light-border' : 'bg-dark-border';
-  const iconColor = isDarkMode ? '#F2EAE0' : '#32221E';
-  const cardBg = isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50';
-  const borderColor = isDarkMode ? 'border-light-border' : 'border-dark-border';
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#D8D3D0]' : 'text-[#D9D5D4]';
+  const colors = useThemeColors();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
+        <Text className="text-aref ml-5 text-[20px]" style={{ color: colors.textColor }}>
           You can Explore
         </Text>
       ),
@@ -31,22 +25,29 @@ export default function ExploreScreen() {
   }, [navigation, isDarkMode]);
 
   return (
-    <View className="flex-1 items-center justify-center px-2" style={{ backgroundColor }}>
+    <View
+      className="flex-1 items-center justify-center px-2"
+      style={{ backgroundColor: colors.backgroundColor }}>
       {/* Learn */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('LearnScreen')}
-        className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
-        <View className="  justify-center">
-          <View className="h-16 w-16 items-center justify-center ">
-            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
-              <FontAwesome name="book" size={20} style={{ color: iconColor }} />
+        className={`w-full rounded-3xl p-6 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
+        <View className="justify-center">
+          <View className="h-16 w-16 items-center justify-center">
+            <View
+              className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
+              <FontAwesome name="book" size={20} style={{ color: colors.iconColorAlt }} />
             </View>
           </View>
 
           <View>
-            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>Learn</Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>Discover Astrology</Text>
+            <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
+              Learn
+            </Text>
+            <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
+              Discover Astrology
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -55,22 +56,23 @@ export default function ExploreScreen() {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('QuizzScreen')}
-        className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
+        className={`w-full rounded-3xl p-6 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
         <View className="justify-center">
-          <View className="h-16 w-16 items-center justify-center ">
-            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
+          <View className="h-16 w-16 items-center justify-center">
+            <View
+              className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
               <MaterialCommunityIcons
                 name="gamepad-variant"
                 size={20}
-                style={{ color: iconColor }}
+                style={{ color: colors.iconColorAlt }}
               />
             </View>
           </View>
           <View>
-            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
+            <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
               Test & Quiz
             </Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>
+            <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
               Test Your Astrology Knowlege
             </Text>
           </View>
@@ -81,19 +83,26 @@ export default function ExploreScreen() {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
-        className={` w-full rounded-3xl p-6 ${cardBg} border ${borderColor} mb-4`}>
+        className={`w-full rounded-3xl p-6 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
         <View className="justify-center">
-          <View className="h-16 w-16 items-center justify-center ">
-            <View className={`mr-3 h-10 w-10 items-center justify-center rounded-full  ${iconBg}`}>
-              <MaterialCommunityIcons name="book" size={20} style={{ color: iconColor }} />
+          <View className="h-16 w-16 items-center justify-center">
+            <View
+              className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
+              <MaterialCommunityIcons
+                name="book"
+                size={20}
+                style={{ color: colors.iconColorAlt }}
+              />
             </View>
           </View>
 
           <View>
-            <Text className={`text-aref text-xl font-semibold ${textPrimary} mb-2`}>
+            <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
               Mini-books
             </Text>
-            <Text className={`text-aref text-sm ${textSecondary}`}>Know more about Astrology</Text>
+            <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
+              Know more about Astrology
+            </Text>
           </View>
         </View>
       </TouchableOpacity>

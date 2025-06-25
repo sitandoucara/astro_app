@@ -4,13 +4,12 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function ChartScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const titleColor = isDarkMode ? '#32221E' : '#D8C8B4';
+  const colors = useThemeColors();
   const navigation = useNavigation();
 
   const user = useAppSelector((state) => state.auth.user);
@@ -103,7 +102,7 @@ export default function ChartScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text className="text-aref ml-5 text-[20px]" style={{ color: textColor }}>
+        <Text className="text-aref ml-5 text-[20px]" style={{ color: colors.textColor }}>
           Your Chart!
         </Text>
       ),
@@ -150,7 +149,7 @@ export default function ChartScreen() {
   `;
 
   return (
-    <ScrollView className="flex-1  px-5 " style={{ backgroundColor }}>
+    <ScrollView className="flex-1 px-5" style={{ backgroundColor: colors.backgroundColor }}>
       {chartUrl && (
         <View className="items-center pt-2">
           <WebView
@@ -162,14 +161,14 @@ export default function ChartScreen() {
         </View>
       )}
 
-      <View className="mt-4 rounded-full border-2  border-stone-600 p-2">
+      <View className="mt-4 rounded-full border-2 border-stone-600 p-2">
         <TouchableOpacity
           onPress={() => Alert.alert('share!')}
           activeOpacity={0.8}
-          className="shadow-opacity-30  elevation-1 rounded-full bg-[#BFB0A7] px-2 py-4  shadow-md shadow-light-text2">
-          <View className="flex-row  justify-center gap-2">
+          className="shadow-opacity-30 elevation-1 rounded-full bg-[#BFB0A7] px-2 py-4 shadow-md shadow-light-text2">
+          <View className="flex-row justify-center gap-2">
             <MaterialCommunityIcons name="share" size={20} color="#32221E" />
-            <Text className="text-aref  text-base font-bold tracking-wide text-[#32221E]">
+            <Text className="text-aref text-base font-bold tracking-wide text-[#32221E]">
               Share
             </Text>
           </View>
@@ -181,9 +180,9 @@ export default function ChartScreen() {
           {Object.entries(planetsDescriptions).map(([planet, info]) => (
             <View
               key={planet}
-              className="mt-4 rounded-[13px] border  bg-light-cardback p-3"
-              style={{ borderColor: titleColor }}>
-              <Text className="text-aref font-bold " style={{ color: titleColor }}>
+              className="mt-4 rounded-[13px] border bg-light-cardback p-3"
+              style={{ borderColor: colors.titleColor }}>
+              <Text className="text-aref font-bold" style={{ color: colors.titleColor }}>
                 {planet} in {info.sign}
               </Text>
               <Text className="text-aref mt-1 text-light-text3">{info.text}</Text>

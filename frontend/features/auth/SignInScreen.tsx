@@ -20,6 +20,7 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import { useAppDispatch, useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { supabase } from 'shared/lib/supabase';
 
 import { signIn } from './useAuth';
@@ -27,15 +28,7 @@ import { signIn } from './useAuth';
 export default function SignInScreen({ navigation }: any) {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const textPrimary = isDarkMode ? 'text-light-text1' : 'text-dark-text1';
-  const textSecondary = isDarkMode ? 'text-[#7B635A]' : 'text-[#ffffff]';
-  const border = isDarkMode ? 'border-[#281109]' : 'border-[#F2EAE0]';
-  const bgInput = isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]';
-  const bgButton = isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]';
-  const buttonTextColor = isDarkMode ? 'text-dark-text1' : 'text-light-text1';
-  const iconColor = isDarkMode ? '#281109' : '#F2EAE0';
-
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
+  const colors = useThemeColors();
 
   const logoSource = isDarkMode
     ? require('../../assets/logo_light.png')
@@ -150,7 +143,7 @@ export default function SignInScreen({ navigation }: any) {
   return (
     <KeyboardAvoidingView
       className="flex-1"
-      style={{ backgroundColor }}
+      style={{ backgroundColor: colors.backgroundColor }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View className="flex-1 p-16">
         <View className="mt-10 flex-1 justify-between">
@@ -165,8 +158,8 @@ export default function SignInScreen({ navigation }: any) {
               value={email}
               onChangeText={setEmail}
               placeholder="email@gmail.com"
-              placeholderTextColor={isDarkMode ? '#281109' : '#ffffff'}
-              className={`text-aref mt-2 w-64 rounded-lg border ${border} ${bgInput} px-5 py-3 ${textPrimary}`}
+              placeholderTextColor={colors.placeholderColor}
+              className={`text-aref mt-2 w-64 rounded-lg border ${colors.border} ${colors.bgInput} px-5 py-3 ${colors.textPrimary}`}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
@@ -176,9 +169,9 @@ export default function SignInScreen({ navigation }: any) {
                 value={password}
                 onChangeText={setPassword}
                 placeholder="Password"
-                placeholderTextColor={isDarkMode ? '#281109' : '#ffffff'}
+                placeholderTextColor={colors.placeholderColor}
                 secureTextEntry={!isPasswordVisible}
-                className={`text-aref w-64 rounded-lg border ${border} ${bgInput} px-5 py-3 ${textPrimary}`}
+                className={`text-aref w-64 rounded-lg border ${colors.border} ${colors.bgInput} px-5 py-3 ${colors.textPrimary}`}
                 autoCapitalize="none"
                 autoCorrect={false}
               />
@@ -188,7 +181,7 @@ export default function SignInScreen({ navigation }: any) {
                 <Ionicons
                   name={isPasswordVisible ? 'eye-off' : 'eye'}
                   size={22}
-                  style={{ color: iconColor }}
+                  style={{ color: colors.iconColorAlt2 }}
                 />
               </TouchableOpacity>
             </View>
@@ -197,17 +190,17 @@ export default function SignInScreen({ navigation }: any) {
               <TouchableOpacity
                 onPress={handleLogin}
                 activeOpacity={0.8}
-                className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${bgButton} py-2 shadow-md shadow-light-text2`}>
+                className={`shadow-opacity-30 elevation-1 w-64 rounded-full ${colors.bgButton} py-2 shadow-md shadow-light-text2`}>
                 <Text
-                  className={`text-aref text-center text-base font-bold tracking-wide ${buttonTextColor}`}>
+                  className={`text-aref text-center text-base font-bold tracking-wide ${colors.buttonTextColor}`}>
                   Continue
                 </Text>
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')} className="mt-4">
-              <Text className={`text-aref mt-4 text-center font-bold ${textSecondary}`}>
-                New here? <Text className={textPrimary}>Create an Account</Text>
+              <Text className={`text-aref mt-4 text-center font-bold ${colors.textSecondary}`}>
+                New here? <Text className={colors.textPrimary}>Create an Account</Text>
               </Text>
             </TouchableOpacity>
           </Animated.View>

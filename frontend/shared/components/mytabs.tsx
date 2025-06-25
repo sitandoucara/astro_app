@@ -6,19 +6,18 @@ import ExploreScreen from 'features/explore/ExploreScreen';
 import HomeScreen from 'features/home/HomeScreen';
 import ProfileScreen from 'features/profile/ProfileScreen';
 import { View, Text } from 'react-native';
-import { useAppSelector } from 'shared/hooks';
+//import { useAppSelector } from 'shared/hooks';
+import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
-  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
-  const backgroundColor = isDarkMode ? '#F2EAE0' : '#281109';
-  const borderColor = isDarkMode ? '#32221E' : '#F2EAE0';
-  const textColor = isDarkMode ? '#32221E' : '#F2EAE0';
+  const colors = useThemeColors();
 
   return (
-    <View className="flex-1" style={{ backgroundColor }}>
+    <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -55,16 +54,16 @@ export default function MyTabs() {
               </Text>
             );
           },
-          tabBarActiveTintColor: textColor,
-          tabBarInactiveTintColor: textColor + '80',
+          tabBarActiveTintColor: colors.textColor,
+          tabBarInactiveTintColor: colors.textColor + '80',
           tabBarStyle: {
-            backgroundColor,
-            borderTopColor: borderColor,
+            backgroundColor: colors.backgroundColor,
+            borderTopColor: colors.textColor,
             borderTopWidth: 1,
           },
           headerStyle: {
-            backgroundColor,
-            borderBottomColor: borderColor,
+            backgroundColor: colors.backgroundColor,
+            borderBottomColor: colors.textColor,
             borderBottomWidth: 1,
             height: 120,
           },
