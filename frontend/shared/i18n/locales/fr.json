@@ -1,0 +1,36 @@
+{
+  "profile": {
+    "title": "Votre profil ({{username}})",
+    "lightAppearance": "Apparence Claire",
+    "darkAppearance": "Apparence Sombre",
+    "changeLanguage": "Changer la Langue",
+    "subscriptions": "Abonnements",
+    "freePlan": "Plan Gratuit",
+    "rateUs": "Nous Noter",
+    "contactUs": "Nous Contacter",
+    "followUs": "Nous Suivre",
+    "logOut": "Se Déconnecter",
+    "deleteAccount": "Supprimer le Compte",
+    "deleteModal": {
+      "title": "Supprimer Votre Compte",
+      "message": "Cette action est irréversible. Toutes vos données seront définitivement supprimées.\n\nÊtes-vous sûr de vouloir supprimer votre compte ?",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
+    },
+    "alerts": {
+      "deleteError": "Une erreur s'est produite lors de la suppression de votre compte. Veuillez réessayer.",
+      "deleteSuccess": "Votre compte a été supprimé avec succès.",
+      "unexpectedError": "Une erreur inattendue s'est produite. Veuillez réessayer."
+    }
+  },
+  "language": {
+    "title": "Changer la Langue",
+    "english": "Anglais",
+    "french": "Français"
+  },
+  "common": {
+    "ok": "OK",
+    "error": "Erreur",
+    "success": "Succès"
+  }
+}

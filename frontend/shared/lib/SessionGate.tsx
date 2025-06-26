@@ -21,6 +21,7 @@ import MyTabs from 'shared/components/mytabs';
 import { useAppSelector } from 'shared/hooks';
 
 import { supabase } from './supabase';
+import Language from 'features/profile/components/Language';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -163,6 +164,7 @@ export default function SessionGate() {
               <Stack.Screen name="GuessWhoGame" component={GuessWhoGame} />
               <Stack.Screen name="QuizzScreen" component={QuizzScreen} />
               <Stack.Screen name="TrueOrFalseGame" component={TrueOrFalseGame} />
+              <Stack.Screen name="Language" component={Language} />
             </>
           ) : (
             <>

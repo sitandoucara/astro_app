@@ -6,6 +6,7 @@ import LoadingScreen from 'shared/components/LoadingScreen';
 import SessionGate from 'shared/lib/SessionGate';
 
 import { store, persistor } from './app/store';
+import './shared/i18n/i18n';
 
 import './global.css';
 

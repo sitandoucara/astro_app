@@ -1,0 +1,36 @@
+{
+  "profile": {
+    "title": "Your profile ({{username}})",
+    "lightAppearance": "Light Appearance",
+    "darkAppearance": "Dark Appearance",
+    "changeLanguage": "Change Language",
+    "subscriptions": "Subscriptions",
+    "freePlan": "Free Plan",
+    "rateUs": "Rate us",
+    "contactUs": "Contact us",
+    "followUs": "Follow us",
+    "logOut": "Log Out",
+    "deleteAccount": "Delete Account",
+    "deleteModal": {
+      "title": "Delete Your Account",
+      "message": "This action is irreversible. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "alerts": {
+      "deleteError": "An error occurred while deleting your account. Please try again.",
+      "deleteSuccess": "Your account has been successfully deleted.",
+      "unexpectedError": "An unexpected error occurred. Please try again."
+    }
+  },
+  "language": {
+    "title": "Change Language",
+    "english": "English",
+    "french": "French"
+  },
+  "common": {
+    "ok": "OK",
+    "error": "Error",
+    "success": "Success"
+  }
+}

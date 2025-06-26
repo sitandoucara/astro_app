@@ -23,6 +23,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
+import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 import { toggleDarkMode } from 'shared/theme/themeSlice';
@@ -34,6 +35,7 @@ export default function ProfileScreen() {
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const colors = useThemeColors();
+  const { t, getCurrentLanguageLabel } = useLanguage();
 
   const { userSign } = useZodiacCompatibility();
 
@@ -69,7 +71,7 @@ export default function ProfileScreen() {
       <View className="flex-row items-center space-x-3">
         <View>{icon}</View>
         <Text
-          className={`text-aref font-medium ${
+          className={`text-aref ml-1 font-medium ${
             isDanger
               ? isDarkMode
                 ? 'text-[#871515]'
@@ -98,17 +100,17 @@ export default function ProfileScreen() {
       const result = await deleteAccount(dispatch);
 
       if (result.error) {
-        Alert.alert('Error', 'An error occurred while deleting your account. Please try again.', [
-          { text: 'OK' },
-        ]);
+        Alert.alert(t('common.error'), t('profile.alerts.deleteError'), [{ text: t('common.ok') }]);
       } else {
-        Alert.alert('Account Deleted', 'Your account has been successfully deleted.', [
-          { text: 'OK' },
+        Alert.alert(t('common.success'), t('profile.alerts.deleteSuccess'), [
+          { text: t('common.ok') },
         ]);
       }
     } catch (error) {
       console.error('Unexpected error during account deletion:', error);
-      Alert.alert('Error', 'An unexpected error occurred. Please try again.', [{ text: 'OK' }]);
+      Alert.alert(t('common.error'), t('profile.alerts.unexpectedError'), [
+        { text: t('common.ok') },
+      ]);
     } finally {
       setIsDeleting(false);
       setShowDeleteModal(false);
@@ -122,7 +124,7 @@ export default function ProfileScreen() {
           <Text
             className="text-aref ml-5 text-[18px] font-medium"
             style={{ color: colors.colors.raw.icon }}>
-            Your profile ({user?.username ?? 'User'})
+            {t('profile.title', { username: user?.username ?? 'User' })}
           </Text>
           <Text
             className="text-aref ml-5 mt-1 text-[14px]"
@@ -134,7 +136,7 @@ export default function ProfileScreen() {
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, user, isDarkMode]);
+  }, [navigation, user, isDarkMode, t]);
 
   return (
     <>
@@ -166,6 +168,7 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
         )}
+
         {/* Appearance & Language */}
         <View className={`mb-6 rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
@@ -184,17 +187,17 @@ export default function ProfileScreen() {
                 />
               )
             }
-            label={isDarkMode ? ' Light Appearance' : ' Dark Appearance'}
+            label={isDarkMode ? t('profile.lightAppearance') : t('profile.darkAppearance')}
             rightComponent={
               <Switch
                 value={isDarkMode}
                 onValueChange={() => {
                   dispatch(toggleDarkMode());
                 }}
-                thumbColor={isDarkMode ? '#32221E' : '#F2EAE0'}
+                thumbColor={colors.colors.raw.thumb}
                 trackColor={{
-                  true: '#F2EAE0',
-                  false: '#32221E',
+                  true: colors.colors.raw.trackOn,
+                  false: colors.colors.raw.trackOff,
                 }}
               />
             }
@@ -202,26 +205,26 @@ export default function ProfileScreen() {
           />
           <SettingItem
             icon={<FontAwesome5 name="globe-americas" size={20} color={colors.colors.raw.icon} />}
-            label=" Change Language"
+            label={t('profile.changeLanguage')}
             rightComponent={
               <View className="flex-row items-center space-x-2">
                 <Text
                   className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.colors.tailwind.iconBg} ${colors.colors.tailwind.textReverse} p-4`}>
-                  English(US)
+                  {getCurrentLanguageLabel()}
                 </Text>
                 <Feather name="chevron-right" size={20} color={colors.colors.raw.icon} />
               </View>
             }
-            onPress={undefined}
+            onPress={() => navigation.navigate('Language')}
           />
           <SettingItem
             icon={<FontAwesome6 name="crown" size={20} color={colors.colors.raw.icon} />}
-            label=" Subscriptions"
+            label={t('profile.subscriptions')}
             rightComponent={
               <View className="flex-row items-center space-x-2">
                 <Text
                   className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.colors.tailwind.iconBg} ${colors.colors.tailwind.textReverse} p-4`}>
-                  Free Plan
+                  {t('profile.freePlan')}
                 </Text>
                 <Feather name="chevron-right" size={20} color={colors.colors.raw.icon} />
               </View>
@@ -229,11 +232,12 @@ export default function ProfileScreen() {
             onPress={undefined}
           />
         </View>
+
         {/* Feedback */}
         <View className={`mb-6 rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
             icon={<FontAwesome6 name="masks-theater" size={20} color={colors.colors.raw.icon} />}
-            label=" Rate us"
+            label={t('profile.rateUs')}
             onPress={undefined}
           />
           <SettingItem
@@ -244,26 +248,27 @@ export default function ProfileScreen() {
                 color={colors.colors.raw.icon}
               />
             }
-            label=" Contact us"
+            label={t('profile.contactUs')}
             onPress={undefined}
           />
           <SettingItem
             icon={<MaterialIcons name="verified" size={20} color={colors.colors.raw.icon} />}
-            label=" Follow us"
+            label={t('profile.followUs')}
             onPress={undefined}
           />
         </View>
+
         {/* Account */}
         <View className={`rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
             icon={<Ionicons name="log-out" size={20} color={colors.colors.raw.icon} />}
-            label=" Log Out"
+            label={t('profile.logOut')}
             rightComponent={undefined}
             onPress={handleLogout}
           />
           <SettingItem
             icon={<FontAwesome6 name="trash" size={20} color={colors.colors.raw.danger} />}
-            label=" Delete Account"
+            label={t('profile.deleteAccount')}
             rightComponent={undefined}
             onPress={showDeleteConfirmation}
             isDanger
@@ -294,13 +299,11 @@ export default function ProfileScreen() {
 
             <Text
               className={`text-aref mb-2 text-center text-lg font-bold ${colors.colors.tailwind.textOnCard}`}>
-              Delete Your Account
+              {t('profile.deleteModal.title')}
             </Text>
 
             <Text className={`text-aref mb-6 text-center ${colors.colors.tailwind.textOnCard}`}>
-              This action is irreversible. All your data will be permanently deleted.
-              {'\n\n'}
-              Are you sure you want to delete your account?
+              {t('profile.deleteModal.message')}
             </Text>
 
             <View className="flex-row gap-2">
@@ -310,7 +313,7 @@ export default function ProfileScreen() {
                 disabled={isDeleting}>
                 <Text
                   className={`text-aref text-center font-medium ${colors.colors.tailwind.textOnCard}`}>
-                  Cancel
+                  {t('profile.deleteModal.cancel')}
                 </Text>
               </TouchableOpacity>
 
@@ -321,7 +324,9 @@ export default function ProfileScreen() {
                 {isDeleting ? (
                   <ActivityIndicator color="white" size="small" />
                 ) : (
-                  <Text className="text-aref text-center font-medium text-white">Delete</Text>
+                  <Text className="text-aref text-center font-medium text-white">
+                    {t('profile.deleteModal.delete')}
+                  </Text>
                 )}
               </TouchableOpacity>
             </View>
