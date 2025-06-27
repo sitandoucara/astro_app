@@ -1,7 +1,9 @@
 demarer --- test iphone : 
 npx expo start -c --tunnel
 
+**npx jest __tests__/auth/SignInScreen.test.tsx --coverage
 
+*** npx jest --coverage
 -------
 
 User1:
