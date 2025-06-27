@@ -1,5 +1,6 @@
 import { useFonts, ArefRuqaa_400Regular, ArefRuqaa_700Bold } from '@expo-google-fonts/aref-ruqaa';
 import { useState, useEffect } from 'react';
+import { LogBox } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import LoadingScreen from 'shared/components/LoadingScreen';
@@ -9,6 +10,9 @@ import { store, persistor } from './app/store';
 import './shared/i18n/i18n';
 
 import './global.css';
+
+//remove warning
+LogBox.ignoreAllLogs();
 
 export default function App() {
   const [fontsLoaded] = useFonts({

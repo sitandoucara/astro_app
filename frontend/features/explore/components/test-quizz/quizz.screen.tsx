@@ -2,7 +2,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'navigation/types';
+import { RootStackParamList } from 'shared/navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Alert, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';

@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { render, fireEvent } from '@testing-library/react-native';
 import { store } from 'app/store';
-import ExploreScreen from 'features/explore/ExploreScreen';
+import ExploreScreen from 'features/explore/explore.screen';
 import React from 'react';
 import { Alert } from 'react-native';
 import { Provider } from 'react-redux';

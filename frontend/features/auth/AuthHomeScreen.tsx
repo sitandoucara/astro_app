@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'navigation/types';
+import { RootStackParamList } from 'shared/navigation/types';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
@@ -14,8 +14,8 @@ export default function AuthHomeScreen() {
   const colors = useThemeColors();
 
   const logoSource = isDarkMode
-    ? require('../../assets/logo_light.png')
-    : require('../../assets/logo_dark.png');
+    ? require('../../shared/assets/logo_light.png')
+    : require('../../shared/assets/logo_dark.png');
 
   return (
     <View className="flex-1 p-16" style={{ backgroundColor: colors.backgroundColor }}>

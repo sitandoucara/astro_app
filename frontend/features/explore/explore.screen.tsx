@@ -1,7 +1,7 @@
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'navigation/types';
+import { RootStackParamList } from 'shared/navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';

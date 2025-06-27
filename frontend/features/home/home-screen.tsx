@@ -8,7 +8,7 @@ import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
-import { HoroscopeSection } from './components/HoroscopeSectionProps';
+import { HoroscopeSection } from './components/horoscope-section.component';
 
 interface TimeTab {
   id: string;
@@ -151,7 +151,7 @@ export default function HomeScreen() {
             <View className="mb-8">
               <View className="items-center">
                 <View className="mt-5 p-2">
-                  <Image source={require('../../assets/padlock.png')} alt="Locked" />
+                  <Image source={require('../../shared/assets/padlock.png')} alt="Locked" />
                 </View>
               </View>
               <View className="mb-8">
@@ -216,7 +216,7 @@ export default function HomeScreen() {
                 </View>
                 <View className="h-60 w-60">
                   <Image
-                    source={require('../../assets/moon.png')}
+                    source={require('../../shared/assets/moon.png')}
                     alt="Moon phase"
                     className="h-60 w-60 object-cover"
                   />

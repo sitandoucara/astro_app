@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { setLoading, setGeneratingChart } from 'features/auth/AuthSlice';
-import { generateChart } from 'features/chart/services/GenerateChart';
+import { generateChart } from 'features/chart/services/generate-chart.service';
 import { useState, useEffect } from 'react';
 import {
   View,
@@ -31,8 +31,8 @@ export default function SignInScreen({ navigation }: any) {
   const colors = useThemeColors();
 
   const logoSource = isDarkMode
-    ? require('../../assets/logo_light.png')
-    : require('../../assets/logo_dark.png');
+    ? require('../../shared/assets/logo_light.png')
+    : require('../../shared/assets/logo_dark.png');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

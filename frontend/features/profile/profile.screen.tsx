@@ -9,7 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout, deleteAccount } from 'features/auth/useAuth';
-import type { RootStackParamList } from 'navigation/types';
+import type { RootStackParamList } from 'shared/navigation/types';
 import { useLayoutEffect, useState } from 'react';
 import {
   View,

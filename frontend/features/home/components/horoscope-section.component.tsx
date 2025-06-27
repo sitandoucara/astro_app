@@ -4,7 +4,7 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
-import { useHoroscope } from '../hooks/useHoroscope';
+import { useHoroscope } from '../hooks/horoscope.hook';
 
 interface HoroscopeSectionProps {
   activeTab: string;

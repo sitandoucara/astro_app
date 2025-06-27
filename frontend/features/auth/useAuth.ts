@@ -1,5 +1,5 @@
 import { AppDispatch } from 'app/store';
-import { generateChart } from 'features/chart/services/GenerateChart';
+import { generateChart } from 'features/chart/services/generate-chart.service';
 import { supabase } from 'shared/lib/supabase';
 
 import {

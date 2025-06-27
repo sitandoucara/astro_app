@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { render, fireEvent } from '@testing-library/react-native';
 import { store } from 'app/store';
-import QuizzScreen from 'features/explore/components/QuizzScreen';
+import QuizzScreen from 'features/explore/components/test-quizz/quizz.screen';
 import React from 'react';
 import { Alert, Text } from 'react-native';
 import { Provider } from 'react-redux';

@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ChartScreen from 'features/chart/ChartScreen';
-import CompatibilityScreen from 'features/compatibility/CompatibilityScreen';
-import ExploreScreen from 'features/explore/ExploreScreen';
-import HomeScreen from 'features/home/HomeScreen';
-import ProfileScreen from 'features/profile/ProfileScreen';
+import ChartScreen from 'features/chart/chart.screen';
+import CompatibilityScreen from 'features/compatibility/compatibility.screen';
+import ExploreScreen from 'features/explore/explore.screen';
+import HomeScreen from 'features/home/home-screen';
+import ProfileScreen from 'features/profile/profile.screen';
 import { View, Text } from 'react-native';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useLanguage } from 'shared/hooks/useLanguage';

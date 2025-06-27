@@ -1,12 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useAudioPlayer } from 'features/explore/hooks/audio-player.hook';
 import { useLayoutEffect, useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
-import { AudioPlayerControls } from './AudioPlayerControls';
-import { useAudioPlayer } from '../hooks/useAudioPlayer';
+import { AudioPlayerControls } from './audio-player-controls.component';
 
 interface TextBlock {
   timestamp: number;

@@ -9,7 +9,7 @@ import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-rean
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
-import CompatibilityResults from './CompatibilityResults';
+import CompatibilityResults from './compatibility-results.component';
 
 export default function ZodiacSignsCompatibility({ onBack }: any) {
   const [showDateModal, setShowDateModal] = useState(false);

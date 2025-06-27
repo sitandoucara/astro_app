@@ -16,8 +16,8 @@ export default function LoadingScreen() {
   const colors = useThemeColors();
 
   const logoSource = isDarkMode
-    ? require('../../assets/logo_light.png')
-    : require('../../assets/logo_dark.png');
+    ? require('../assets/logo_light.png')
+    : require('../assets/logo_dark.png');
 
   const scale = useSharedValue(1);
 

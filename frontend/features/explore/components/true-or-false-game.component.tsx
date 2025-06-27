@@ -13,7 +13,7 @@ import Animated, {
 import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
-import { useTrueOrFalseGame } from '../hooks/useTrueOrFalseGame';
+import { useTrueOrFalseGame } from '../hooks/true-or-false-game.hook';
 
 interface TrueOrFalseGameProps {
   onBack?: () => void;

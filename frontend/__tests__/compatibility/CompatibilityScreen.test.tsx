@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { render, fireEvent } from '@testing-library/react-native';
 import { store } from 'app/store';
-import CompatibilityScreen from 'features/compatibility/CompatibilityScreen';
+import CompatibilityScreen from 'features/compatibility/compatibility.screen';
 import { Provider } from 'react-redux';
 
 describe('CompatibilityScreen', () => {

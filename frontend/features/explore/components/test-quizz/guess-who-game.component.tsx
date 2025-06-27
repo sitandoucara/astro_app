@@ -7,7 +7,7 @@ import Animated, { FadeInUp, FadeInDown, SlideInLeft, SlideInRight } from 'react
 import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
-import { useGuessWhoGame } from '../hooks/useGuessWhoGame';
+import { useGuessWhoGame } from 'features/explore/hooks/guess-who-game.hook';
 
 interface GuessWhoGameProps {
   onBack?: () => void;

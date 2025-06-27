@@ -47,7 +47,7 @@ export default function BirthChartCompability({ onBack }: any) {
       <View className="mb-8">
         <View className="items-center">
           <View className="mt-5 p-2">
-            <Image source={require('../../../assets/lock_birthchart.png')} alt="Locked" />
+            <Image source={require('../../../shared/assets/lock_birthchart.png')} alt="Locked" />
           </View>
         </View>
         <View className="mb-8">
