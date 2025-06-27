@@ -7,6 +7,7 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Alert, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
+import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function QuizzScreen({ onBack }: any) {
@@ -14,6 +15,7 @@ export default function QuizzScreen({ onBack }: any) {
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const colors = useThemeColors();
+  const { t } = useLanguage();
 
   const goBack = () => {
     if (onBack) onBack();
@@ -35,33 +37,27 @@ export default function QuizzScreen({ onBack }: any) {
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
               style={{ color: colors.textColor }}>
-              Test your knowledge of Astrology
+              {t('quiz.title')}
             </Text>
           </View>
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, t]);
 
   const chapters = [
     {
       id: '01',
-      title: 'Guess Who Signs ?',
-      duration: 'Test 1',
       sign: 'aries',
       icon: 'gamepad-variant',
     },
     {
       id: '02',
-      title: 'True or False',
-      duration: 'Test 2',
       sign: 'taurus',
       icon: 'help-circle',
     },
     {
       id: '03',
-      title: 'Astro Memory',
-      duration: 'Test 3',
       sign: 'gemini',
       icon: 'cards',
     },
@@ -80,13 +76,15 @@ export default function QuizzScreen({ onBack }: any) {
 
   // Function to manage clicking on a chapter
   const handleChapterPress = (chapter: (typeof chapters)[0]) => {
+    const testTitle = t(`quiz.tests.${chapter.id}.title`);
+
     if (isLocked(chapter)) {
       Alert.alert(
-        'Coming Soon!',
-        `${chapter.title} will be available soon !`,
+        t('common.comingSoon'),
+        t('common.availableSoon', { title: testTitle }),
         [
           {
-            text: 'OK',
+            text: t('common.ok'),
             style: 'default',
           },
         ],
@@ -160,17 +158,17 @@ export default function QuizzScreen({ onBack }: any) {
                             chapter,
                             `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
                           )}>
-                          {chapter.title}
+                          {t(`quiz.tests.${chapter.id}.title`)}
                         </Text>
                         <Text
                           className={getTextStyle(
                             chapter,
                             `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
                           )}>
-                          {chapter.duration}
+                          {t(`quiz.tests.${chapter.id}.subtitle`)}
                         </Text>
                       </View>
-                      {/* Padlock  or game icon */}
+                      {/* Padlock or game icon */}
                       <View className="ml-3 flex-row items-center gap-3">
                         {locked ? (
                           <View className="h-10 w-10 items-center justify-center">

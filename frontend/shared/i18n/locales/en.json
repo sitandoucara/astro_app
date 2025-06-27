@@ -1,4 +1,54 @@
 {
+  "navigation": {
+    "home": "Home",
+    "chart": "Chart",
+    "compatibility": "Compatibility",
+    "explore": "Explore",
+    "profile": "Profile"
+  },
+  "home": {
+    "hi": "Hi {{username}}!",
+    "horoscopeDate": "Horoscope Date",
+    "sunSign": "Sun sign",
+    "moonPhase": "Moon Phase",
+    "moonSign": "Moon sign",
+    "horoscopeFor": "Horoscope for {{period}}",
+    "unlockSubscribe": "To unlock the horoscope, subscribe",
+    "subscribeToUnlock": "Subscribe to unlock",
+    "affirmation": "Affirmation",
+    "affirmationText": "I can be a masterpiece and a work in progress at the same time",
+    "tabs": {
+      "yesterday": "YESTERDAY",
+      "today": "TODAY",
+      "tomorrow": "TOMORROW",
+      "week": "WEEK",
+      "month": "MONTH"
+    },
+    "periods": {
+      "thisWeek": "This week",
+      "year": "Year {{year}}"
+    }
+  },
+  "explore": {
+    "title": "You can Explore",
+    "learn": "Learn",
+    "discoverAstrology": "Discover Astrology",
+    "testQuiz": "Test & Quiz",
+    "testKnowledge": "Test Your Astrology Knowledge",
+    "miniBooks": "Mini-books",
+    "knowMore": "Know more about Astrology"
+  },
+  "compatibility": {
+    "title": "Your compatibility",
+    "zodiacCompatibility": "Zodiac Sign Compatibility",
+    "knowCompatibility": "Know your Zodiac sign compatibility",
+    "birthChartCompatibility": "Birth Charts Compatibility",
+    "planetsLoveMatch": "Let's see what planets in your charts say\nabout your love match"
+  },
+  "chart": {
+    "title": "Your Chart!",
+    "share": "Share"
+  },
   "profile": {
     "title": "Your profile ({{username}})",
     "lightAppearance": "Light Appearance",
@@ -23,14 +73,75 @@
       "unexpectedError": "An unexpected error occurred. Please try again."
     }
   },
-  "language": {
-    "title": "Change Language",
-    "english": "English",
-    "french": "French"
+  "learn": {
+    "title": "Learn Astrology",
+    "lessons": {
+      "01": {
+        "title": "Level 1: Introduction to Astrology",
+        "duration": "20 sec"
+      },
+      "02": {
+        "title": "Level 1: The Zodiac Signs",
+        "duration": "20 sec"
+      },
+      "03": {
+        "title": "Level 1: The Planets and Their",
+        "duration": "20 sec"
+      },
+      "04": {
+        "title": "Level 2: The Ascendant",
+        "duration": ""
+      },
+      "05": {
+        "title": "Level 2: The Four Elements",
+        "duration": ""
+      },
+      "06": {
+        "title": "Level 2: Planetary Aspects",
+        "duration": ""
+      },
+      "07": {
+        "title": "Level 3: Birth Chart Interpretation",
+        "duration": ""
+      },
+      "08": {
+        "title": "Level 3: Synastry and Compatibility",
+        "duration": ""
+      },
+      "09": {
+        "title": "Level 3: Planetary Transits",
+        "duration": ""
+      },
+      "10": {
+        "title": "Level 3: Retrogrades",
+        "duration": ""
+      }
+    }
+  },
+  "quiz": {
+    "title": "Test your knowledge of Astrology",
+    "tests": {
+      "01": {
+        "title": "Guess Who Signs ?",
+        "subtitle": "Test 1"
+      },
+      "02": {
+        "title": "True or False",
+        "subtitle": "Test 2"
+      },
+      "03": {
+        "title": "Astro Memory",
+        "subtitle": "Test 3"
+      }
+    }
   },
   "common": {
     "ok": "OK",
+    "in": "in",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "comingSoon": "Coming Soon!",
+    "availableSoon": "{{title}} will be available soon!",
+    "subscribe": "subscribe!"
   }
 }

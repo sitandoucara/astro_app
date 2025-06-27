@@ -6,14 +6,14 @@ import { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
-//import { useAppSelector } from 'shared/hooks';
+import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function LearnScreen({ onBack }: any) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const colors = useThemeColors();
+  const { t } = useLanguage();
 
   const goBack = () => {
     if (onBack) onBack();
@@ -35,65 +35,25 @@ export default function LearnScreen({ onBack }: any) {
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
               style={{ color: colors.textColor }}>
-              Learn Astrology
+              {t('learn.title')}
             </Text>
           </View>
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, t]);
 
   const chapters = [
-    {
-      id: '01',
-      title: 'Level 1: Introduction to Astrology',
-      duration: '20 sec',
-    },
-    {
-      id: '02',
-      title: 'Level 1: The Zodiac Signs',
-      duration: '20 sec',
-    },
-    {
-      id: '03',
-      title: 'Level 1: The Planets and Their',
-      duration: '20 sec',
-    },
-    {
-      id: '04',
-      title: 'Level 2: The Ascendant ',
-      duration: '',
-    },
-    {
-      id: '05',
-      title: 'Level 2: The Four Elements',
-      duration: '',
-    },
-    {
-      id: '06',
-      title: 'Level 2: Planetary Aspects',
-      duration: '',
-    },
-    {
-      id: '07',
-      title: 'Level 3: Birth Chart Interpretation',
-      duration: '',
-    },
-    {
-      id: '08',
-      title: 'Level 3: Synastry and Compatibility',
-      duration: '',
-    },
-    {
-      id: '09',
-      title: 'Level 3: Planetary Transits',
-      duration: '',
-    },
-    {
-      id: '10',
-      title: 'Level 3: Retrogrades ',
-      duration: '',
-    },
+    { id: '01' },
+    { id: '02' },
+    { id: '03' },
+    { id: '04' },
+    { id: '05' },
+    { id: '06' },
+    { id: '07' },
+    { id: '08' },
+    { id: '09' },
+    { id: '10' },
   ];
 
   // Function to determine if a chapter is locked
@@ -104,13 +64,15 @@ export default function LearnScreen({ onBack }: any) {
 
   // Function to manage clicking on a chapter
   const handleChapterPress = (chapter: (typeof chapters)[0]) => {
+    const lessonTitle = t(`learn.lessons.${chapter.id}.title`);
+
     if (isLocked(chapter)) {
       Alert.alert(
-        'Coming Soon!',
-        `${chapter.title} will be available soon !`,
+        t('common.comingSoon'),
+        t('common.availableSoon', { title: lessonTitle }),
         [
           {
-            text: 'OK',
+            text: t('common.ok'),
             style: 'default',
           },
         ],
@@ -118,7 +80,7 @@ export default function LearnScreen({ onBack }: any) {
       );
     } else {
       navigation.navigate('AudioBookScreen', {
-        title: chapter.title,
+        title: lessonTitle,
         jsonUrl: `https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/lesson_${chapter.id}.json`,
       });
     }
@@ -180,18 +142,18 @@ export default function LearnScreen({ onBack }: any) {
                             chapter,
                             `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
                           )}>
-                          {chapter.title}
+                          {t(`learn.lessons.${chapter.id}.title`)}
                         </Text>
                         <Text
                           className={getTextStyle(
                             chapter,
                             `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
                           )}>
-                          {chapter.duration}
+                          {t(`learn.lessons.${chapter.id}.duration`)}
                         </Text>
                       </View>
 
-                      {/* Padlock  or play icon */}
+                      {/* Padlock or play icon */}
                       <View className="ml-3 flex-row items-center">
                         {locked ? (
                           <View className="h-10 w-10 items-center justify-center">

@@ -1,38 +1,78 @@
 {
-  "sun": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "en": {
+    "sun": {
+      "male": "He expresses this placement with calm strength and steady determination.",
+      "female": "She expresses this placement with grace, patience, and inner peace."
+    },
+    "ascendant": {
+      "male": "He presents himself with stability, warmth, and sensual charm.",
+      "female": "She comes across as grounded, peaceful, and naturally attractive."
+    },
+    "moon": {
+      "male": "He seeks emotional security and comfort through routines.",
+      "female": "She nurtures with calm, loyalty, and a soothing presence."
+    },
+    "venus": {
+      "male": "He loves deeply and sensually, showing affection through touch and gifts.",
+      "female": "She expresses love with sweetness, loyalty, and gentle romance."
+    },
+    "mercury": {
+      "male": "He communicates in a calm, deliberate, and grounded manner.",
+      "female": "She speaks with clarity, patience, and thoughtful words."
+    },
+    "jupiter": {
+      "male": "He grows through consistency and values stability in life.",
+      "female": "She expands by building secure foundations and trusting her pace."
+    },
+    "mars": {
+      "male": "He acts slowly but with persistence and physical strength.",
+      "female": "She takes action with determination and grounded intention."
+    },
+    "uranus": {
+      "male": "He resists change but surprises with practical innovations.",
+      "female": "She brings transformation through steady but impactful shifts."
+    },
+    "neptune": {
+      "male": "He dreams of beauty, peace, and material comfort.",
+      "female": "She imagines a serene world full of love and softness."
+    }
   },
-  "ascendant": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "moon": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "venus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mercury": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "jupiter": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mars": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "uranus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "neptune": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "fr": {
+    "sun": {
+      "male": "Il exprime ce placement avec force tranquille et détermination constante.",
+      "female": "Elle exprime ce placement avec grâce, patience et paix intérieure."
+    },
+    "ascendant": {
+      "male": "Il se présente avec stabilité, chaleur et charme sensuel.",
+      "female": "Elle paraît ancrée, paisible et naturellement attirante."
+    },
+    "moon": {
+      "male": "Il recherche la sécurité émotionnelle à travers ses habitudes.",
+      "female": "Elle réconforte avec calme, loyauté et douceur."
+    },
+    "venus": {
+      "male": "Il aime profondément et sensuellement, avec gestes et cadeaux.",
+      "female": "Elle exprime son amour avec tendresse, fidélité et romantisme doux."
+    },
+    "mercury": {
+      "male": "Il communique de manière posée, réfléchie et stable.",
+      "female": "Elle parle avec clarté, patience et soin dans ses mots."
+    },
+    "jupiter": {
+      "male": "Il grandit par la constance et recherche la stabilité.",
+      "female": "Elle s’épanouit en construisant des bases solides à son rythme."
+    },
+    "mars": {
+      "male": "Il agit lentement mais avec force et persévérance.",
+      "female": "Elle agit avec détermination et intention ancrée."
+    },
+    "uranus": {
+      "male": "Il résiste au changement mais innove de manière pratique.",
+      "female": "Elle transforme lentement mais durablement."
+    },
+    "neptune": {
+      "male": "Il rêve de beauté, de paix et de confort matériel.",
+      "female": "Elle imagine un monde doux, aimant et serein."
+    }
   }
 }

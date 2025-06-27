@@ -6,15 +6,14 @@ import ExploreScreen from 'features/explore/ExploreScreen';
 import HomeScreen from 'features/home/HomeScreen';
 import ProfileScreen from 'features/profile/ProfileScreen';
 import { View, Text } from 'react-native';
-//import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useLanguage } from 'shared/hooks/useLanguage';
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-
   const colors = useThemeColors();
+  const { t } = useLanguage();
 
   return (
     <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
@@ -46,11 +45,32 @@ export default function MyTabs() {
             return <Ionicons name={iconName} size={size} color={color} />;
           },
           tabBarLabel: ({ focused, color }) => {
+            let labelKey = '';
+            switch (route.name) {
+              case 'Home':
+                labelKey = 'navigation.home';
+                break;
+              case 'Chart':
+                labelKey = 'navigation.chart';
+                break;
+              case 'Compatibility':
+                labelKey = 'navigation.compatibility';
+                break;
+              case 'Explore':
+                labelKey = 'navigation.explore';
+                break;
+              case 'Profile':
+                labelKey = 'navigation.profile';
+                break;
+              default:
+                labelKey = 'navigation.home';
+            }
+
             return (
               <Text
                 className="text-aref text-xs"
                 style={{ color, fontWeight: focused ? 'bold' : 'normal' }}>
-                {route.name}
+                {t(labelKey)}
               </Text>
             );
           },

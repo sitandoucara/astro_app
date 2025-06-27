@@ -1,38 +1,78 @@
 {
-  "sun": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "en": {
+    "sun": {
+      "male": "He expresses this placement with originality and visionary thinking.",
+      "female": "She expresses this placement with independence and mental clarity."
+    },
+    "ascendant": {
+      "male": "He appears detached but deeply intelligent and unique.",
+      "female": "She comes across as quirky, open-minded, and free-spirited."
+    },
+    "moon": {
+      "male": "He feels in abstract ways and values emotional freedom.",
+      "female": "She experiences emotions through logic and distance."
+    },
+    "venus": {
+      "male": "He loves with freedom and values intellectual connection.",
+      "female": "She expresses affection in unique, non-traditional ways."
+    },
+    "mercury": {
+      "male": "He thinks innovatively and communicates with a futuristic tone.",
+      "female": "She speaks with clarity and often surprises others with ideas."
+    },
+    "jupiter": {
+      "male": "He grows through humanitarian ideals and new perspectives.",
+      "female": "She expands by embracing uniqueness and forward-thinking beliefs."
+    },
+    "mars": {
+      "male": "He acts unpredictably and fights for social causes.",
+      "female": "She asserts herself with originality and rebellion."
+    },
+    "uranus": {
+      "male": "He revolutionizes with sudden insights and inventive energy.",
+      "female": "She brings change with brilliance and visionary ideas."
+    },
+    "neptune": {
+      "male": "He dreams of a better future and idealistic worlds.",
+      "female": "She imagines cosmic harmony and seeks to uplift humanity."
+    }
   },
-  "ascendant": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "moon": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "venus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mercury": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "jupiter": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mars": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "uranus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "neptune": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "fr": {
+    "sun": {
+      "male": "Il exprime ce placement avec originalité et une pensée visionnaire.",
+      "female": "Elle exprime ce placement avec indépendance et clarté d’esprit."
+    },
+    "ascendant": {
+      "male": "Il paraît détaché mais profondément intelligent et unique.",
+      "female": "Elle se montre originale, ouverte d’esprit et libre."
+    },
+    "moon": {
+      "male": "Il ressent de manière abstraite et valorise la liberté émotionnelle.",
+      "female": "Elle vit ses émotions à travers la logique et la distance."
+    },
+    "venus": {
+      "male": "Il aime avec liberté et valorise la connexion intellectuelle.",
+      "female": "Elle exprime son affection de façon unique et non conventionnelle."
+    },
+    "mercury": {
+      "male": "Il pense de façon innovante et communique avec une vision futuriste.",
+      "female": "Elle parle avec clarté et surprend souvent par ses idées."
+    },
+    "jupiter": {
+      "male": "Il évolue grâce à ses idéaux humanitaires et de nouvelles perspectives.",
+      "female": "Elle s’élargit en adoptant l’originalité et la pensée novatrice."
+    },
+    "mars": {
+      "male": "Il agit de manière imprévisible et lutte pour les causes sociales.",
+      "female": "Elle s’impose avec originalité et esprit rebelle."
+    },
+    "uranus": {
+      "male": "Il révolutionne par des éclairs d’intuition et une énergie inventive.",
+      "female": "Elle apporte le changement avec génie et idées visionnaires."
+    },
+    "neptune": {
+      "male": "Il rêve d’un futur meilleur et de mondes idéaux.",
+      "female": "Elle imagine une harmonie cosmique et cherche à élever l’humanité."
+    }
   }
 }

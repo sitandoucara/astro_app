@@ -1,38 +1,78 @@
 {
-  "sun": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "en": {
+    "sun": {
+      "male": "He expresses this placement with courage and bold leadership.",
+      "female": "She expresses this placement with fierce energy and confidence."
+    },
+    "ascendant": {
+      "male": "He approaches life head-on and radiates assertiveness.",
+      "female": "She presents herself with fire, spontaneity, and directness."
+    },
+    "moon": {
+      "male": "He reacts quickly and wears his heart on his sleeve.",
+      "female": "She feels passionately and responds with intensity."
+    },
+    "venus": {
+      "male": "He loves with boldness and pursues desire fearlessly.",
+      "female": "She expresses affection with fiery passion and honesty."
+    },
+    "mercury": {
+      "male": "He speaks with bluntness and thinks quickly on his feet.",
+      "female": "She communicates directly and values mental independence."
+    },
+    "jupiter": {
+      "male": "He expands through bold actions and daring pursuits.",
+      "female": "She grows by taking risks and asserting her vision."
+    },
+    "mars": {
+      "male": "He acts with instinct and relentless drive.",
+      "female": "She pushes forward with courage and fierce determination."
+    },
+    "uranus": {
+      "male": "He disrupts through sudden, bold change.",
+      "female": "She awakens others with radical honesty and energy."
+    },
+    "neptune": {
+      "male": "He dreams of heroic ideals and acts on impulse.",
+      "female": "She imagines with passion and craves spiritual excitement."
+    }
   },
-  "ascendant": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "moon": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "venus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mercury": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "jupiter": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mars": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "uranus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "neptune": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "fr": {
+    "sun": {
+      "male": "Il exprime ce placement avec courage et un leadership audacieux.",
+      "female": "Elle exprime ce placement avec une énergie vive et une grande confiance."
+    },
+    "ascendant": {
+      "male": "Il aborde la vie de front et dégage de l’assurance.",
+      "female": "Elle se présente avec feu, spontanéité et franchise."
+    },
+    "moon": {
+      "male": "Il réagit rapidement et montre clairement ses émotions.",
+      "female": "Elle ressent intensément et répond avec passion."
+    },
+    "venus": {
+      "male": "Il aime avec audace et poursuit ses désirs sans peur.",
+      "female": "Elle exprime son affection avec passion et franchise."
+    },
+    "mercury": {
+      "male": "Il parle avec franchise et pense avec rapidité.",
+      "female": "Elle communique directement et valorise l’indépendance mentale."
+    },
+    "jupiter": {
+      "male": "Il se développe à travers l’action et les défis.",
+      "female": "Elle grandit en prenant des risques et en affirmant sa vision."
+    },
+    "mars": {
+      "male": "Il agit avec instinct et une énergie implacable.",
+      "female": "Elle avance avec courage et une détermination farouche."
+    },
+    "uranus": {
+      "male": "Il bouleverse par des changements soudains et audacieux.",
+      "female": "Elle réveille les autres avec honnêteté radicale et énergie."
+    },
+    "neptune": {
+      "male": "Il rêve d’idéaux héroïques et agit par impulsion.",
+      "female": "Elle imagine avec passion et recherche une excitation spirituelle."
+    }
   }
 }

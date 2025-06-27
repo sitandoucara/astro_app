@@ -6,23 +6,25 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useLanguage } from 'shared/hooks/useLanguage';
 
 export default function ExploreScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const colors = useThemeColors();
+  const { t } = useLanguage();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
         <Text className="text-aref ml-5 text-[20px]" style={{ color: colors.textColor }}>
-          You can Explore
+          {t('explore.title')}
         </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, isDarkMode]);
+  }, [navigation, isDarkMode, t]);
 
   return (
     <View
@@ -43,10 +45,10 @@ export default function ExploreScreen() {
 
           <View>
             <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
-              Learn
+              {t('explore.learn')}
             </Text>
             <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
-              Discover Astrology
+              {t('explore.discoverAstrology')}
             </Text>
           </View>
         </View>
@@ -70,10 +72,10 @@ export default function ExploreScreen() {
           </View>
           <View>
             <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
-              Test & Quiz
+              {t('explore.testQuiz')}
             </Text>
             <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
-              Test Your Astrology Knowlege
+              {t('explore.testKnowledge')}
             </Text>
           </View>
         </View>
@@ -82,7 +84,12 @@ export default function ExploreScreen() {
       {/*Mini books */}
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => Alert.alert('Zodiac Sign Compatibility clicked!')}
+        onPress={() =>
+          Alert.alert(
+            t('common.comingSoon'),
+            t('common.availableSoon', { title: t('explore.miniBooks') })
+          )
+        }
         className={`w-full rounded-3xl p-6 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
         <View className="justify-center">
           <View className="h-16 w-16 items-center justify-center">
@@ -98,10 +105,10 @@ export default function ExploreScreen() {
 
           <View>
             <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
-              Mini-books
+              {t('explore.miniBooks')}
             </Text>
             <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
-              Know more about Astrology
+              {t('explore.knowMore')}
             </Text>
           </View>
         </View>

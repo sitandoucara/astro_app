@@ -4,6 +4,7 @@ import { format, addDays, subDays } from 'date-fns';
 import { useLayoutEffect, useState, useMemo } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
+import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
 
@@ -21,8 +22,8 @@ export default function HomeScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const { userSign } = useZodiacCompatibility();
-
   const colors = useThemeColors();
+  const { t } = useLanguage();
 
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
@@ -38,17 +39,16 @@ export default function HomeScreen() {
       headerTitle: () => (
         <View className="flex-row gap-2">
           <Image source={{ uri: signImage }} className="h-10 w-10" />
-
           <View>
             <Text className="text-aref text-[20px]" style={{ color: colors.textColor }}>
-              Hi {user?.username ?? 'You'}!
+              {t('home.hi', { username: user?.username ?? 'You' })}
             </Text>
           </View>
         </View>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, isDarkMode, signImage, user?.username]);
+  }, [navigation, isDarkMode, signImage, user?.username, t]);
 
   const [activeTab, setActiveTab] = useState<string>('TODAY');
 
@@ -58,15 +58,15 @@ export default function HomeScreen() {
 
   const tabs: TimeTab[] = useMemo(
     () => [
-      { id: 'YESTERDAY', label: 'YESTERDAY', active: false },
-      { id: 'TODAY', label: 'TODAY', active: true },
-      { id: 'TOMORROW', label: 'TOMORROW', active: false },
-      { id: 'WEEK', label: 'WEEK', active: false },
-      { id: 'MONTH', label: 'MONTH', active: false },
+      { id: 'YESTERDAY', label: t('home.tabs.yesterday'), active: false },
+      { id: 'TODAY', label: t('home.tabs.today'), active: true },
+      { id: 'TOMORROW', label: t('home.tabs.tomorrow'), active: false },
+      { id: 'WEEK', label: t('home.tabs.week'), active: false },
+      { id: 'MONTH', label: t('home.tabs.month'), active: false },
       { id: '2025', label: '2025', active: false },
       { id: '2026', label: '2026', active: false },
     ],
-    []
+    [t]
   );
 
   const getFormattedDate = (tabId: string) => {
@@ -83,9 +83,9 @@ export default function HomeScreen() {
         return format(today, 'MMMM yyyy');
       case '2025':
       case '2026':
-        return `Year ${tabId}`;
+        return t('home.periods.year', { year: tabId });
       case 'WEEK':
-        return 'This week';
+        return t('home.periods.thisWeek');
       default:
         return format(today, 'dd MMMM yyyy');
     }
@@ -132,14 +132,16 @@ export default function HomeScreen() {
               {getFormattedDate(activeTab)}
             </Text>
 
-            <Text className={`text-aref mt-1 text-sm ${colors.textSecondary}`}>Horoscope Date</Text>
+            <Text className={`text-aref mt-1 text-sm ${colors.textSecondary}`}>
+              {t('home.horoscopeDate')}
+            </Text>
           </View>
           <View className="items-end">
             <Text className={`text-aref mt-1 text-xl font-light ${colors.textSecondary}`}>
               {isPremiumTab(activeTab) ? capitalizeFirst(currentUserSign) : 'Waning Gibbous'}
             </Text>
             <Text className={`text-aref mt-1 text-sm ${colors.textSecondary}`}>
-              {isPremiumTab(activeTab) ? 'Sun sign' : 'Moon Phase'}
+              {isPremiumTab(activeTab) ? t('home.sunSign') : t('home.moonPhase')}
             </Text>
           </View>
         </View>
@@ -155,10 +157,10 @@ export default function HomeScreen() {
               <View className="mb-8">
                 <Text
                   className={`text-aref mb-4 text-center text-lg font-medium ${colors.textPrimary}`}>
-                  Horoscope for {activeTab}
+                  {t('home.horoscopeFor', { period: activeTab })}
                 </Text>
                 <Text className={`text-aref text-center text-sm ${colors.textSecondary}`}>
-                  To unlock the horoscope, subscribe
+                  {t('home.unlockSubscribe')}
                 </Text>
               </View>
 
@@ -170,13 +172,13 @@ export default function HomeScreen() {
 
                 <View className={`rounded-full border-2 p-2 ${colors.borderColor}`}>
                   <TouchableOpacity
-                    onPress={() => Alert.alert('subscribe!')}
+                    onPress={() => Alert.alert(t('common.subscribe'))}
                     activeOpacity={0.8}
                     className="shadow-opacity-30 elevation-1 rounded-full bg-[#BFB0A7] px-12 py-3 shadow-md shadow-light-text2">
                     <Text
                       className={`text-aref text-center text-base font-bold tracking-wide`}
                       style={{ color: colors.iconColor }}>
-                      Subscribe to unlock
+                      {t('home.subscribeToUnlock')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -225,12 +227,15 @@ export default function HomeScreen() {
                   <Text className={`text-aref text-lg font-medium ${colors.textPrimary}`}>
                     {capitalizeFirst(currentUserSign)}
                   </Text>
-                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>Sun sign</Text>
+                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>
+                    {t('home.sunSign')}
+                  </Text>
                 </View>
                 <View className="items-end">
                   <Text className={`text-aref text-lg font-medium ${colors.textPrimary}`}>Leo</Text>
-
-                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>Moon sign</Text>
+                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>
+                    {t('home.moonSign')}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -240,12 +245,12 @@ export default function HomeScreen() {
 
             <View className="mb-8">
               <Text className={`text-aref mb-4 text-lg font-medium ${colors.textPrimary}`}>
-                Affirmation
+                {t('home.affirmation')}
               </Text>
               <Text
                 className={`text-aref text-sm ${colors.textSecondary}`}
                 style={{ lineHeight: 20 }}>
-                I can be a masterpiece and a work in progress at the same time
+                {t('home.affirmationText')}
               </Text>
             </View>
           </>

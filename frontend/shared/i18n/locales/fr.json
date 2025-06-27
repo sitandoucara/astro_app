@@ -1,4 +1,116 @@
 {
+  "navigation": {
+    "home": "Accueil",
+    "chart": "Thème",
+    "compatibility": "Compatibilité",
+    "explore": "Explorer",
+    "profile": "Profil"
+  },
+  "home": {
+    "hi": "Salut {{username}} !",
+    "horoscopeDate": "Date Horoscope",
+    "sunSign": "Signe Solaire",
+    "moonPhase": "Phase Lunaire",
+    "moonSign": "Signe Lunaire",
+    "horoscopeFor": "Horoscope pour {{period}}",
+    "unlockSubscribe": "Pour débloquer l'horoscope, abonnez-vous",
+    "subscribeToUnlock": "S'abonner pour débloquer",
+    "affirmation": "Affirmation",
+    "affirmationText": "Je peux être un chef-d'œuvre et un travail en cours en même temps",
+    "tabs": {
+      "yesterday": "HIER",
+      "today": "AUJOURD'HUI",
+      "tomorrow": "DEMAIN",
+      "week": "SEMAINE",
+      "month": "MOIS"
+    },
+    "periods": {
+      "thisWeek": "Cette semaine",
+      "year": "Année {{year}}"
+    }
+  },
+  "explore": {
+    "title": "Vous pouvez Explorer",
+    "learn": "Apprendre",
+    "discoverAstrology": "Découvrir l'Astrologie",
+    "testQuiz": "Tests & Quiz",
+    "testKnowledge": "Testez vos Connaissances en Astrologie",
+    "miniBooks": "Mini-livres",
+    "knowMore": "En savoir plus sur l'Astrologie"
+  },
+  "learn": {
+    "title": "Apprendre l'Astrologie",
+    "lessons": {
+      "01": {
+        "title": "Niveau 1 : Introduction à l'Astrologie",
+        "duration": "20 sec"
+      },
+      "02": {
+        "title": "Niveau 1 : Les Signes du Zodiaque",
+        "duration": "20 sec"
+      },
+      "03": {
+        "title": "Niveau 1 : Les Planètes et Leurs Influences",
+        "duration": "20 sec"
+      },
+      "04": {
+        "title": "Niveau 2 : L'Ascendant",
+        "duration": ""
+      },
+      "05": {
+        "title": "Niveau 2 : Les Quatre Éléments",
+        "duration": ""
+      },
+      "06": {
+        "title": "Niveau 2 : Les Aspects Planétaires",
+        "duration": ""
+      },
+      "07": {
+        "title": "Niveau 3 : Interprétation du Thème Astral",
+        "duration": ""
+      },
+      "08": {
+        "title": "Niveau 3 : Synastrie et Compatibilité",
+        "duration": ""
+      },
+      "09": {
+        "title": "Niveau 3 : Transits Planétaires",
+        "duration": ""
+      },
+      "10": {
+        "title": "Niveau 3 : Rétrogrades",
+        "duration": ""
+      }
+    }
+  },
+  "quiz": {
+    "title": "Testez vos connaissances en Astrologie",
+    "tests": {
+      "01": {
+        "title": "Devinez Qui Signe ?",
+        "subtitle": "Test 1"
+      },
+      "02": {
+        "title": "Vrai ou Faux",
+        "subtitle": "Test 2"
+      },
+      "03": {
+        "title": "Mémoire Astro",
+        "subtitle": "Test 3"
+      }
+    }
+  },
+  "compatibility": {
+    "title": "Votre compatibilité",
+    "zodiacCompatibility": "Compatibilité des Signes Zodiacaux",
+    "knowCompatibility": "Connaissez votre compatibilité zodiacale",
+    "birthChartCompatibility": "Compatibilité des Thèmes Astraux",
+    "planetsLoveMatch": "Voyons ce que les planètes dans vos thèmes\ndisent de votre relation amoureuse"
+  },
+  "chart": {
+    "title": "Votre Thème !",
+    "share": "Partager"
+  },
   "profile": {
     "title": "Votre profil ({{username}})",
     "lightAppearance": "Apparence Claire",
@@ -30,7 +142,11 @@
   },
   "common": {
     "ok": "OK",
+    "in": "en",
     "error": "Erreur",
-    "success": "Succès"
+    "success": "Succès",
+    "comingSoon": "Bientôt Disponible !",
+    "availableSoon": "{{title}} sera bientôt disponible !",
+    "subscribe": "s'abonner !"
   }
 }

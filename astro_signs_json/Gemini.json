@@ -1,38 +1,78 @@
 {
-  "sun": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "en": {
+    "sun": {
+      "male": "He expresses this placement with wit, curiosity, and quick thinking.",
+      "female": "She expresses this placement with mental agility and vibrant energy."
+    },
+    "ascendant": {
+      "male": "He appears lively, talkative, and full of questions.",
+      "female": "She presents herself with charm, movement, and a playful mind."
+    },
+    "moon": {
+      "male": "He processes feelings through words and constant thought.",
+      "female": "She needs mental stimulation to feel emotionally balanced."
+    },
+    "venus": {
+      "male": "He loves playfully, with humor and clever conversation.",
+      "female": "She expresses affection through laughter, words, and spontaneity."
+    },
+    "mercury": {
+      "male": "He speaks quickly and enjoys exchanging ideas endlessly.",
+      "female": "She thinks fast and communicates with ease and sparkle."
+    },
+    "jupiter": {
+      "male": "He grows by learning, networking, and sharing knowledge.",
+      "female": "She expands through diverse ideas and intellectual curiosity."
+    },
+    "mars": {
+      "male": "He acts on impulse and uses words as his weapon.",
+      "female": "She moves quickly, multitasks, and asserts through intellect."
+    },
+    "uranus": {
+      "male": "He disrupts with unexpected ideas and mental breakthroughs.",
+      "female": "She sparks change through communication and originality."
+    },
+    "neptune": {
+      "male": "He dreams in words, poetry, and mental escapes.",
+      "female": "She imagines endlessly and loses herself in thought."
+    }
   },
-  "ascendant": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "moon": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "venus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mercury": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "jupiter": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mars": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "uranus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "neptune": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "fr": {
+    "sun": {
+      "male": "Il exprime ce placement avec esprit, curiosité et vivacité d’esprit.",
+      "female": "Elle exprime ce placement avec agilité mentale et énergie vive."
+    },
+    "ascendant": {
+      "male": "Il apparaît vif, bavard et curieux.",
+      "female": "Elle se montre charmante, en mouvement, avec un esprit joueur."
+    },
+    "moon": {
+      "male": "Il traite ses émotions par la parole et la réflexion constante.",
+      "female": "Elle a besoin de stimulation mentale pour se sentir équilibrée."
+    },
+    "venus": {
+      "male": "Il aime avec légèreté, humour et conversation brillante.",
+      "female": "Elle montre son amour avec des mots, du rire et de la spontanéité."
+    },
+    "mercury": {
+      "male": "Il parle vite et adore échanger des idées sans fin.",
+      "female": "Elle pense vite et communique avec aisance et éclat."
+    },
+    "jupiter": {
+      "male": "Il évolue en apprenant et en partageant ses connaissances.",
+      "female": "Elle s’élargit à travers la curiosité intellectuelle et les échanges."
+    },
+    "mars": {
+      "male": "Il agit sur un coup de tête et manie les mots avec force.",
+      "female": "Elle agit vite, jongle avec les tâches et s’impose par son esprit."
+    },
+    "uranus": {
+      "male": "Il crée des ruptures par des idées inattendues.",
+      "female": "Elle initie le changement par la parole et l’originalité."
+    },
+    "neptune": {
+      "male": "Il rêve en mots, poésie et évasion mentale.",
+      "female": "Elle s’évade dans l’imaginaire et les pensées infinies."
+    }
   }
 }

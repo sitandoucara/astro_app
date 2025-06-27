@@ -1,38 +1,78 @@
 {
-  "sun": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "en": {
+    "sun": {
+      "male": "He expresses this placement with confidence, warmth, and creative flair.",
+      "female": "She expresses this placement with radiance, pride, and generosity."
+    },
+    "ascendant": {
+      "male": "He comes across as charismatic and proud, with a strong presence.",
+      "female": "She presents herself with elegance, strength, and magnetism."
+    },
+    "moon": {
+      "male": "He seeks emotional recognition and loves with loyalty.",
+      "female": "She feels deeply and wants to be valued and admired."
+    },
+    "venus": {
+      "male": "He loves grandly and showers affection with boldness.",
+      "female": "She expresses love with drama, passion, and devotion."
+    },
+    "mercury": {
+      "male": "He speaks with authority and adds flair to every word.",
+      "female": "She communicates with passion and seeks to inspire others."
+    },
+    "jupiter": {
+      "male": "He grows by leading, performing, and following his heart.",
+      "female": "She expands through creativity, generosity, and pride."
+    },
+    "mars": {
+      "male": "He acts with confidence and aims to shine in all he does.",
+      "female": "She asserts herself with fire, pride, and determination."
+    },
+    "uranus": {
+      "male": "He brings bold change and unexpected displays of ego.",
+      "female": "She revolutionizes with creative flair and dramatic energy."
+    },
+    "neptune": {
+      "male": "He dreams of glory, romance, and artistic success.",
+      "female": "She imagines magical love and the beauty of self-expression."
+    }
   },
-  "ascendant": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "moon": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "venus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mercury": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "jupiter": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mars": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "uranus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "neptune": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "fr": {
+    "sun": {
+      "male": "Il exprime ce placement avec confiance, chaleur et créativité.",
+      "female": "Elle exprime ce placement avec éclat, fierté et générosité."
+    },
+    "ascendant": {
+      "male": "Il dégage du charisme et une forte présence.",
+      "female": "Elle se présente avec élégance, force et magnétisme."
+    },
+    "moon": {
+      "male": "Il cherche la reconnaissance affective et aime avec loyauté.",
+      "female": "Elle ressent profondément et veut être valorisée."
+    },
+    "venus": {
+      "male": "Il aime avec grandeur et montre son affection avec audace.",
+      "female": "Elle exprime son amour avec passion, drame et dévotion."
+    },
+    "mercury": {
+      "male": "Il parle avec autorité et embellit chaque mot.",
+      "female": "Elle communique avec feu et cherche à inspirer."
+    },
+    "jupiter": {
+      "male": "Il évolue en dirigeant et en suivant son cœur.",
+      "female": "Elle s’épanouit par la créativité, la générosité et la fierté."
+    },
+    "mars": {
+      "male": "Il agit avec confiance et cherche à briller.",
+      "female": "Elle s’impose avec feu, fierté et détermination."
+    },
+    "uranus": {
+      "male": "Il initie des changements spectaculaires et inattendus.",
+      "female": "Elle transforme avec génie créatif et énergie théâtrale."
+    },
+    "neptune": {
+      "male": "Il rêve de gloire, d’amour romantique et de succès artistique.",
+      "female": "Elle imagine un amour magique et l’art comme expression de soi."
+    }
   }
 }

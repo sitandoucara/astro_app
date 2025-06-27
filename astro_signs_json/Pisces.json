@@ -1,38 +1,78 @@
 {
-  "sun": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "en": {
+    "sun": {
+      "male": "He expresses this placement with compassion, intuition, and creative depth.",
+      "female": "She expresses this placement with softness, imagination, and emotional fluidity."
+    },
+    "ascendant": {
+      "male": "He comes across as dreamy, gentle, and mysterious.",
+      "female": "She appears sensitive, ethereal, and full of emotion."
+    },
+    "moon": {
+      "male": "He feels everything deeply and absorbs the emotions around him.",
+      "female": "She reacts with empathy and needs time alone to recharge."
+    },
+    "venus": {
+      "male": "He loves unconditionally and loses himself in romantic ideals.",
+      "female": "She expresses love with magic, devotion, and deep sensitivity."
+    },
+    "mercury": {
+      "male": "He speaks with emotion, poetry, and a gentle tone.",
+      "female": "She communicates through feelings, images, and subtle meanings."
+    },
+    "jupiter": {
+      "male": "He grows through spiritual beliefs and helping others.",
+      "female": "She expands by trusting her intuition and connecting to the divine."
+    },
+    "mars": {
+      "male": "He acts quietly, inspired by dreams and feelings.",
+      "female": "She pursues her goals with subtle determination and inner guidance."
+    },
+    "uranus": {
+      "male": "He changes through spiritual awakenings and inner visions.",
+      "female": "She brings transformation through compassion and mysticism."
+    },
+    "neptune": {
+      "male": "He dreams of unity, healing, and universal love.",
+      "female": "She imagines a world of peace, emotion, and spiritual connection."
+    }
   },
-  "ascendant": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "moon": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "venus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mercury": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "jupiter": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "mars": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "uranus": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
-  },
-  "neptune": {
-    "male": "He expresses this placement with strength and confidence.",
-    "female": "She expresses this placement with intuition and grace."
+  "fr": {
+    "sun": {
+      "male": "Il exprime ce placement avec compassion, intuition et profondeur créative.",
+      "female": "Elle exprime ce placement avec douceur, imagination et fluidité émotionnelle."
+    },
+    "ascendant": {
+      "male": "Il paraît rêveur, doux et mystérieux.",
+      "female": "Elle semble sensible, éthérée et pleine d’émotion."
+    },
+    "moon": {
+      "male": "Il ressent tout intensément et absorbe les émotions de son entourage.",
+      "female": "Elle réagit avec empathie et a besoin de solitude pour se régénérer."
+    },
+    "venus": {
+      "male": "Il aime sans condition et se perd dans ses idéaux romantiques.",
+      "female": "Elle exprime l’amour avec magie, dévouement et grande sensibilité."
+    },
+    "mercury": {
+      "male": "Il parle avec émotion, poésie et douceur.",
+      "female": "Elle communique par les sentiments, les images et les nuances."
+    },
+    "jupiter": {
+      "male": "Il grandit grâce à la foi et au service des autres.",
+      "female": "Elle s’épanouit en suivant son intuition et en se connectant au divin."
+    },
+    "mars": {
+      "male": "Il agit discrètement, inspiré par ses rêves et émotions.",
+      "female": "Elle poursuit ses buts avec détermination douce et guidance intérieure."
+    },
+    "uranus": {
+      "male": "Il change à travers des éveils spirituels et des visions intérieures.",
+      "female": "Elle transforme par la compassion et le mysticisme."
+    },
+    "neptune": {
+      "male": "Il rêve d’unité, de guérison et d’amour universel.",
+      "female": "Elle imagine un monde de paix, d’émotion et de lien spirituel."
+    }
   }
 }

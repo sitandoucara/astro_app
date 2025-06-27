@@ -5,12 +5,14 @@ import { RootStackParamList } from 'navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
+import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function CompatibilityScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const colors = useThemeColors();
+  const { t } = useLanguage();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const lightSignUrl =
@@ -23,12 +25,12 @@ export default function CompatibilityScreen() {
     navigation.setOptions({
       headerTitle: () => (
         <Text className="text-aref ml-5 text-[20px]" style={{ color: colors.textColor }}>
-          Your compability
+          {t('compatibility.title')}
         </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, isDarkMode]);
+  }, [navigation, isDarkMode, t]);
 
   return (
     <View
@@ -52,10 +54,10 @@ export default function CompatibilityScreen() {
 
           <View className="items-center">
             <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
-              Zodiac Sign Compatibility
+              {t('compatibility.zodiacCompatibility')}
             </Text>
             <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
-              Know your Zodiac sign compability
+              {t('compatibility.knowCompatibility')}
             </Text>
           </View>
         </View>
@@ -156,10 +158,10 @@ export default function CompatibilityScreen() {
 
           <View className="mt-2 items-center">
             <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
-              Birth Charts Compatibility
+              {t('compatibility.birthChartCompatibility')}
             </Text>
             <Text className={`text-aref text-sm ${colors.textSecondaryAlt} text-center`}>
-              Let's see what planets in your charts say{'\n'}about your love match
+              {t('compatibility.planetsLoveMatch')}
             </Text>
           </View>
         </View>

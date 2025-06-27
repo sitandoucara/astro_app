@@ -4,12 +4,14 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
+import { useLanguage } from 'shared/hooks/useLanguage';
 import { useThemeColors } from 'shared/hooks/useThemeColors';
 
 export default function ChartScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const colors = useThemeColors();
+  const { t, currentLanguage } = useLanguage();
   const navigation = useNavigation();
 
   const user = useAppSelector((state) => state.auth.user);
@@ -58,7 +60,9 @@ export default function ChartScreen() {
   useEffect(() => {
     const loadDescriptions = async () => {
       if (!planets || !user?.gender) return;
-      const gender = user.gender.toLowerCase();
+
+      const gender = user.gender.toLowerCase(); // "male" | "female"
+      const langKey = currentLanguage === 'fr' ? 'fr' : 'en'; // ← nouvelle clé langue
       const validPlanets = [
         'sun',
         'moon',
@@ -84,10 +88,11 @@ export default function ChartScreen() {
         const sign = data.sign;
         if (validPlanets.includes(lowerPlanet)) {
           const detail = await fetchSignDetail(sign);
-          if (detail?.[lowerPlanet]?.[gender]) {
+          const planetNode = detail?.[langKey]?.[lowerPlanet];
+          if (planetNode?.[gender]) {
             descriptions[planet] = {
               sign,
-              text: detail[lowerPlanet][gender],
+              text: planetNode[gender],
             };
           }
         }
@@ -97,18 +102,18 @@ export default function ChartScreen() {
     };
 
     loadDescriptions();
-  }, [planets, user]);
+  }, [planets, user, currentLanguage]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
         <Text className="text-aref ml-5 text-[20px]" style={{ color: colors.textColor }}>
-          Your Chart!
+          {t('chart.title')}
         </Text>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, isDarkMode]);
+  }, [navigation, isDarkMode, t]);
 
   const generateHtmlWithSvg = (url: string) => `
     <html>
@@ -163,13 +168,13 @@ export default function ChartScreen() {
 
       <View className="mt-4 rounded-full border-2 border-stone-600 p-2">
         <TouchableOpacity
-          onPress={() => Alert.alert('share!')}
+          onPress={() => Alert.alert(t('chart.share'))}
           activeOpacity={0.8}
           className="shadow-opacity-30 elevation-1 rounded-full bg-[#BFB0A7] px-2 py-4 shadow-md shadow-light-text2">
           <View className="flex-row justify-center gap-2">
             <MaterialCommunityIcons name="share" size={20} color="#32221E" />
             <Text className="text-aref text-base font-bold tracking-wide text-[#32221E]">
-              Share
+              {t('chart.share')}
             </Text>
           </View>
         </TouchableOpacity>
@@ -183,7 +188,7 @@ export default function ChartScreen() {
               className="mt-4 rounded-[13px] border bg-light-cardback p-3"
               style={{ borderColor: colors.titleColor }}>
               <Text className="text-aref font-bold" style={{ color: colors.titleColor }}>
-                {planet} in {info.sign}
+                {planet} {t('common.in')} {info.sign}
               </Text>
               <Text className="text-aref mt-1 text-light-text3">{info.text}</Text>
             </View>
