@@ -163,7 +163,7 @@ export const deleteAccount = async (dispatch: AppDispatch) => {
     if (userError || !user) {
       return { error: userError || { message: 'No user logged in' } };
     }
-    const res = await fetch('https://astro-mood-store.vercel.app/api/delete-account', {
+    const res = await fetch('https://astro-app-eight-chi.vercel.app/api/delete-account', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: user.id }),
