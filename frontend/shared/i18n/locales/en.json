@@ -38,6 +38,23 @@
     "arFilters": "Astro Filters",
     "exploreAstrologyDifferently": "Discover your sign in augmented reality"
   },
+  "filters": {
+    "title": "Astro Filters",
+    "list": {
+      "01": {
+        "title": "Your Astrologic Face",
+        "subtitle": "Filter 1"
+      },
+      "02": {
+        "title": "Astro Horoscope",
+        "subtitle": "Filter 2"
+      },
+      "03": {
+        "title": "CelebrityAstro",
+        "subtitle": "Filter 3"
+      }
+    }
+  },
   "compatibility": {
     "title": "Your compatibility",
     "zodiacCompatibility": "Zodiac Sign Compatibility",
@@ -49,11 +66,19 @@
     "title": "Your Chart!",
     "share": "Share"
   },
+  "voice": {
+    "title": "Change Voice",
+    "female": "Female Voice",
+    "male": "Male Voice",
+    "currentSelection": "Current selection",
+    "description": "This setting affects all audio content in the app"
+  },
   "profile": {
     "title": "Your profile ({{username}})",
     "lightAppearance": "Light Appearance",
     "darkAppearance": "Dark Appearance",
     "changeLanguage": "Change Language",
+    "changeVoice": "Change Audio Voice",
     "subscriptions": "Subscriptions",
     "freePlan": "Free Plan",
     "rateUs": "Rate us",
@@ -67,6 +92,7 @@
       "cancel": "Cancel",
       "delete": "Delete"
     },
+
     "alerts": {
       "deleteError": "An error occurred while deleting your account. Please try again.",
       "deleteSuccess": "Your account has been successfully deleted.",

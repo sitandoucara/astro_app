@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import authReducer from '../features/auth/auth.slice';
 import languageReducer from '../shared/language/language.slice';
 import themeReducer from '../shared/theme/theme.slice';
+import voiceReducer from '../shared/voice/voice.slice';
 
 const themePersistConfig = {
   key: 'theme',
@@ -16,14 +17,21 @@ const languagePersistConfig = {
   storage: AsyncStorage,
 };
 
+const voicePersistConfig = {
+  key: 'voice',
+  storage: AsyncStorage,
+};
+
 const persistedThemeReducer = persistReducer(themePersistConfig, themeReducer);
 const persistedLanguageReducer = persistReducer(languagePersistConfig, languageReducer);
+const persistedVoiceReducer = persistReducer(voicePersistConfig, voiceReducer);
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     theme: persistedThemeReducer,
     language: persistedLanguageReducer,
+    voice: persistedVoiceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

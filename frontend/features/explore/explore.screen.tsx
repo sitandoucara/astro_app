@@ -2,7 +2,7 @@ import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
-import { Text, TouchableOpacity, View, Alert } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
@@ -84,12 +84,7 @@ export default function ExploreScreen() {
       {/*Mini books */}
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() =>
-          Alert.alert(
-            t('common.comingSoon'),
-            t('common.availableSoon', { title: t('explore.miniBooks') })
-          )
-        }
+        onPress={() => navigation.navigate('FilterScreen')}
         className={`w-full rounded-3xl p-6 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
         <View className="justify-center">
           <View className="h-16 w-16 items-center justify-center">

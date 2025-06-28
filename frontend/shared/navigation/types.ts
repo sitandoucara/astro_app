@@ -13,4 +13,6 @@ export type RootStackParamList = {
   TrueOrFalseGame: undefined;
   EditProfile: undefined;
   Language: undefined;
+  FilterScreen: undefined;
+  Voice: undefined;
 };

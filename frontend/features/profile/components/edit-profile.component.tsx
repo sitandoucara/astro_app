@@ -13,7 +13,6 @@ import { supabase } from 'shared/lib/supabase';
 export default function EditProfile({ onBack }: any) {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const user = useAppSelector((state) => state.auth.user);
 
   const colors = useThemeColors();

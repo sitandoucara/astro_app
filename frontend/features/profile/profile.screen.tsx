@@ -9,7 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout, deleteAccount } from 'features/auth/auth.hook';
-import type { RootStackParamList } from 'shared/navigation/types';
+import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import { useLayoutEffect, useState } from 'react';
 import {
   View,
@@ -24,14 +24,16 @@ import {
 } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 import { useLanguage } from 'shared/language/language.hook';
+import type { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
-import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
+import { useVoice } from 'shared/voice/voice.hook';
 import { toggleDarkMode } from 'shared/theme/theme.slice';
 
 export default function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const { getCurrentVoiceLabel } = useVoice();
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const colors = useThemeColors();
@@ -218,6 +220,20 @@ export default function ProfileScreen() {
             onPress={() => navigation.navigate('Language')}
           />
           <SettingItem
+            icon={<MaterialIcons name="settings-voice" size={20} color={colors.colors.raw.icon} />}
+            label={t('profile.changeVoice')}
+            rightComponent={
+              <View className="flex-row items-center space-x-2">
+                <Text
+                  className={`text-aref rounded-full px-3 py-1 text-sm font-medium ${colors.colors.tailwind.iconBg} ${colors.colors.tailwind.textReverse} p-4`}>
+                  {getCurrentVoiceLabel()}
+                </Text>
+                <Feather name="chevron-right" size={20} color={colors.colors.raw.icon} />
+              </View>
+            }
+            onPress={() => navigation.navigate('Voice')}
+          />
+          <SettingItem
             icon={<FontAwesome6 name="crown" size={20} color={colors.colors.raw.icon} />}
             label={t('profile.subscriptions')}
             rightComponent={
@@ -275,7 +291,7 @@ export default function ProfileScreen() {
           />
           <Text
             className={`text-aref text-center font-medium ${colors.colors.tailwind.textPrimary} p-2`}>
-            V1.1.0
+            V1.1.5
           </Text>
         </View>
       </ScrollView>

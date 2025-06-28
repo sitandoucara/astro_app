@@ -22,6 +22,8 @@ import { useAppSelector } from 'shared/hooks';
 
 import { supabase } from './supabase';
 import Language from 'features/profile/components/language.component';
+import FilterScreen from 'features/explore/filter/filter-screen';
+import Voice from 'features/profile/components/voice.component';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -168,6 +170,8 @@ export default function SessionGate() {
               <Stack.Screen name="QuizzScreen" component={QuizzScreen} />
               <Stack.Screen name="TrueOrFalseGame" component={TrueOrFalseGame} />
               <Stack.Screen name="Language" component={Language} />
+              <Stack.Screen name="FilterScreen" component={FilterScreen} />
+              <Stack.Screen name="Voice" component={Voice} />
             </>
           ) : (
             <>

@@ -38,6 +38,23 @@
     "arFilters": "Filtres Astro",
     "exploreAstrologyDifferently": "Découvrez votre signe en réalité augmentée"
   },
+  "filters": {
+    "title": "Filtres Astro",
+    "list": {
+      "01": {
+        "title": "Votre Visage Astrologique",
+        "subtitle": "Filtre 1"
+      },
+      "02": {
+        "title": "Astro Horoscope",
+        "subtitle": "Filtre 2"
+      },
+      "03": {
+        "title": "CelebrityAstro",
+        "subtitle": "Filtre 3"
+      }
+    }
+  },
   "learn": {
     "title": "Apprendre l'Astrologie",
     "lessons": {
@@ -111,11 +128,19 @@
     "title": "Votre Thème !",
     "share": "Partager"
   },
+  "voice": {
+    "title": "Changer la Voix",
+    "female": "Voix Féminine",
+    "male": "Voix Masculine",
+    "currentSelection": "Sélection actuelle",
+    "description": "Ce paramètre affecte tout le contenu audio de l'app"
+  },
   "profile": {
     "title": "Votre profil ({{username}})",
     "lightAppearance": "Apparence Claire",
     "darkAppearance": "Apparence Sombre",
     "changeLanguage": "Changer la Langue",
+    "changeVoice": "Changer la voix audio",
     "subscriptions": "Abonnements",
     "freePlan": "Plan Gratuit",
     "rateUs": "Nous Noter",
@@ -129,6 +154,7 @@
       "cancel": "Annuler",
       "delete": "Supprimer"
     },
+
     "alerts": {
       "deleteError": "Une erreur s'est produite lors de la suppression de votre compte. Veuillez réessayer.",
       "deleteSuccess": "Votre compte a été supprimé avec succès.",

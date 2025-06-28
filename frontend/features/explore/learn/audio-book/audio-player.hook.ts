@@ -2,6 +2,7 @@ import { Audio } from 'expo-av';
 import type { AVPlaybackStatus, AVPlaybackStatusSuccess } from 'expo-av';
 import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
+import { useVoice } from 'shared/voice/voice.hook';
 
 interface TextBlock {
   timestamp: number;
@@ -35,16 +36,20 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
 
   const wordsRef = useRef<WordWithTimestamp[]>([]);
 
+  // Using the voice hook
+  const { currentVoice } = useVoice();
+
   const extractLessonId = (jsonUrl: string): string => {
     const match = jsonUrl.match(/lesson_(\d+)\.json/);
     return match ? match[1] : '01';
   };
 
+  // Edit to use selected voice
   const getAudioUrl = (jsonUrl: string): string => {
     const lessonId = extractLessonId(jsonUrl);
     const baseUrl =
       'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/signdetails/learn/';
-    return `${baseUrl}lesson_${lessonId}_female.mp3`;
+    return `${baseUrl}lesson_${lessonId}_${currentVoice}.mp3`;
   };
 
   const createWordsWithTimestamps = (textBlocks: TextBlock[], totalDuration: number) => {
@@ -78,7 +83,9 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
       });
     });
 
-    console.log(`Total de ${words.length} mots créés pour la lesson ${lessonId}`);
+    console.log(
+      `Total de ${words.length} mots créés pour la lesson ${lessonId} avec voix ${currentVoice}`
+    );
     return words;
   };
 
@@ -152,7 +159,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
     }
   }, [chapterData, duration, jsonUrl]);
 
-  // load sound
+  // Reload when voice changes
   useEffect(() => {
     let isMounted = true;
 
@@ -174,7 +181,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
         const audioUrl = getAudioUrl(jsonUrl);
         const lessonId = extractLessonId(jsonUrl);
 
-        console.log(`Loading audio for the lesson ${lessonId}: ${audioUrl}`);
+        console.log(`Loading audio for lesson ${lessonId} with ${currentVoice} voice: ${audioUrl}`);
 
         const { sound: audioSound, status } = await Audio.Sound.createAsync(
           { uri: audioUrl },
@@ -189,14 +196,16 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
           setSound(audioSound);
           const audioDuration = (status.durationMillis ?? 0) / 1000;
           setDuration(audioDuration);
-          console.log(`Audio loaded for the lesson ${lessonId}, duration: ${audioDuration}s`);
+          console.log(
+            `Audio loaded for lesson ${lessonId} with ${currentVoice} voice, duration: ${audioDuration}s`
+          );
         }
       } catch (error) {
         console.error('Error loading sound:', error);
         const lessonId = extractLessonId(jsonUrl);
         Alert.alert(
           'Audio Error',
-          `Unable to load audio file for lesson ${lessonId}. Check that the file exists.`
+          `Unable to load ${currentVoice} voice audio file for lesson ${lessonId}. Check that the file exists.`
         );
       }
     };
@@ -209,7 +218,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
         sound.unloadAsync();
       }
     };
-  }, [jsonUrl]);
+  }, [jsonUrl, currentVoice]);
 
   return {
     isPlaying,
@@ -221,5 +230,6 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
     togglePlayPause,
     unloadSound,
     extractLessonId,
+    currentVoice,
   };
 };
