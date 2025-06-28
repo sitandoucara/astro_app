@@ -2,12 +2,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
-import { setUser } from 'features/auth/AuthSlice';
+import { setUser } from 'features/auth/auth.slice';
 import { useState, useLayoutEffect, useEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View, Modal, Alert } from 'react-native';
 import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 import { supabase } from 'shared/lib/supabase';
 
 export default function EditProfile({ onBack }: any) {

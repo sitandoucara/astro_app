@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'shared/navigation/types';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { RootStackParamList } from 'shared/navigation/types';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function AuthHomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();

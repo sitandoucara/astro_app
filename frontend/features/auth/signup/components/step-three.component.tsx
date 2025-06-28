@@ -3,7 +3,7 @@ import { BlurView } from 'expo-blur';
 import { useState } from 'react';
 import { Text, TouchableOpacity, View, Modal } from 'react-native';
 //import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function StepThree({ formData, updateForm, onBack, onSubmit }: any) {
   //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);

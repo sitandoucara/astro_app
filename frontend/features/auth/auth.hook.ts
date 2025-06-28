@@ -8,7 +8,7 @@ import {
   setLoading,
   setGeneratingChart,
   updateUserMetadata,
-} from './AuthSlice';
+} from './auth.slice';
 
 export const signUp = async (
   email: string,

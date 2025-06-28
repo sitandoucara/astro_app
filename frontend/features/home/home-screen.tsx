@@ -4,9 +4,9 @@ import { format, addDays, subDays } from 'date-fns';
 import { useLayoutEffect, useState, useMemo } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
-import { useLanguage } from 'shared/hooks/useLanguage';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
-import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
+import { useLanguage } from 'shared/language/language.hook';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
+import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 
 import { HoroscopeSection } from './components/horoscope-section.component';
 

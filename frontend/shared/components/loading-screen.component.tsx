@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function LoadingScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);

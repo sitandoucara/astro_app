@@ -1,23 +1,23 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AuthHomeScreen from 'features/auth/AuthHomeScreen';
-import { setUser, clearUser } from 'features/auth/AuthSlice';
-import SignInScreen from 'features/auth/SignInScreen';
-import SignUpScreen from 'features/auth/SignUpScreen';
+import AuthHomeScreen from 'features/auth/auth-home-screen';
+import { setUser, clearUser } from 'features/auth/auth.slice';
+import SignInScreen from 'features/auth/sign-in-screen';
+import SignUpScreen from 'features/auth/signup/sign-up-screen';
 import BirthChartCompability from 'features/compatibility/components/birth-chart-compatibility.component';
-import ZodiacSignsCompatibility from 'features/compatibility/components/zodiac-signs-compatibility/zodiac-signs-compatibility.component';
-import AudioBookScreen from 'features/explore/components/audio-book/audio-book.screen';
-import GuessWhoGame from 'features/explore/components/test-quizz/guess-who-game.component';
-import LearnScreen from 'features/explore/components/learn.screen.component';
-import QuizzScreen from 'features/explore/components/test-quizz/quizz.screen';
-import TrueOrFalseGame from 'features/explore/components/true-or-false-game.component';
+import ZodiacCompatibilityScreen from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.screen';
+import AudioBookScreen from 'features/explore/learn/audio-book/audio-book.screen';
+import LearnScreen from 'features/explore/learn/learn.screen';
+import GuessWhoGame from 'features/explore/quizz/guess-who-game/guess-who-game.screen';
+import QuizzScreen from 'features/explore/quizz/quizz.screen';
+import TrueOrFalseGame from 'features/explore/quizz/true-or-false-game/true-or-false-game.screen';
 import EditProfile from 'features/profile/components/edit-profile.component';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
-import LoadingScreen from 'shared/components/LoadingScreen';
-import MyTabs from 'shared/components/mytabs';
+import LoadingScreen from 'shared/components/loading-screen.component';
+import MyTabs from 'shared/components/my-tabs.component';
 import { useAppSelector } from 'shared/hooks';
 
 import { supabase } from './supabase';
@@ -157,7 +157,10 @@ export default function SessionGate() {
             <>
               <Stack.Screen name="App" component={MyTabs} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
-              <Stack.Screen name="ZodiacSignsCompatibility" component={ZodiacSignsCompatibility} />
+              <Stack.Screen
+                name="ZodiacCompatibilityScreen"
+                component={ZodiacCompatibilityScreen}
+              />
               <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
               <Stack.Screen name="LearnScreen" component={LearnScreen} />
               <Stack.Screen name="AudioBookScreen" component={AudioBookScreen} />

@@ -4,8 +4,8 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { useAppSelector } from 'shared/hooks';
-import { useLanguage } from 'shared/hooks/useLanguage';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useLanguage } from 'shared/language/language.hook';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function ChartScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);

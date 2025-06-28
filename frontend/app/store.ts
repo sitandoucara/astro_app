@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 
-import authReducer from '../features/auth/AuthSlice';
-import languageReducer from '../shared/language/languageSlice';
-import themeReducer from '../shared/theme/themeSlice';
+import authReducer from '../features/auth/auth.slice';
+import languageReducer from '../shared/language/language.slice';
+import themeReducer from '../shared/theme/theme.slice';
 
 const themePersistConfig = {
   key: 'theme',

@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { setLoading, setGeneratingChart } from 'features/auth/AuthSlice';
+import { setLoading, setGeneratingChart } from 'features/auth/auth.slice';
 import { generateChart } from 'features/chart/services/generate-chart.service';
 import { useState, useEffect } from 'react';
 import {
@@ -20,10 +20,10 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import { useAppDispatch, useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 import { supabase } from 'shared/lib/supabase';
 
-import { signIn } from './useAuth';
+import { signIn } from './auth.hook';
 
 export default function SignInScreen({ navigation }: any) {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);

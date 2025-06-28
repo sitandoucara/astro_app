@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { render, fireEvent } from '@testing-library/react-native';
 import { store } from 'app/store';
-import LearnScreen from 'features/explore/components/learn.screen.component';
+import LearnScreen from 'features/explore/learn/learn.screen';
 import React from 'react';
 import { Alert } from 'react-native';
 import { Provider } from 'react-redux';

@@ -3,8 +3,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Animated, { SlideInLeft, SlideInRight } from 'react-native-reanimated';
-import { useLanguage } from 'shared/hooks/useLanguage';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useLanguage } from 'shared/language/language.hook';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function Language({ onBack }: any) {
   const navigation = useNavigation();

@@ -11,9 +11,9 @@ import Animated, {
   BounceIn,
 } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
-import { useTrueOrFalseGame } from '../hooks/true-or-false-game.hook';
+import { useTrueOrFalseGame } from './true-or-false-game.hook';
 
 interface TrueOrFalseGameProps {
   onBack?: () => void;

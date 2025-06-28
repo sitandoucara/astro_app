@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { LogBox } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import LoadingScreen from 'shared/components/LoadingScreen';
-import SessionGate from 'shared/lib/SessionGate';
+import LoadingScreen from 'shared/components/loading-screen.component';
+import SessionGate from 'shared/lib/session-gate.service';
 
 import { store, persistor } from './app/store';
 import './shared/i18n/i18n';

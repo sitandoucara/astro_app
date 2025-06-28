@@ -1,12 +1,12 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'shared/navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
-import { useLanguage } from 'shared/hooks/useLanguage';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useLanguage } from 'shared/language/language.hook';
+import { RootStackParamList } from 'shared/navigation/types';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function CompatibilityScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
@@ -39,7 +39,7 @@ export default function CompatibilityScreen() {
       {/* Zodiac Sign Compatibility */}
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('ZodiacSignsCompatibility')}
+        onPress={() => navigation.navigate('ZodiacCompatibilityScreen')}
         className={`w-full rounded-3xl p-8 ${colors.cardBg} border ${colors.borderColor} mb-4`}>
         <View className="items-center justify-center">
           <View className="mb-6 flex-row items-center justify-center">

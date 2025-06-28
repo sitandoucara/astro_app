@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 
-import { setLanguage } from '../language/languageSlice';
+import { setLanguage } from './language.slice';
 
 export const useLanguage = () => {
   const { t, i18n } = useTranslation();

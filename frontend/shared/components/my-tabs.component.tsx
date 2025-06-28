@@ -6,8 +6,8 @@ import ExploreScreen from 'features/explore/explore.screen';
 import HomeScreen from 'features/home/home-screen';
 import ProfileScreen from 'features/profile/profile.screen';
 import { View, Text } from 'react-native';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
-import { useLanguage } from 'shared/hooks/useLanguage';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
+import { useLanguage } from 'shared/language/language.hook';
 
 const Tab = createBottomTabNavigator();
 

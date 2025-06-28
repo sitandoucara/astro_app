@@ -2,16 +2,15 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
+import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import { useState, useLayoutEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View, Modal } from 'react-native';
 import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
-//import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
-import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
-import CompatibilityResults from './compatibility-results.component';
+import ZodiacCompatibilityResults from './zodiac-compatibility-results.component';
 
-export default function ZodiacSignsCompatibility({ onBack }: any) {
+export default function ZodiacCompatibilityScreen({ onBack }: any) {
   const [showDateModal, setShowDateModal] = useState(false);
 
   const {
@@ -30,7 +29,6 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
   } = useZodiacCompatibility();
 
   const navigation = useNavigation();
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const colors = useThemeColors();
 
@@ -67,7 +65,7 @@ export default function ZodiacSignsCompatibility({ onBack }: any) {
   // Display results
   if (showCompatibility && userSign && partnerSign) {
     return (
-      <CompatibilityResults
+      <ZodiacCompatibilityResults
         userSign={userSign}
         partnerSign={partnerSign}
         username={username}

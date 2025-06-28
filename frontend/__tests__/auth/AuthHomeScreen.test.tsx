@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { render, fireEvent } from '@testing-library/react-native';
 import { store } from 'app/store';
-import AuthHomeScreen from 'features/auth/AuthHomeScreen';
+import AuthHomeScreen from 'features/auth/auth-home-screen';
 import React from 'react';
 import { Provider } from 'react-redux';
 

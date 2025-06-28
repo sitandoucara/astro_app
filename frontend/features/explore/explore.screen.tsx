@@ -1,12 +1,12 @@
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'shared/navigation/types';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
-import { useLanguage } from 'shared/hooks/useLanguage';
+import { useLanguage } from 'shared/language/language.hook';
+import { RootStackParamList } from 'shared/navigation/types';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function ExploreScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
@@ -96,7 +96,7 @@ export default function ExploreScreen() {
             <View
               className={`mr-3 h-10 w-10 items-center justify-center rounded-full ${colors.iconBg}`}>
               <MaterialCommunityIcons
-                name="book"
+                name="augmented-reality"
                 size={20}
                 style={{ color: colors.iconColorAlt }}
               />
@@ -105,10 +105,10 @@ export default function ExploreScreen() {
 
           <View>
             <Text className={`text-aref text-xl font-semibold ${colors.textPrimary} mb-2`}>
-              {t('explore.miniBooks')}
+              {t('explore.arFilters')}
             </Text>
             <Text className={`text-aref text-sm ${colors.textSecondaryAlt}`}>
-              {t('explore.knowMore')}
+              {t('explore.exploreAstrologyDifferently')}
             </Text>
           </View>
         </View>

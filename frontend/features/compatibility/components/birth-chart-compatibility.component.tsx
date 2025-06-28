@@ -2,12 +2,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
 import { Alert, Text, Image, TouchableOpacity, View } from 'react-native';
-//import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function BirthChartCompability({ onBack }: any) {
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-
   const colors = useThemeColors();
   const navigation = useNavigation();
 

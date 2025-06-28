@@ -5,9 +5,9 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp, FadeInDown, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
-import { useGuessWhoGame } from 'features/explore/hooks/guess-who-game.hook';
+import { useGuessWhoGame } from './guess-who-game.hook';
 
 interface GuessWhoGameProps {
   onBack?: () => void;

@@ -1,14 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-//import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
-import StepOne from './components/StepOne';
-import StepThree from './components/StepThree';
-import StepTwo from './components/StepTwo';
-import { signUp } from './useAuth';
-import { LocationResult } from '../../shared/hooks/useLocationSearch';
+import { signUp } from '../auth.hook';
+import StepOne from './components/step-one.component';
+import StepThree from './components/step-three.component';
+import StepTwo from './components/step-two.component';
+import { LocationResult } from '../../../shared/location/location.hook';
 
 export default function SignUpScreen({ navigation }: any) {
   //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);

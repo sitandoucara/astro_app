@@ -8,7 +8,7 @@ import {
 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { logout, deleteAccount } from 'features/auth/useAuth';
+import { logout, deleteAccount } from 'features/auth/auth.hook';
 import type { RootStackParamList } from 'shared/navigation/types';
 import { useLayoutEffect, useState } from 'react';
 import {
@@ -23,10 +23,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
-import { useLanguage } from 'shared/hooks/useLanguage';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
-import { useZodiacCompatibility } from 'shared/hooks/useZodiacCompatibility';
-import { toggleDarkMode } from 'shared/theme/themeSlice';
+import { useLanguage } from 'shared/language/language.hook';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
+import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
+import { toggleDarkMode } from 'shared/theme/theme.slice';
 
 export default function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();

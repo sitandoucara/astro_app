@@ -2,9 +2,9 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp, FadeInDown, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
-interface CompatibilityResultsProps {
+interface ZodiacCompatibilityResultsProps {
   userSign: string;
   partnerSign: string;
   username: string;
@@ -12,13 +12,13 @@ interface CompatibilityResultsProps {
   onTryAnother: () => void;
 }
 
-export default function CompatibilityResults({
+export default function ZodiacCompatibilityResults({
   userSign,
   partnerSign,
   username,
   compatibilityData,
   onTryAnother,
-}: CompatibilityResultsProps) {
+}: ZodiacCompatibilityResultsProps) {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   const colors = useThemeColors();

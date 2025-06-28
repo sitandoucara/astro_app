@@ -13,9 +13,9 @@ import {
 } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 //import { useAppSelector } from 'shared/hooks';
-import { useThemeColors } from 'shared/hooks/useThemeColors';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
-import useLocationSearch, { LocationResult } from '../../../shared/hooks/useLocationSearch';
+import useLocationSearch, { LocationResult } from '../../../../shared/location/location.hook';
 
 export default function StepTwo({ formData, updateForm, onNext }: any) {
   //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);

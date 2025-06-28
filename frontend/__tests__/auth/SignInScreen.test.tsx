@@ -2,11 +2,11 @@ import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import SignUpScreen from 'features/auth/SignUpScreen';
-import authReducer from 'features/auth/AuthSlice';
-import themeReducer from 'shared/theme/themeSlice';
+import SignUpScreen from 'features/auth/signup/sign-up-screen';
+import authReducer from 'features/auth/auth.slice';
+import themeReducer from 'shared/theme/theme.slice';
 
-import * as authAPI from 'features/auth/useAuth';
+import * as authAPI from 'features/auth/auth.hook';
 
 // Mock fetch for timezone API
 global.fetch = jest.fn();
