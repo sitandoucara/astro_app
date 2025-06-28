@@ -6,8 +6,8 @@ import ExploreScreen from 'features/explore/explore.screen';
 import HomeScreen from 'features/home/home-screen';
 import ProfileScreen from 'features/profile/profile.screen';
 import { View, Text } from 'react-native';
-import { useThemeColors } from 'shared/theme/theme-color.hook';
 import { useLanguage } from 'shared/language/language.hook';
+import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 const Tab = createBottomTabNavigator();
 
@@ -85,7 +85,6 @@ export default function MyTabs() {
             backgroundColor: colors.backgroundColor,
             borderBottomColor: colors.textColor,
             borderBottomWidth: 1,
-            height: 120,
           },
         })}>
         <Tab.Screen name="Home" component={HomeScreen} />

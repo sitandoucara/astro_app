@@ -1,6 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import { CustomAlert } from 'shared/components/custom-alert.component';
+import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 import { signUp } from '../auth.hook';
@@ -10,9 +12,9 @@ import StepTwo from './components/step-two.component';
 import { LocationResult } from '../../../shared/location/location.hook';
 
 export default function SignUpScreen({ navigation }: any) {
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-
   const colors = useThemeColors();
+
+  const { alertConfig, hideAlert, showError, showSuccess } = useCustomAlert();
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -35,7 +37,7 @@ export default function SignUpScreen({ navigation }: any) {
   const submitForm = async () => {
     const { email, password, username, dateOfBirth, timeOfBirth, selectedPlace, gender } = formData;
     if (!dateOfBirth || !timeOfBirth || !selectedPlace || !gender) {
-      alert('Please fill all fields');
+      showError('Missing Information', 'Please fill all fields');
       return;
     }
     try {
@@ -63,14 +65,21 @@ export default function SignUpScreen({ navigation }: any) {
       );
       if (error) {
         console.error('Signup error:', error);
-        //alert(error.message);
+
+        showError('Signup Error', error.message);
       } else {
-        alert('Account created!');
-        navigation.navigate('SignIn');
+        showSuccess('Account Created!', 'Your account has been successfully created.', [
+          {
+            text: 'Continue to Sign In',
+            style: 'edit-style',
+            onPress: () => navigation.navigate('SignIn'),
+          },
+        ]);
       }
     } catch (err) {
       console.error('Timezone error:', err);
-      alert('Unable to fetch timezone');
+
+      showError('Timezone Error', 'Unable to fetch timezone information');
     }
   };
 
@@ -106,19 +115,29 @@ export default function SignUpScreen({ navigation }: any) {
   }, [navigation, step, colors]);
 
   return (
-    <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
-      {step === 1 && <StepOne formData={formData} updateForm={updateForm} onNext={goToNext} />}
-      {step === 2 && (
-        <StepTwo formData={formData} updateForm={updateForm} onNext={goToNext} onBack={goBack} />
-      )}
-      {step === 3 && (
-        <StepThree
-          formData={formData}
-          updateForm={updateForm}
-          onBack={goBack}
-          onSubmit={submitForm}
-        />
-      )}
-    </View>
+    <>
+      <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
+        {step === 1 && <StepOne formData={formData} updateForm={updateForm} onNext={goToNext} />}
+        {step === 2 && (
+          <StepTwo formData={formData} updateForm={updateForm} onNext={goToNext} onBack={goBack} />
+        )}
+        {step === 3 && (
+          <StepThree
+            formData={formData}
+            updateForm={updateForm}
+            onBack={goBack}
+            onSubmit={submitForm}
+          />
+        )}
+      </View>
+
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        actions={alertConfig.actions}
+        onClose={hideAlert}
+      />
+    </>
   );
 }

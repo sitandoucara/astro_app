@@ -4,7 +4,6 @@ import AuthHomeScreen from 'features/auth/auth-home-screen';
 import { setUser, clearUser } from 'features/auth/auth.slice';
 import SignInScreen from 'features/auth/sign-in-screen';
 import SignUpScreen from 'features/auth/signup/sign-up-screen';
-import BirthChartCompability from 'features/compatibility/components/birth-chart-compatibility.component';
 import ZodiacCompatibilityScreen from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.screen';
 import AudioBookScreen from 'features/explore/learn/audio-book/audio-book.screen';
 import LearnScreen from 'features/explore/learn/learn.screen';
@@ -163,7 +162,7 @@ export default function SessionGate() {
                 name="ZodiacCompatibilityScreen"
                 component={ZodiacCompatibilityScreen}
               />
-              <Stack.Screen name="BirthChartCompability" component={BirthChartCompability} />
+
               <Stack.Screen name="LearnScreen" component={LearnScreen} />
               <Stack.Screen name="AudioBookScreen" component={AudioBookScreen} />
               <Stack.Screen name="GuessWhoGame" component={GuessWhoGame} />

@@ -1,7 +1,6 @@
 import { Audio } from 'expo-av';
 import type { AVPlaybackStatus, AVPlaybackStatusSuccess } from 'expo-av';
 import { useState, useEffect, useRef } from 'react';
-import { Alert } from 'react-native';
 import { useVoice } from 'shared/voice/voice.hook';
 
 interface TextBlock {
@@ -26,7 +25,11 @@ interface ChapterData {
   text: TextBlock[];
 }
 
-export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null) => {
+export const useAudioPlayer = (
+  jsonUrl: string,
+  chapterData: ChapterData | null,
+  showError?: (title: string, message: string) => void // Fonction pour afficher les erreurs
+) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -203,10 +206,14 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
       } catch (error) {
         console.error('Error loading sound:', error);
         const lessonId = extractLessonId(jsonUrl);
-        Alert.alert(
-          'Audio Error',
-          `Unable to load ${currentVoice} voice audio file for lesson ${lessonId}. Check that the file exists.`
-        );
+
+        // Utilise showError si fourni, sinon log
+        if (showError) {
+          showError(
+            'Audio Error',
+            `Unable to load ${currentVoice} voice audio file for lesson ${lessonId}. Check that the file exists.`
+          );
+        }
       }
     };
 
@@ -218,7 +225,7 @@ export const useAudioPlayer = (jsonUrl: string, chapterData: ChapterData | null)
         sound.unloadAsync();
       }
     };
-  }, [jsonUrl, currentVoice]);
+  }, [jsonUrl, currentVoice, showError]);
 
   return {
     isPlaying,

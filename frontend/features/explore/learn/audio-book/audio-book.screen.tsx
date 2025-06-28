@@ -159,7 +159,6 @@ export default function AudioBookScreen({ onBack }: any) {
         </View>
       </ScrollView>
 
-      {/* AudioPlayerControls component */}
       <AudioPlayerControls
         isPlaying={isPlaying}
         currentTime={currentTime}

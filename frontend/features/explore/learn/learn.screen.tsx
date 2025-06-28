@@ -3,8 +3,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
+import { CustomAlert } from 'shared/components/custom-alert.component';
+import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
@@ -14,6 +16,8 @@ export default function LearnScreen({ onBack }: any) {
 
   const colors = useThemeColors();
   const { t } = useLanguage();
+
+  const { alertConfig, hideAlert, showAlert } = useCustomAlert();
 
   const goBack = () => {
     if (onBack) onBack();
@@ -67,17 +71,18 @@ export default function LearnScreen({ onBack }: any) {
     const lessonTitle = t(`learn.lessons.${chapter.id}.title`);
 
     if (isLocked(chapter)) {
-      Alert.alert(
-        t('common.comingSoon'),
-        t('common.availableSoon', { title: lessonTitle }),
-        [
-          {
-            text: t('common.ok'),
-            style: 'default',
-          },
-        ],
-        { cancelable: true }
-      );
+      showAlert({
+        title: t('common.comingSoon'),
+        message: t('common.availableSoon', { title: lessonTitle }),
+        actions: [{ text: t('common.ok'), style: 'edit-style' }],
+        icon: (
+          <MaterialIcons
+            name="lock"
+            size={48}
+            color={colors.iconColorAlt2 || colors.colors.raw.icon}
+          />
+        ),
+      });
     } else {
       navigation.navigate('AudioBookScreen', {
         title: lessonTitle,
@@ -109,78 +114,89 @@ export default function LearnScreen({ onBack }: any) {
   };
 
   return (
-    <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
-      <ScrollView className="mt-20">
-        <View>
-          <View className="mt-8">
-            {chapters.map((chapter, idx) => {
-              const cardStyle = getCardStyle(chapter);
-              const locked = isLocked(chapter);
+    <>
+      <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
+        <ScrollView className="mt-20">
+          <View>
+            <View className="mt-8">
+              {chapters.map((chapter, idx) => {
+                const cardStyle = getCardStyle(chapter);
+                const locked = isLocked(chapter);
 
-              return (
-                <Animated.View key={chapter.id} entering={FadeInUp.delay(idx * 50).duration(400)}>
-                  <TouchableOpacity
-                    activeOpacity={locked ? 0.7 : 0.8}
-                    onPress={() => handleChapterPress(chapter)}
-                    className={cardStyle.className}
-                    style={{ opacity: cardStyle.opacity }}>
-                    <View className="flex-row items-center">
-                      <View className="mr-4 w-10 items-center justify-center">
-                        {/* Chapter number */}
-                        <Text
-                          className={getTextStyle(
-                            chapter,
-                            `text-aref text-lg font-bold ${colors.textPrimary}`
-                          )}>
-                          {chapter.id}
-                        </Text>
-                      </View>
+                return (
+                  <Animated.View key={chapter.id} entering={FadeInUp.delay(idx * 50).duration(400)}>
+                    <TouchableOpacity
+                      activeOpacity={locked ? 0.7 : 0.8}
+                      onPress={() => handleChapterPress(chapter)}
+                      className={cardStyle.className}
+                      style={{ opacity: cardStyle.opacity }}>
+                      <View className="flex-row items-center">
+                        <View className="mr-4 w-10 items-center justify-center">
+                          {/* Chapter number */}
+                          <Text
+                            className={getTextStyle(
+                              chapter,
+                              `text-aref text-lg font-bold ${colors.textPrimary}`
+                            )}>
+                            {chapter.id}
+                          </Text>
+                        </View>
 
-                      <View className="flex-1">
-                        <Text
-                          className={getTextStyle(
-                            chapter,
-                            `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
-                          )}>
-                          {t(`learn.lessons.${chapter.id}.title`)}
-                        </Text>
-                        <Text
-                          className={getTextStyle(
-                            chapter,
-                            `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
-                          )}>
-                          {t(`learn.lessons.${chapter.id}.duration`)}
-                        </Text>
-                      </View>
+                        <View className="flex-1">
+                          <Text
+                            className={getTextStyle(
+                              chapter,
+                              `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
+                            )}>
+                            {t(`learn.lessons.${chapter.id}.title`)}
+                          </Text>
+                          <Text
+                            className={getTextStyle(
+                              chapter,
+                              `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
+                            )}>
+                            {t(`learn.lessons.${chapter.id}.duration`)}
+                          </Text>
+                        </View>
 
-                      {/* Padlock or play icon */}
-                      <View className="ml-3 flex-row items-center">
-                        {locked ? (
-                          <View className="h-10 w-10 items-center justify-center">
-                            <MaterialIcons
-                              name="lock"
-                              size={24}
-                              style={{ color: colors.iconColorAlt2, opacity: 0.7 }}
-                            />
-                          </View>
-                        ) : (
-                          <View className="h-10 w-10 items-center justify-center">
-                            <Ionicons
-                              name="play-circle"
-                              size={32}
-                              style={{ color: colors.iconColorAlt2 }}
-                            />
-                          </View>
-                        )}
+                        {/* Padlock or play icon */}
+                        <View className="ml-3 flex-row items-center">
+                          {locked ? (
+                            <View className="h-10 w-10 items-center justify-center">
+                              <MaterialIcons
+                                name="lock"
+                                size={24}
+                                style={{ color: colors.iconColorAlt2, opacity: 0.7 }}
+                              />
+                            </View>
+                          ) : (
+                            <View className="h-10 w-10 items-center justify-center">
+                              <Ionicons
+                                name="play-circle"
+                                size={32}
+                                style={{ color: colors.iconColorAlt2 }}
+                              />
+                            </View>
+                          )}
+                        </View>
                       </View>
-                    </View>
-                  </TouchableOpacity>
-                </Animated.View>
-              );
-            })}
+                    </TouchableOpacity>
+                  </Animated.View>
+                );
+              })}
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        actions={alertConfig.actions}
+        onClose={hideAlert}
+        icon={alertConfig.icon}
+      />
+    </>
   );
 }

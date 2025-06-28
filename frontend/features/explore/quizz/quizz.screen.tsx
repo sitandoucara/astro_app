@@ -3,9 +3,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, Alert, Image } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
+import { CustomAlert } from 'shared/components/custom-alert.component';
 import { useAppSelector } from 'shared/hooks';
+import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
@@ -16,6 +18,8 @@ export default function QuizzScreen({ onBack }: any) {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const colors = useThemeColors();
   const { t } = useLanguage();
+
+  const { alertConfig, hideAlert, showAlert } = useCustomAlert();
 
   const goBack = () => {
     if (onBack) onBack();
@@ -79,17 +83,18 @@ export default function QuizzScreen({ onBack }: any) {
     const testTitle = t(`quiz.tests.${chapter.id}.title`);
 
     if (isLocked(chapter)) {
-      Alert.alert(
-        t('common.comingSoon'),
-        t('common.availableSoon', { title: testTitle }),
-        [
-          {
-            text: t('common.ok'),
-            style: 'default',
-          },
-        ],
-        { cancelable: true }
-      );
+      showAlert({
+        title: t('common.comingSoon'),
+        message: t('common.availableSoon', { title: testTitle }),
+        actions: [{ text: t('common.ok'), style: 'default' }],
+        icon: (
+          <MaterialIcons
+            name="lock"
+            size={48}
+            color={colors.iconColorAlt2 || colors.colors.raw.icon}
+          />
+        ),
+      });
     } else {
       if (chapter.id === '01') {
         navigation.navigate('GuessWhoGame');
@@ -122,80 +127,91 @@ export default function QuizzScreen({ onBack }: any) {
   };
 
   return (
-    <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
-      <ScrollView className="mt-20">
-        <View>
-          <View className="mt-8">
-            {chapters.map((chapter, idx) => {
-              const cardStyle = getCardStyle(chapter);
-              const locked = isLocked(chapter);
+    <>
+      <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
+        <ScrollView className="mt-20">
+          <View>
+            <View className="mt-8">
+              {chapters.map((chapter, idx) => {
+                const cardStyle = getCardStyle(chapter);
+                const locked = isLocked(chapter);
 
-              return (
-                <Animated.View key={chapter.id} entering={FadeInUp.delay(idx * 50).duration(400)}>
-                  <TouchableOpacity
-                    activeOpacity={locked ? 0.7 : 0.8}
-                    onPress={() => handleChapterPress(chapter)}
-                    className={cardStyle.className}
-                    style={{ opacity: cardStyle.opacity }}>
-                    <View className="flex-row items-center">
-                      {/* Image of the astrological sign */}
-                      <View className="mr-4 h-12 w-12 items-center justify-center">
-                        <Image
-                          source={{ uri: getSignImageUrl(chapter.sign) }}
-                          style={{
-                            width: 40,
-                            height: 40,
-                            opacity: locked ? 0.6 : 1,
-                          }}
-                          resizeMode="contain"
-                        />
-                      </View>
+                return (
+                  <Animated.View key={chapter.id} entering={FadeInUp.delay(idx * 50).duration(400)}>
+                    <TouchableOpacity
+                      activeOpacity={locked ? 0.7 : 0.8}
+                      onPress={() => handleChapterPress(chapter)}
+                      className={cardStyle.className}
+                      style={{ opacity: cardStyle.opacity }}>
+                      <View className="flex-row items-center">
+                        {/* Image of the astrological sign */}
+                        <View className="mr-4 h-12 w-12 items-center justify-center">
+                          <Image
+                            source={{ uri: getSignImageUrl(chapter.sign) }}
+                            style={{
+                              width: 40,
+                              height: 40,
+                              opacity: locked ? 0.6 : 1,
+                            }}
+                            resizeMode="contain"
+                          />
+                        </View>
 
-                      {/* Chapter Content */}
-                      <View className="flex-1">
-                        <Text
-                          className={getTextStyle(
-                            chapter,
-                            `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
-                          )}>
-                          {t(`quiz.tests.${chapter.id}.title`)}
-                        </Text>
-                        <Text
-                          className={getTextStyle(
-                            chapter,
-                            `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
-                          )}>
-                          {t(`quiz.tests.${chapter.id}.subtitle`)}
-                        </Text>
+                        {/* Chapter Content */}
+                        <View className="flex-1">
+                          <Text
+                            className={getTextStyle(
+                              chapter,
+                              `text-aref whitespace-nowrap text-base font-medium ${colors.textPrimary} mb-1`
+                            )}>
+                            {t(`quiz.tests.${chapter.id}.title`)}
+                          </Text>
+                          <Text
+                            className={getTextStyle(
+                              chapter,
+                              `text-aref whitespace-nowrap text-sm ${colors.textSecondaryAlt}`
+                            )}>
+                            {t(`quiz.tests.${chapter.id}.subtitle`)}
+                          </Text>
+                        </View>
+                        {/* Padlock or game icon */}
+                        <View className="ml-3 flex-row items-center gap-3">
+                          {locked ? (
+                            <View className="h-10 w-10 items-center justify-center">
+                              <MaterialIcons
+                                name="lock"
+                                size={24}
+                                style={{ color: colors.iconColorAlt2, opacity: 0.7 }}
+                              />
+                            </View>
+                          ) : (
+                            <View className="h-10 w-10 items-center justify-center">
+                              <MaterialCommunityIcons
+                                name="gamepad-variant"
+                                size={32}
+                                style={{ color: colors.iconColorAlt2 }}
+                              />
+                            </View>
+                          )}
+                        </View>
                       </View>
-                      {/* Padlock or game icon */}
-                      <View className="ml-3 flex-row items-center gap-3">
-                        {locked ? (
-                          <View className="h-10 w-10 items-center justify-center">
-                            <MaterialIcons
-                              name="lock"
-                              size={24}
-                              style={{ color: colors.iconColorAlt2, opacity: 0.7 }}
-                            />
-                          </View>
-                        ) : (
-                          <View className="h-10 w-10 items-center justify-center">
-                            <MaterialCommunityIcons
-                              name="gamepad-variant"
-                              size={32}
-                              style={{ color: colors.iconColorAlt2 }}
-                            />
-                          </View>
-                        )}
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </Animated.View>
-              );
-            })}
+                    </TouchableOpacity>
+                  </Animated.View>
+                );
+              })}
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        actions={alertConfig.actions}
+        onClose={hideAlert}
+        icon={alertConfig.icon}
+      />
+    </>
   );
 }

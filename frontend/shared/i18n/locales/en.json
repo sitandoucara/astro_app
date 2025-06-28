@@ -7,13 +7,13 @@
     "profile": "Profile"
   },
   "home": {
-    "hi": "Hi {{username}}!",
+    "hi": "Hi {{username}}",
     "horoscopeDate": "Horoscope Date",
     "sunSign": "Sun sign",
     "moonPhase": "Moon Phase",
     "moonSign": "Moon sign",
     "horoscopeFor": "Horoscope for {{period}}",
-    "unlockSubscribe": "To unlock the horoscope, subscribe",
+    "unlockSubscribe": "Coming Soon...",
     "subscribeToUnlock": "Subscribe to unlock",
     "affirmation": "Affirmation",
     "affirmationText": "I can be a masterpiece and a work in progress at the same time",
@@ -63,7 +63,7 @@
     "planetsLoveMatch": "Let's see what planets in your charts say\nabout your love match"
   },
   "chart": {
-    "title": "Your Chart!",
+    "title": "Your Chart",
     "share": "Share"
   },
   "voice": {
@@ -74,7 +74,7 @@
     "description": "This setting affects all audio content in the app"
   },
   "profile": {
-    "title": "Your profile ({{username}})",
+    "title": "Your profile",
     "lightAppearance": "Light Appearance",
     "darkAppearance": "Dark Appearance",
     "changeLanguage": "Change Language",

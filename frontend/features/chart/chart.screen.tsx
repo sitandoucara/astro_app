@@ -61,8 +61,8 @@ export default function ChartScreen() {
     const loadDescriptions = async () => {
       if (!planets || !user?.gender) return;
 
-      const gender = user.gender.toLowerCase(); // "male" | "female"
-      const langKey = currentLanguage === 'fr' ? 'fr' : 'en'; // ← nouvelle clé langue
+      const gender = user.gender.toLowerCase();
+      const langKey = currentLanguage === 'fr' ? 'fr' : 'en';
       const validPlanets = [
         'sun',
         'moon',

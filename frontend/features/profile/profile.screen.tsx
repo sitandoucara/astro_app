@@ -11,23 +11,15 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { logout, deleteAccount } from 'features/auth/auth.hook';
 import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import { useLayoutEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Switch,
-  Image,
-  Alert,
-  Modal,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
+import { CustomAlert } from 'shared/components/custom-alert.component';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
+import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import type { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
-import { useVoice } from 'shared/voice/voice.hook';
 import { toggleDarkMode } from 'shared/theme/theme.slice';
+import { useVoice } from 'shared/voice/voice.hook';
 
 export default function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -41,8 +33,9 @@ export default function ProfileScreen() {
 
   const { userSign } = useZodiacCompatibility();
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const { alertConfig, hideAlert, showConfirm, showSuccess, showError } = useCustomAlert();
 
   const getSignImageUrl = (signName: string) => {
     const theme = isDarkMode ? 'dark' : 'light';
@@ -92,9 +85,15 @@ export default function ProfileScreen() {
   };
 
   const showDeleteConfirmation = () => {
-    setShowDeleteModal(true);
+    showConfirm(
+      t('profile.deleteModal.title'),
+      t('profile.deleteModal.message'),
+      handleDeleteAccount,
+      undefined,
+      t('profile.deleteModal.delete'),
+      t('profile.deleteModal.cancel')
+    );
   };
-
   const handleDeleteAccount = async () => {
     setIsDeleting(true);
 
@@ -102,20 +101,15 @@ export default function ProfileScreen() {
       const result = await deleteAccount(dispatch);
 
       if (result.error) {
-        Alert.alert(t('common.error'), t('profile.alerts.deleteError'), [{ text: t('common.ok') }]);
+        showError(t('common.error'), t('profile.alerts.deleteError'));
       } else {
-        Alert.alert(t('common.success'), t('profile.alerts.deleteSuccess'), [
-          { text: t('common.ok') },
-        ]);
+        showSuccess(t('common.success'), t('profile.alerts.deleteSuccess'));
       }
     } catch (error) {
       console.error('Unexpected error during account deletion:', error);
-      Alert.alert(t('common.error'), t('profile.alerts.unexpectedError'), [
-        { text: t('common.ok') },
-      ]);
+      showError(t('common.error'), t('profile.alerts.unexpectedError'));
     } finally {
       setIsDeleting(false);
-      setShowDeleteModal(false);
     }
   };
 
@@ -126,19 +120,13 @@ export default function ProfileScreen() {
           <Text
             className="text-aref ml-5 text-[18px] font-medium"
             style={{ color: colors.colors.raw.icon }}>
-            {t('profile.title', { username: user?.username ?? 'User' })}
-          </Text>
-          <Text
-            className="text-aref ml-5 mt-1 text-[14px]"
-            style={{ color: colors.colors.raw.icon }}>
-            {user?.dateOfBirth ? `${user.dateOfBirth.slice(0, 10)}` : ''}
-            {user?.timeOfBirth ? ` • ${user.timeOfBirth.slice(11, 16)}` : ''}
+            {t('profile.title')}
           </Text>
         </View>
       ),
       headerTitleAlign: 'left',
     });
-  }, [navigation, user, isDarkMode, t]);
+  }, [navigation, isDarkMode, t]);
 
   return (
     <>
@@ -296,59 +284,16 @@ export default function ProfileScreen() {
         </View>
       </ScrollView>
 
-      <Modal
-        visible={showDeleteModal}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowDeleteModal(false)}>
-        <View className="flex-1 items-center justify-center bg-black/50 p-4">
-          <View
-            className={`w-full max-w-sm rounded-xl p-6 ${colors.colors.tailwind.modalBg}`}
-            style={{ backgroundColor: colors.colors.raw.modalBg }}>
-            <View className="mb-4 items-center">
-              <FontAwesome6
-                name="triangle-exclamation"
-                size={48}
-                color={colors.colors.raw.danger}
-              />
-            </View>
-
-            <Text
-              className={`text-aref mb-2 text-center text-lg font-bold ${colors.colors.tailwind.textOnCard}`}>
-              {t('profile.deleteModal.title')}
-            </Text>
-
-            <Text className={`text-aref mb-6 text-center ${colors.colors.tailwind.textOnCard}`}>
-              {t('profile.deleteModal.message')}
-            </Text>
-
-            <View className="flex-row gap-2">
-              <TouchableOpacity
-                className={`flex-1 rounded-lg border p-3 ${colors.colors.tailwind.borderReverse}`}
-                onPress={() => setShowDeleteModal(false)}
-                disabled={isDeleting}>
-                <Text
-                  className={`text-aref text-center font-medium ${colors.colors.tailwind.textOnCard}`}>
-                  {t('profile.deleteModal.cancel')}
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                className="flex-1 rounded-lg bg-red-600 p-3"
-                onPress={handleDeleteAccount}
-                disabled={isDeleting}>
-                {isDeleting ? (
-                  <ActivityIndicator color="white" size="small" />
-                ) : (
-                  <Text className="text-aref text-center font-medium text-white">
-                    {t('profile.deleteModal.delete')}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        actions={alertConfig.actions?.map((action) => ({
+          ...action,
+          loading: action.text === t('profile.deleteModal.delete') ? isDeleting : action.loading,
+        }))}
+        onClose={hideAlert}
+      />
     </>
   );
 }

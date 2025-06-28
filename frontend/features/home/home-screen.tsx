@@ -1,12 +1,12 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { format, addDays, subDays } from 'date-fns';
+import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import { useLayoutEffect, useState, useMemo } from 'react';
-import { ScrollView, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { useLanguage } from 'shared/language/language.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
-import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 
 import { HoroscopeSection } from './components/horoscope-section.component';
 
@@ -37,7 +37,7 @@ export default function HomeScreen() {
     console.log('HomeScreen - User data updated:', user?.username);
     navigation.setOptions({
       headerTitle: () => (
-        <View className="flex-row gap-2">
+        <View className="mb-1 flex-row gap-2">
           <Image source={{ uri: signImage }} className="h-10 w-10" />
           <View>
             <Text className="text-aref text-[20px]" style={{ color: colors.textColor }}>
@@ -162,31 +162,6 @@ export default function HomeScreen() {
                 <Text className={`text-aref text-center text-sm ${colors.textSecondary}`}>
                   {t('home.unlockSubscribe')}
                 </Text>
-              </View>
-
-              <View className="w-full flex-row items-center justify-center gap-2">
-                <View className="flex-row items-center" style={{ gap: 8 }}>
-                  <View className={`h-3 w-3 rounded-full ${colors.cardBg}`} />
-                  <View className={`h-4 w-4 rounded-full ${colors.cardBg}`} />
-                </View>
-
-                <View className={`rounded-full border-2 p-2 ${colors.borderColor}`}>
-                  <TouchableOpacity
-                    onPress={() => Alert.alert(t('common.subscribe'))}
-                    activeOpacity={0.8}
-                    className="shadow-opacity-30 elevation-1 rounded-full bg-[#BFB0A7] px-12 py-3 shadow-md shadow-light-text2">
-                    <Text
-                      className={`text-aref text-center text-base font-bold tracking-wide`}
-                      style={{ color: colors.iconColor }}>
-                      {t('home.subscribeToUnlock')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View className="flex-row items-center" style={{ gap: 8 }}>
-                  <View className={`h-4 w-4 rounded-full ${colors.cardBg}`} />
-                  <View className={`h-3 w-3 rounded-full ${colors.cardBg}`} />
-                </View>
               </View>
             </View>
           </>

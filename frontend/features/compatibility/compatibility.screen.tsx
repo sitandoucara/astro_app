@@ -1,9 +1,11 @@
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
+import { CustomAlert } from 'shared/components/custom-alert.component';
 import { useAppSelector } from 'shared/hooks';
+import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
@@ -14,6 +16,23 @@ export default function CompatibilityScreen() {
   const colors = useThemeColors();
   const { t } = useLanguage();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const { alertConfig, hideAlert, showAlert } = useCustomAlert();
+
+  const handleBirthChartCompatibility = () => {
+    showAlert({
+      title: 'Subscribe',
+      message: 'This feature requires a subscription to unlock advanced compatibility analysis.',
+      actions: [{ text: 'OK', style: 'edit-style' }],
+      icon: (
+        <MaterialIcons
+          name="lock"
+          size={48}
+          color={colors.colors?.raw?.icon || colors.iconColorAlt2}
+        />
+      ),
+    });
+  };
 
   const lightSignUrl =
     'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
@@ -66,7 +85,7 @@ export default function CompatibilityScreen() {
       {/* Birth Charts Compatibility (Locked) */}
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('BirthChartCompability')}
+        onPress={handleBirthChartCompatibility}
         className={`relative w-full rounded-3xl px-6 py-8 ${colors.cardBg} border ${colors.borderColor}`}>
         <View
           className={`absolute right-4 top-2 h-6 w-6 items-center justify-center rounded-full ${colors.iconBg}`}>
@@ -166,6 +185,14 @@ export default function CompatibilityScreen() {
           </View>
         </View>
       </TouchableOpacity>
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        actions={alertConfig.actions}
+        onClose={hideAlert}
+        icon={alertConfig.icon}
+      />
     </View>
   );
 }

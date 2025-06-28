@@ -1,8 +1,7 @@
+import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
-//import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
-import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 
 import { useHoroscope } from '../hooks/horoscope.hook';
 
@@ -12,7 +11,6 @@ interface HoroscopeSectionProps {
 }
 
 export const HoroscopeSection: React.FC<HoroscopeSectionProps> = ({ activeTab, isPremiumTab }) => {
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
   const { userSign } = useZodiacCompatibility();
   const { horoscopeData, loading, error, fetchHoroscope, getHoroscopeTitle } = useHoroscope();
 

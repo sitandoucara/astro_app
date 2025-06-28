@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Alert } from 'react-native';
 
-export const useZodiacCompatibility = () => {
+export const useZodiacCompatibility = (showError?: (title: string, message: string) => void) => {
   const [username, setUsername] = useState('');
   const [gender, setGender] = useState<string | null>(null);
   const [date, setDate] = useState(new Date());
@@ -70,7 +69,11 @@ export const useZodiacCompatibility = () => {
 
   const handleCheckCompatibility = () => {
     if (!username.trim() || !gender || !date) {
-      Alert.alert('Incomplete', 'Please fill in all fields');
+      if (showError) {
+        showError('Incomplete Information', 'Please fill in all fields');
+      } else {
+        console.warn('Incomplete form data');
+      }
       return;
     }
 

@@ -10,12 +10,9 @@ import {
   Platform,
 } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
-//import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function StepOne({ formData, updateForm, onNext }: any) {
-  //const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-
   const colors = useThemeColors();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);

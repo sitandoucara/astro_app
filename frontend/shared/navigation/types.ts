@@ -5,7 +5,6 @@ export type RootStackParamList = {
   App: undefined;
   ZodiacCompatibilityScreen: undefined;
   CompatibilityScreen: undefined;
-  BirthChartCompability: undefined;
   LearnScreen: undefined;
   AudioBookScreen: { title: string; jsonUrl: string };
   GuessWhoGame: undefined;

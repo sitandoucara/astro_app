@@ -81,7 +81,7 @@ export default function ExploreScreen() {
         </View>
       </TouchableOpacity>
 
-      {/*Mini books */}
+      {/*Astro Filters */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('FilterScreen')}
