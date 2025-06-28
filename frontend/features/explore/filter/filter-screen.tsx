@@ -52,13 +52,13 @@ export default function FilterScreen({ onBack }: any) {
       id: '01',
       icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter1.png',
       snapchatUrl:
-        'https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=493d062c4459475485981bab6ec98caa&metadata=01',
+        'https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=a12e28db4cc548d3b1ee58301811974f&metadata=01',
     },
     {
       id: '02',
       icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter2.png',
       snapchatUrl:
-        'https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=22b967bb25354848ac87bd8756468917&metadata=01',
+        'https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=d6c70fbbed2f4448bfd12b94b718eb8e&metadata=01',
     },
     {
       id: '03',

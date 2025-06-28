@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useAppSelector } from 'shared/hooks';
 import { RootStackParamList } from 'shared/navigation/types';
@@ -8,18 +8,24 @@ import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 export default function AuthHomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768;
 
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
-
   const colors = useThemeColors();
 
-  const logoSource = isDarkMode
-    ? require('../../shared/assets/logo_light.png')
-    : require('../../shared/assets/logo_dark.png');
+  const logoSource = {
+    uri: isDarkMode
+      ? 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/logo_light.png'
+      : 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/logo_dark.png',
+  };
+
+  // Classes responsives
+  const containerMarginTop = isTablet ? 'mt-2' : 'mt-10';
 
   return (
     <View className="flex-1 p-16" style={{ backgroundColor: colors.backgroundColor }}>
-      <View className="mt-10 flex-1 justify-between">
+      <View className={`${containerMarginTop} flex-1 justify-between`}>
         <Animated.View entering={FadeInUp.duration(1000)} className="mt-5 items-center">
           <Image source={logoSource} style={{ width: 280, height: 280 }} resizeMode="contain" />
         </Animated.View>

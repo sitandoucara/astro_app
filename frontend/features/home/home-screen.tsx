@@ -151,7 +151,13 @@ export default function HomeScreen() {
             <View className="mb-8">
               <View className="items-center">
                 <View className="mt-5 p-2">
-                  <Image source={require('../../shared/assets/padlock.png')} alt="Locked" />
+                  <Image
+                    source={{
+                      uri: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/padlock.png',
+                    }}
+                    alt="Locked"
+                    className="objectif-fit h-64 w-60"
+                  />
                 </View>
               </View>
               <View className="mb-8">
@@ -191,7 +197,9 @@ export default function HomeScreen() {
                 </View>
                 <View className="h-60 w-60">
                   <Image
-                    source={require('../../shared/assets/moon.png')}
+                    source={{
+                      uri: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/moon.png',
+                    }}
                     alt="Moon phase"
                     className="h-60 w-60 object-cover"
                   />

@@ -34,9 +34,11 @@ export default function SignInScreen({ navigation }: any) {
 
   const { alertConfig, hideAlert, showError } = useCustomAlert();
 
-  const logoSource = isDarkMode
-    ? require('../../shared/assets/logo_light.png')
-    : require('../../shared/assets/logo_dark.png');
+  const logoSource = {
+    uri: isDarkMode
+      ? 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/logo_light.png'
+      : 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/logo_dark.png',
+  };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

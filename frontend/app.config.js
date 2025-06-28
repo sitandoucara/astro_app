@@ -2,7 +2,7 @@ export default () => ({
   expo: {
     name: 'AstroMood',
     slug: 'astromood',
-    version: '1.0.9',
+    version: '1.1.1',
     icon: './assets/icon.png',
     userInterfaceStyle: 'automatic',
     supportsTablet: false,

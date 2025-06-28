@@ -39,14 +39,14 @@
     "exploreAstrologyDifferently": "Découvrez votre signe en réalité augmentée"
   },
   "filters": {
-    "title": "Filtres Astro",
+    "title": "Filters Astro",
     "list": {
       "01": {
-        "title": "Votre Visage Astrologique",
+        "title": "My 2025 Horoscope",
         "subtitle": "Filtre 1"
       },
       "02": {
-        "title": "Astro Horoscope",
+        "title": "Your Zodiac Face",
         "subtitle": "Filtre 2"
       },
       "03": {
