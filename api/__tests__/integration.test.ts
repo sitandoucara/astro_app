@@ -121,4 +121,58 @@ describe("AstroMood API Integration Tests", () => {
       expect(true).toBe(true);
     });
   });
+
+  describe("🔒 Security Tests", () => {
+    describe("Authentication Required", () => {
+      it("should return 401 for generate-complete without auth", async () => {
+        const testUser = {
+          id: `test-${Date.now()}`,
+          dateOfBirth: "1990-06-15",
+          timeOfBirth: "1990-06-15T14:30:00Z",
+          latitude: 48.8566,
+          longitude: 2.3522,
+          timezoneOffset: 2,
+        };
+
+        try {
+          await axios.post(`${API_BASE_URL}/api/generate-complete`, testUser);
+        } catch (error: any) {
+          expect(error.response.status).toBe(401);
+          expect(error.response.data.error).toBe("Unauthorized");
+        }
+      });
+
+      it("should return 401 for delete-account without auth", async () => {
+        try {
+          await axios.post(`${API_BASE_URL}/api/delete-account`, {
+            userId: "fake-user-id",
+          });
+        } catch (error: any) {
+          expect(error.response.status).toBe(401);
+          expect(error.response.data.error).toBe("Unauthorized");
+        }
+      });
+
+      it("should return 401 for invalid token", async () => {
+        const fakeToken = "fake-token-123";
+
+        try {
+          await axios.post(
+            `${API_BASE_URL}/api/delete-account`,
+            { userId: "fake-user-id" },
+            {
+              headers: {
+                Authorization: `Bearer ${fakeToken}`,
+              },
+            }
+          );
+        } catch (error: any) {
+          expect(error.response.status).toBe(401);
+          expect(error.response.data.message).toContain(
+            "Invalid or expired token"
+          );
+        }
+      });
+    });
+  });
 });

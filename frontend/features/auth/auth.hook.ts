@@ -157,17 +157,25 @@ export const logout = async (dispatch: AppDispatch) => {
 export const deleteAccount = async (dispatch: AppDispatch) => {
   try {
     const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-    if (userError || !user) {
-      return { error: userError || { message: 'No user logged in' } };
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
+
+    if (sessionError || !session || !session.user) {
+      return { error: sessionError || { message: 'No user logged in' } };
     }
+
+    const user = session.user;
+
     const res = await fetch('https://astro-app-eight-chi.vercel.app/api/delete-account', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
       body: JSON.stringify({ userId: user.id }),
     });
+
     const json = await res.json();
 
     if (!res.ok) {

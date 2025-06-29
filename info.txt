@@ -5,6 +5,8 @@ npx expo start -c --tunnel
 
 *** npx jest --coverage
 
+*** npm run test:integration
+
 -----------
 eas build:configure --platform ios
 eas build --platform ios

@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
+import { AuthenticatedRequest, requireAuth } from "./middleware/auth";
 
 const getSupabaseClient = () => {
   const supabaseUrl = process.env.SUPABASE_URL;
@@ -212,16 +213,10 @@ const generateCompleteChart = async (user: any) => {
   }
 };
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
-  }
-
+const generateChartHandler = async (
+  req: AuthenticatedRequest,
+  res: VercelResponse
+) => {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method Not Allowed" });
     return;
@@ -229,6 +224,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const userAstroData = req.body;
+    const authenticatedUserId = req.user?.id;
 
     const requiredFields = [
       "id",
@@ -249,6 +245,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
+    // A user can only generate his own chart
+    if (userAstroData.id !== authenticatedUserId) {
+      res.status(403).json({
+        error: "Forbidden",
+        message: "You can only generate your own chart",
+      });
+      return;
+    }
+
     console.log("Generating complete chart for user:", userAstroData.id);
 
     const result = await generateCompleteChart(userAstroData);
@@ -265,4 +270,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       details: error.message,
     });
   }
+};
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
+  // Apply authentication
+  return requireAuth(generateChartHandler)(req as AuthenticatedRequest, res);
 }

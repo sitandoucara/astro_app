@@ -1,3 +1,5 @@
+import { supabase } from 'shared/lib/supabase';
+
 type UserAstroData = {
   id: string;
   dateOfBirth: string;
@@ -9,6 +11,15 @@ type UserAstroData = {
 
 export const generateChart = async (user: UserAstroData) => {
   try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
+
+    if (sessionError || !session) {
+      throw new Error('Authentication required - no valid session');
+    }
+
     if (
       !user.dateOfBirth ||
       !user.timeOfBirth ||
@@ -24,7 +35,10 @@ export const generateChart = async (user: UserAstroData) => {
 
     const response = await fetch('https://astro-app-eight-chi.vercel.app/api/generate-complete', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
       body: JSON.stringify(user),
     });
 
