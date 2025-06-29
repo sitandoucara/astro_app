@@ -15,9 +15,11 @@ export default function LoadingScreen() {
 
   const colors = useThemeColors();
 
-  const logoSource = isDarkMode
-    ? require('../assets/logo_light.png')
-    : require('../assets/logo_dark.png');
+  const logoSource = {
+    uri: isDarkMode
+      ? 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/logo_light.png'
+      : 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/logo_dark.png',
+  };
 
   const scale = useSharedValue(1);
 

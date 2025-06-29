@@ -4,6 +4,11 @@ export const useThemeColors = () => {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   return {
+    //my-tabs
+    //my-tabs
+    tabActiveColor: isDarkMode ? 'rgba(242, 234, 224, 1)' : 'rgba(50, 34, 30, 1)',
+    tabInactiveColor: isDarkMode ? 'rgba(242, 234, 224, 0.4)' : 'rgba(50, 34, 30, 0.4)',
+    //background
     backgroundColor: isDarkMode ? '#F2EAE0' : '#281109',
     cardBg: isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50',
     bgInput: isDarkMode ? 'bg-[#91837C]' : 'bg-[#584540]',
@@ -15,6 +20,7 @@ export const useThemeColors = () => {
     progressColor: isDarkMode ? 'bg-[#281109]' : 'bg-[#F2EAE0]',
     modalBg: isDarkMode ? '#0F0A0A' : '#ffffff',
 
+    //text
     textColor: isDarkMode ? '#32221E' : '#F2EAE0',
     titleColor: isDarkMode ? '#32221E' : '#D8C8B4',
     textPrimary: isDarkMode ? 'text-light-text1' : 'text-dark-text1',
@@ -46,6 +52,7 @@ export const useThemeColors = () => {
     modalBgPlace: isDarkMode ? '#F2EAE0' : '#281109',
     modalTextPlace: isDarkMode ? '#32221E' : '#F2EAE0',
 
+    //page...profil
     colors: {
       tailwind: {
         background: isDarkMode ? 'bg-[#F2EAE0]' : 'bg-[#281109]',

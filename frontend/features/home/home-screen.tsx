@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { format, addDays, subDays } from 'date-fns';
 import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import { useLayoutEffect, useState, useMemo } from 'react';
-import { ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, Image, useWindowDimensions } from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { useLanguage } from 'shared/language/language.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
@@ -20,6 +20,8 @@ export default function HomeScreen() {
   const user = useAppSelector((state) => state.auth.user);
   const navigation = useNavigation();
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768;
 
   const { userSign } = useZodiacCompatibility();
   const colors = useThemeColors();
@@ -99,6 +101,8 @@ export default function HomeScreen() {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  const tabSpacing = isTablet ? 'mx-12' : 'mx-3';
+
   return (
     <ScrollView className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <ScrollView horizontal className="mt-8" showsHorizontalScrollIndicator={false}>
@@ -120,7 +124,9 @@ export default function HomeScreen() {
                 />
               )}
             </TouchableOpacity>
-            {index < tabs.length - 1 && <Text className="mx-3 text-xs text-stone-400">•</Text>}
+            {index < tabs.length - 1 && (
+              <Text className={`text-xs text-stone-400 ${tabSpacing}`}>•</Text>
+            )}
           </View>
         ))}
       </ScrollView>

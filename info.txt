@@ -4,6 +4,11 @@ npx expo start -c --tunnel
 **npx jest __tests__/auth/SignInScreen.test.tsx --coverage
 
 *** npx jest --coverage
+
+-----------
+eas build:configure --platform ios
+eas build --platform ios
+ eas submit -p ios
 -------
 
 User1:

@@ -21,16 +21,19 @@ export default function AuthHomeScreen() {
   };
 
   // Classes responsives
-  const containerMarginTop = isTablet ? 'mt-2' : 'mt-10';
+  const containerMarginBottom = isTablet ? 'mb-9' : 'mb-5';
+  const containerMarginTop = isTablet ? 'mt-14' : 'mt-5';
 
   return (
     <View className="flex-1 p-16" style={{ backgroundColor: colors.backgroundColor }}>
-      <View className={`${containerMarginTop} flex-1 justify-between`}>
-        <Animated.View entering={FadeInUp.duration(1000)} className="mt-5 items-center">
+      <View className={`flex-1 justify-between `}>
+        <Animated.View
+          entering={FadeInUp.duration(1000)}
+          className={`${containerMarginTop} items-center`}>
           <Image source={logoSource} style={{ width: 280, height: 280 }} resizeMode="contain" />
         </Animated.View>
 
-        <View className="mb-5 mt-10">
+        <View className={`mt-10  ${containerMarginBottom}`}>
           <View className="mb-8">
             <Text
               className={`text-aref mb-4 text-center text-4xl font-medium ${colors.textPrimaryAlt}`}>

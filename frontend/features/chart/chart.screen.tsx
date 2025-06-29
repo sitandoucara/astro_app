@@ -166,7 +166,7 @@ export default function ChartScreen() {
         </View>
       )}
 
-      <View className="mt-4 rounded-full border-2 border-stone-600 p-2">
+      {/*<View className="mt-4 rounded-full border-2 border-stone-600 p-2">
         <TouchableOpacity
           onPress={() => Alert.alert(t('chart.share'))}
           activeOpacity={0.8}
@@ -178,7 +178,7 @@ export default function ChartScreen() {
             </Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </View>*/}
 
       {planetsDescriptions && (
         <View className="mt-7 space-y-4">

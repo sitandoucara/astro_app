@@ -28,6 +28,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function StatusBarTheme() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
+
   console.log('Dark mode ?', isDarkMode);
   return <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} translucent={false} />;
 }
@@ -138,6 +139,7 @@ export default function SessionGate() {
       }
     });
 
+    // Check session on startup
     checkSession();
 
     return () => {
@@ -145,6 +147,7 @@ export default function SessionGate() {
     };
   }, [dispatch]);
 
+  // Display loading while the app is loading
   if (loading) {
     return <LoadingScreen />;
   }

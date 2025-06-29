@@ -5,38 +5,43 @@ import CompatibilityScreen from 'features/compatibility/compatibility.screen';
 import ExploreScreen from 'features/explore/explore.screen';
 import HomeScreen from 'features/home/home-screen';
 import ProfileScreen from 'features/profile/profile.screen';
-import { View, Text } from 'react-native';
+import { View, Text, useWindowDimensions } from 'react-native';
 import { useLanguage } from 'shared/language/language.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768;
+
   const colors = useThemeColors();
   const { t } = useLanguage();
+
+  const tabBarPaddingBottom = isTablet ? 22 : 0;
 
   return (
     <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             let iconName: keyof typeof Ionicons.glyphMap;
 
             switch (route.name) {
               case 'Home':
-                iconName = focused ? 'moon' : 'moon-outline';
-                break;
-              case 'Chart':
-                iconName = focused ? 'planet' : 'planet-outline';
-                break;
-              case 'Compatibility':
-                iconName = focused ? 'heart' : 'heart-outline';
+                iconName = 'moon';
                 break;
               case 'Explore':
-                iconName = focused ? 'star' : 'star-outline';
+                iconName = 'star';
+                break;
+              case 'Chart':
+                iconName = 'planet';
+                break;
+              case 'Compatibility':
+                iconName = 'heart';
                 break;
               case 'Profile':
-                iconName = focused ? 'person' : 'person-outline';
+                iconName = 'person';
                 break;
               default:
                 iconName = 'help-circle';
@@ -50,14 +55,14 @@ export default function MyTabs() {
               case 'Home':
                 labelKey = 'navigation.home';
                 break;
+              case 'Explore':
+                labelKey = 'navigation.explore';
+                break;
               case 'Chart':
                 labelKey = 'navigation.chart';
                 break;
               case 'Compatibility':
                 labelKey = 'navigation.compatibility';
-                break;
-              case 'Explore':
-                labelKey = 'navigation.explore';
                 break;
               case 'Profile':
                 labelKey = 'navigation.profile';
@@ -75,11 +80,12 @@ export default function MyTabs() {
             );
           },
           tabBarActiveTintColor: colors.textColor,
-          tabBarInactiveTintColor: colors.textColor + '80',
+          tabBarInactiveTintColor: colors.textColor + '50',
           tabBarStyle: {
             backgroundColor: colors.backgroundColor,
             borderTopColor: colors.textColor,
             borderTopWidth: 1,
+            paddingBottom: tabBarPaddingBottom,
           },
           headerStyle: {
             backgroundColor: colors.backgroundColor,
@@ -88,9 +94,9 @@ export default function MyTabs() {
           },
         })}>
         <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Explore" component={ExploreScreen} />
         <Tab.Screen name="Chart" component={ChartScreen} />
         <Tab.Screen name="Compatibility" component={CompatibilityScreen} />
-        <Tab.Screen name="Explore" component={ExploreScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </View>

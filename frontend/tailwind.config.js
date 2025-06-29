@@ -39,7 +39,20 @@ module.exports = {
     'border-[#281109]',
     'border-[#F2EAE0]',
 
-    // Optional: add all other dynamic classes you might need
+    // Shadow classes
+    'shadow-[#281109]',
+    'shadow-lg',
+    'shadow-md',
+    'shadow-opacity-30',
+    'elevation-1',
+
+    //classes others..
+    'rounded-full',
+    'px-3',
+    'py-1',
+    'text-sm',
+    'font-medium',
+    'p-4',
   ],
   theme: {
     extend: {

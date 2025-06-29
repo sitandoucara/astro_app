@@ -5,10 +5,10 @@ export default () => ({
     version: '1.1.1',
     icon: './assets/icon.png',
     userInterfaceStyle: 'automatic',
-    supportsTablet: false,
+    supportsTablet: true,
     ios: {
-      buildNumber: '11',
-      supportsTablet: false,
+      buildNumber: '13',
+      supportsTablet: true,
       bundleIdentifier: 'com.sigraph.astromood',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
@@ -16,7 +16,7 @@ export default () => ({
     },
     android: {
       package: 'com.sigraph.astromood',
-      supportsTablet: false,
+      supportsTablet: true,
     },
     extra: {
       supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,

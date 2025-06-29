@@ -193,7 +193,7 @@ export default function ProfileScreen() {
             }
             onPress={undefined}
           />
-          <SettingItem
+          {/*<SettingItem
             icon={<FontAwesome5 name="globe-americas" size={20} color={colors.colors.raw.icon} />}
             label={t('profile.changeLanguage')}
             rightComponent={
@@ -206,7 +206,7 @@ export default function ProfileScreen() {
               </View>
             }
             onPress={() => navigation.navigate('Language')}
-          />
+          />*/}
           <SettingItem
             icon={<MaterialIcons name="settings-voice" size={20} color={colors.colors.raw.icon} />}
             label={t('profile.changeVoice')}
@@ -221,7 +221,7 @@ export default function ProfileScreen() {
             }
             onPress={() => navigation.navigate('Voice')}
           />
-          <SettingItem
+          {/*<SettingItem
             icon={<FontAwesome6 name="crown" size={20} color={colors.colors.raw.icon} />}
             label={t('profile.subscriptions')}
             rightComponent={
@@ -234,10 +234,10 @@ export default function ProfileScreen() {
               </View>
             }
             onPress={undefined}
-          />
+          />*/}
         </View>
 
-        {/* Feedback */}
+        {/* Feedback 
         <View className={`mb-6 rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
           <SettingItem
             icon={<FontAwesome6 name="masks-theater" size={20} color={colors.colors.raw.icon} />}
@@ -260,7 +260,7 @@ export default function ProfileScreen() {
             label={t('profile.followUs')}
             onPress={undefined}
           />
-        </View>
+        </View>*/}
 
         {/* Account */}
         <View className={`rounded-xl p-4 ${colors.colors.tailwind.cardBg}`}>
@@ -279,7 +279,7 @@ export default function ProfileScreen() {
           />
           <Text
             className={`text-aref text-center font-medium ${colors.colors.tailwind.textPrimary} p-2`}>
-            V1.1.5
+            V1.1.1
           </Text>
         </View>
       </ScrollView>
