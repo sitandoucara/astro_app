@@ -45,8 +45,11 @@ export const authenticateUser = async (
       return { isAuthenticated: false };
     }
 
-    // Add the user to the query
-    req.user = user;
+    // check if emais is  undefined
+    req.user = {
+      id: user.id,
+      email: user.email || "",
+    };
 
     return { isAuthenticated: true, user };
   } catch (error) {

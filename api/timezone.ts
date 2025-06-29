@@ -1,9 +1,9 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import tzLookup from "tz-lookup";
+import * as tzLookup from "tz-lookup";
 import moment from "moment-timezone";
 
 function getTimezoneFromCoords(lat: number, lon: number): string {
-  return tzLookup(lat, lon);
+  return (tzLookup as any)(lat, lon);
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
