@@ -3,6 +3,7 @@ node_modules/
 
 # Environnement
 .env
+.env.local
 
 # Build
 dist/
