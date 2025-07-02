@@ -38,20 +38,49 @@
     "arFilters": "Filtres Astro",
     "exploreAstrologyDifferently": "Découvrez votre signe en réalité augmentée"
   },
+
   "filters": {
-    "title": "Filters Astro",
+    "title": "Filtres Astro",
     "list": {
       "01": {
-        "title": "Your Zodiac Face",
+        "title": "Votre Visage Zodiacal",
         "subtitle": "Filtre 1"
       },
       "02": {
-        "title": "My 2025 Horoscope",
+        "title": "Mon Horoscope 2025",
         "subtitle": "Filtre 2"
       },
       "03": {
         "title": "CelebrityAstro",
         "subtitle": "Filtre 3"
+      },
+      "04": {
+        "title": "Aura Planétaire",
+        "subtitle": "Filtre 4"
+      },
+      "05": {
+        "title": "Magie Phases Lunaires",
+        "subtitle": "Filtre 5"
+      },
+      "06": {
+        "title": "Pouvoir des Éléments",
+        "subtitle": "Filtre 6"
+      },
+      "07": {
+        "title": "Jumeau Cosmique",
+        "subtitle": "Filtre 7"
+      },
+      "08": {
+        "title": "Vision Rétrograde",
+        "subtitle": "Filtre 8"
+      },
+      "09": {
+        "title": "Projection Astrale",
+        "subtitle": "Filtre 9"
+      },
+      "10": {
+        "title": "Gardien Galactique",
+        "subtitle": "Filtre 10"
       }
     }
   },
@@ -100,11 +129,12 @@
       }
     }
   },
+
   "quiz": {
     "title": "Testez vos connaissances en Astrologie",
     "tests": {
       "01": {
-        "title": "Devinez Qui Signe ?",
+        "title": "Devinez Qui Signe?",
         "subtitle": "Test 1"
       },
       "02": {
@@ -114,6 +144,34 @@
       "03": {
         "title": "Mémoire Astro",
         "subtitle": "Test 3"
+      },
+      "04": {
+        "title": "Maître des Éléments",
+        "subtitle": "Test 4"
+      },
+      "05": {
+        "title": "Pouvoirs Planétaires",
+        "subtitle": "Test 5"
+      },
+      "06": {
+        "title": "Mystère des Phases Lunaires",
+        "subtitle": "Test 6"
+      },
+      "07": {
+        "title": "Quiz Compatibilité",
+        "subtitle": "Test 7"
+      },
+      "08": {
+        "title": "Décodeur Thème Astral",
+        "subtitle": "Test 8"
+      },
+      "09": {
+        "title": "Course Rétrograde",
+        "subtitle": "Test 9"
+      },
+      "10": {
+        "title": "Champion Cosmique",
+        "subtitle": "Test 10"
       }
     }
   },

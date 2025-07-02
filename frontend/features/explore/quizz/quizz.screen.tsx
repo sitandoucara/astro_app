@@ -6,6 +6,7 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { CustomAlert } from 'shared/components/custom-alert.component';
+import ScreenWrapper from 'shared/components/screen-wrapper.component';
 import { useAppSelector } from 'shared/hooks';
 import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
@@ -37,7 +38,7 @@ export default function QuizzScreen({ onBack }: any) {
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row gap-2">
-            <Ionicons name="arrow-back" size={24} style={{ color: colors.textColor }} />
+            <Ionicons name="chevron-back" size={24} style={{ color: colors.textColor }} />
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
               style={{ color: colors.textColor }}>
@@ -65,6 +66,41 @@ export default function QuizzScreen({ onBack }: any) {
       sign: 'gemini',
       icon: 'cards',
     },
+    {
+      id: '04',
+      sign: 'cancer',
+      icon: 'puzzle',
+    },
+    {
+      id: '05',
+      sign: 'leo',
+      icon: 'star-circle',
+    },
+    {
+      id: '06',
+      sign: 'virgo',
+      icon: 'clock-time-three',
+    },
+    {
+      id: '07',
+      sign: 'libra',
+      icon: 'scale-balance',
+    },
+    {
+      id: '08',
+      sign: 'scorpio',
+      icon: 'eye',
+    },
+    {
+      id: '09',
+      sign: 'sagittarius',
+      icon: 'bow-arrow',
+    },
+    {
+      id: '10',
+      sign: 'capricorn',
+      icon: 'trophy',
+    },
   ];
 
   const getSignImageUrl = (signName: string) => {
@@ -86,7 +122,7 @@ export default function QuizzScreen({ onBack }: any) {
       showAlert({
         title: t('common.comingSoon'),
         message: t('common.availableSoon', { title: testTitle }),
-        actions: [{ text: t('common.ok'), style: 'default' }],
+        actions: [{ text: t('common.ok'), style: 'edit-style' }],
         icon: (
           <MaterialIcons
             name="lock"
@@ -127,8 +163,8 @@ export default function QuizzScreen({ onBack }: any) {
   };
 
   return (
-    <>
-      <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
+    <ScreenWrapper noiseIntensity={0.12}>
+      <View className="flex-1 p-2">
         <ScrollView className="mt-20">
           <View>
             <View className="mt-8">
@@ -212,6 +248,6 @@ export default function QuizzScreen({ onBack }: any) {
         onClose={hideAlert}
         icon={alertConfig.icon}
       />
-    </>
+    </ScreenWrapper>
   );
 }

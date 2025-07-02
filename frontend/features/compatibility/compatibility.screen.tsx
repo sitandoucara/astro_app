@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
-//import { CustomAlert } from 'shared/components/custom-alert.component';
+import { CustomAlert } from 'shared/components/custom-alert.component';
 import { useAppSelector } from 'shared/hooks';
-//import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
+import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
@@ -17,9 +17,9 @@ export default function CompatibilityScreen() {
   const { t } = useLanguage();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  //const { alertConfig, hideAlert, showAlert } = useCustomAlert();
+  const { alertConfig, hideAlert, showAlert } = useCustomAlert();
 
-  /*const handleBirthChartCompatibility = () => {
+  const handleBirthChartCompatibility = () => {
     showAlert({
       title: 'Subscribe',
       message: 'This feature requires a subscription to unlock advanced compatibility analysis.',
@@ -32,7 +32,7 @@ export default function CompatibilityScreen() {
         />
       ),
     });
-  };*/
+  };
 
   const lightSignUrl =
     'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/signs/cancer_light.png';
@@ -82,7 +82,7 @@ export default function CompatibilityScreen() {
         </View>
       </TouchableOpacity>
 
-      {/* Birth Charts Compatibility (Locked)
+      {/* Birth Charts Compatibility (Locked)*/}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={handleBirthChartCompatibility}
@@ -192,7 +192,7 @@ export default function CompatibilityScreen() {
         actions={alertConfig.actions}
         onClose={hideAlert}
         icon={alertConfig.icon}
-      />*/}
+      />
     </View>
   );
 }

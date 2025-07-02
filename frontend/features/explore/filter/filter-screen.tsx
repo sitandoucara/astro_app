@@ -10,6 +10,7 @@ import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
+import ScreenWrapper from 'shared/components/screen-wrapper.component';
 
 export default function FilterScreen({ onBack }: any) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -35,7 +36,7 @@ export default function FilterScreen({ onBack }: any) {
       headerLeft: () => (
         <TouchableOpacity style={{ marginLeft: 16 }} onPress={goBack}>
           <View className="flex-row gap-2">
-            <Ionicons name="arrow-back" size={24} style={{ color: colors.textColor }} />
+            <Ionicons name="chevron-back" size={24} style={{ color: colors.textColor }} />
             <Text
               className="text-aref m-l-2 text-left text-xl font-bold"
               style={{ color: colors.textColor }}>
@@ -65,11 +66,47 @@ export default function FilterScreen({ onBack }: any) {
       icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter3.png',
       snapchatUrl: null,
     },
+    {
+      id: '04',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter1.png',
+      snapchatUrl: null,
+    },
+    {
+      id: '05',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter2.png',
+      snapchatUrl: null,
+    },
+    {
+      id: '06',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter3.png',
+      snapchatUrl: null,
+    },
+    {
+      id: '07',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter1.png',
+      snapchatUrl: null,
+    },
+    {
+      id: '08',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter2.png',
+      snapchatUrl: null,
+    },
+    {
+      id: '09',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter3.png',
+      snapchatUrl: null,
+    },
+    {
+      id: '10',
+      icon: 'https://vaajrvpkjbzyqbxiuzsi.supabase.co/storage/v1/object/public/assets/app/icon_filter1.png',
+      snapchatUrl: null,
+    },
   ];
 
   // Function to determine if a filter is locked
   const isLocked = (filter: (typeof filters)[0]) => {
-    return filter.id === '03';
+    const availableFilters = ['01', '02'];
+    return !availableFilters.includes(filter.id);
   };
 
   // Function to open Snapchat filter
@@ -136,8 +173,8 @@ export default function FilterScreen({ onBack }: any) {
   };
 
   return (
-    <>
-      <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
+    <ScreenWrapper noiseIntensity={1}>
+      <View className="flex-1 p-2">
         <ScrollView className="mt-20">
           <View>
             <View className="mt-8">
@@ -222,6 +259,6 @@ export default function FilterScreen({ onBack }: any) {
         onClose={hideAlert}
         icon={alertConfig.icon}
       />
-    </>
+    </ScreenWrapper>
   );
 }

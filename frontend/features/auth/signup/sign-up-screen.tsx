@@ -102,7 +102,7 @@ export default function SignUpScreen({ navigation }: any) {
             }
           }}>
           <View className="flex-row gap-2">
-            <Ionicons name="arrow-back" size={24} color={colors.iconColor} />
+            <Ionicons name="chevron-back" size={24} color={colors.iconColor} />
             <Text
               className="text-aref ml-2 text-left text-xl font-bold"
               style={{ color: colors.textColor }}>

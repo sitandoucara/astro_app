@@ -98,9 +98,10 @@ export default function MyTabs() {
           },
         })}>
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Explore" component={ExploreScreen} />
+
         <Tab.Screen name="Chart" component={ChartScreen} />
         <Tab.Screen name="Compatibility" component={CompatibilityScreen} />
+        <Tab.Screen name="Explore" component={ExploreScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NoiseOverlay>

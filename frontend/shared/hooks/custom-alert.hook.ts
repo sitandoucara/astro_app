@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
+import React, { useState, useCallback } from 'react';
 import { AlertAction } from 'shared/components/custom-alert.component';
 
 export interface ShowAlertOptions {
@@ -35,6 +36,11 @@ export const useCustomAlert = () => {
         title,
         message,
         actions: actions || [{ text: 'OK', style: 'edit-style' }],
+        icon: React.createElement(MaterialIcons, {
+          name: 'check-circle',
+          size: 48,
+          color: '#22C55E',
+        }),
       });
     },
     [showAlert]
@@ -46,6 +52,11 @@ export const useCustomAlert = () => {
         title,
         message,
         actions: actions || [{ text: 'OK', style: 'edit-style' }],
+        icon: React.createElement(FontAwesome6, {
+          name: 'triangle-exclamation',
+          size: 48,
+          color: '#EF4444',
+        }),
       });
     },
     [showAlert]
@@ -57,6 +68,11 @@ export const useCustomAlert = () => {
         title,
         message,
         actions: actions || [{ text: 'OK', style: 'edit-style' }],
+        icon: React.createElement(FontAwesome6, {
+          name: 'triangle-exclamation',
+          size: 48,
+          color: '#F59E0B',
+        }),
       });
     },
     [showAlert]
@@ -86,6 +102,11 @@ export const useCustomAlert = () => {
             onPress: onConfirm,
           },
         ],
+        icon: React.createElement(FontAwesome6, {
+          name: 'circle-question',
+          size: 48,
+          color: '#6B7280',
+        }),
       });
     },
     [showAlert]

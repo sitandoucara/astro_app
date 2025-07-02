@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAppSelector } from 'shared/hooks';
 
 export const useZodiacCompatibility = (showError?: (title: string, message: string) => void) => {
   const [username, setUsername] = useState('');
@@ -8,22 +9,13 @@ export const useZodiacCompatibility = (showError?: (title: string, message: stri
   const [partnerSign, setPartnerSign] = useState<string | null>(null);
   const [userSign, setUserSign] = useState<string | null>(null);
 
-  const mockUser = {
-    raw_user_meta_data: {
-      planets: {
-        Sun: 'Virgo',
-      },
-    },
-  };
+  const user = useAppSelector((state) => state.auth.user);
 
-  useEffect(() => {
-    const initialUserSign = mockUser.raw_user_meta_data.planets.Sun;
-    setUserSign(initialUserSign);
-  }, []);
-
-  const getZodiacSign = (birthDate: Date) => {
-    const month = birthDate.getMonth() + 1;
-    const day = birthDate.getDate();
+  // Fonction unique pour calculer le signe zodiacal
+  const getZodiacSign = (input: Date | string) => {
+    const date = typeof input === 'string' ? new Date(input) : input;
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
 
     if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'Aries';
     if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'Taurus';
@@ -39,6 +31,30 @@ export const useZodiacCompatibility = (showError?: (title: string, message: stri
     if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Pisces';
     return 'Aries';
   };
+  // Determine the user's sign based on the available data
+  useEffect(() => {
+    let calculatedUserSign = 'Cancer';
+
+    if (user) {
+      if (
+        user.planets &&
+        user.planets.Sun &&
+        typeof user.planets.Sun === 'object' &&
+        user.planets.Sun.sign
+      ) {
+        calculatedUserSign = user.planets.Sun.sign;
+      } else if (user.planets && user.planets.Sun && typeof user.planets.Sun === 'string') {
+        calculatedUserSign = user.planets.Sun;
+      } else if (user.dateOfBirth) {
+        calculatedUserSign = getZodiacSign(user.dateOfBirth);
+      }
+    }
+
+    console.log('User data:', user);
+    console.log('Calculated user sign:', calculatedUserSign);
+
+    setUserSign(calculatedUserSign);
+  }, [user]);
 
   const compatibilityData = {
     romance: {
@@ -78,10 +94,7 @@ export const useZodiacCompatibility = (showError?: (title: string, message: stri
     }
 
     const calculatedPartnerSign = getZodiacSign(date);
-    const calculatedUserSign = mockUser.raw_user_meta_data.planets.Sun;
-
     setPartnerSign(calculatedPartnerSign);
-    setUserSign(calculatedUserSign);
     setShowCompatibility(true);
   };
 

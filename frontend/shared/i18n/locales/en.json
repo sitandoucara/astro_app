@@ -38,6 +38,7 @@
     "arFilters": "Astro Filters",
     "exploreAstrologyDifferently": "Discover your sign in augmented reality"
   },
+
   "filters": {
     "title": "Astro Filters",
     "list": {
@@ -52,6 +53,34 @@
       "03": {
         "title": "CelebrityAstro",
         "subtitle": "Filter 3"
+      },
+      "04": {
+        "title": "Planetary Aura",
+        "subtitle": "Filter 4"
+      },
+      "05": {
+        "title": "Moon Phase Magic",
+        "subtitle": "Filter 5"
+      },
+      "06": {
+        "title": "Element Power",
+        "subtitle": "Filter 6"
+      },
+      "07": {
+        "title": "Cosmic Twin",
+        "subtitle": "Filter 7"
+      },
+      "08": {
+        "title": "Retrograde Vision",
+        "subtitle": "Filter 8"
+      },
+      "09": {
+        "title": "Astral Projection",
+        "subtitle": "Filter 9"
+      },
+      "10": {
+        "title": "Galaxy Guardian",
+        "subtitle": "Filter 10"
       }
     }
   },
@@ -144,11 +173,12 @@
       }
     }
   },
+
   "quiz": {
     "title": "Test your knowledge of Astrology",
     "tests": {
       "01": {
-        "title": "Guess Who Signs ?",
+        "title": "Guess Who Signs?",
         "subtitle": "Test 1"
       },
       "02": {
@@ -158,6 +188,34 @@
       "03": {
         "title": "Astro Memory",
         "subtitle": "Test 3"
+      },
+      "04": {
+        "title": "Element Master",
+        "subtitle": "Test 4"
+      },
+      "05": {
+        "title": "Planetary Powers",
+        "subtitle": "Test 5"
+      },
+      "06": {
+        "title": "Moon Phase Mystery",
+        "subtitle": "Test 6"
+      },
+      "07": {
+        "title": "Compatibility Quiz",
+        "subtitle": "Test 7"
+      },
+      "08": {
+        "title": "Birth Chart Decoder",
+        "subtitle": "Test 8"
+      },
+      "09": {
+        "title": "Retrograde Rush",
+        "subtitle": "Test 9"
+      },
+      "10": {
+        "title": "Cosmic Champion",
+        "subtitle": "Test 10"
       }
     }
   },
