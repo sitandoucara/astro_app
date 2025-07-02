@@ -24,6 +24,9 @@ export default function MyTabs() {
     <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
+          // Keeps screens in memory for faster access
+          // Immediately loads all screens
+          lazy: false,
           tabBarIcon: ({ color, size }) => {
             let iconName: keyof typeof Ionicons.glyphMap;
 

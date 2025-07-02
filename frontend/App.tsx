@@ -26,7 +26,7 @@ export default function App() {
     if (fontsLoaded) {
       setTimeout(() => {
         setShowLoading(false);
-      }, 1000);
+      }, 500);
     }
   }, [fontsLoaded]);
 

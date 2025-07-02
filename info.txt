@@ -33,19 +33,4 @@ Usurname : test1
 ****link: https://my-astromood-help.netlify.app/
 
 -------
-
-{/*<Text className="font-semibold text-[#32221E]">Gender: {user.gender}</Text>
-          <Text className="font-semibold text-[#32221E]">Birthplace: {user.birthplace}</Text>
-          <Text className="font-semibold text-[#32221E]">
-            Date of birth: {user.dateOfBirth?.slice(0, 10)}
-          </Text>
-          <Text className="font-semibold text-[#32221E]">
-            Time of birth: {user.timeOfBirth?.slice(11, 16)}
-          </Text>
-          <Text className="font-semibold text-[#32221E]">Timezonename: {user.timezoneName}</Text>
-          <Text className="font-semibold text-[#32221E]">
-            Timezoneoffset: {user.timezoneOffset}
-          </Text>
-          <Text className="font-semibold text-[#32221E]">Timezone: {user.timeOfBirth}</Text>
-          <Text className="font-semibold text-[#32221E]">Latitude: {user.latitude}</Text>
-          <Text className="font-semibold text-[#32221E]">Longitude: {user.longitude}</Text>*/}
+**utiliser redux RTK Query mais apres avec potentitellement useMemo pour avori un chargement un peu plus instatané

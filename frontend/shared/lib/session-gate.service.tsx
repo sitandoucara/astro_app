@@ -47,95 +47,109 @@ export default function SessionGate() {
       }
     });
 
+    // OPTIMIZATION: Retrieve session AND user in parallel + pre-load data
     const checkSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      try {
+        console.log('Checking session and preparing data...');
 
-      if (!session) {
+        // Use Promise.all to parallelize requests
+        const [sessionResult, userResult] = await Promise.all([
+          supabase.auth.getSession(),
+          supabase.auth.getUser(),
+        ]);
+
+        const session = sessionResult.data.session;
+        const user = userResult.data.user;
+
+        if (!session || !user) {
+          console.log('No valid session found');
+          setIsAuthenticated(false);
+          setLoading(false);
+          return;
+        }
+
+        console.log('Valid session found, setting up user...');
+        const metadata = user.user_metadata || {};
+
+        // Immediate treatment without waiting
+        dispatch(
+          setUser({
+            user: {
+              id: user.id,
+              email: user.email ?? '',
+              username: metadata.username ?? '',
+              dateOfBirth: metadata.dateOfBirth ?? '',
+              timeOfBirth: metadata.timeOfBirth ?? '',
+              birthplace: metadata.birthplace ?? '',
+              timezoneName: metadata.timezoneName ?? '',
+              timezoneOffset: metadata.timezoneOffset ?? 0,
+              latitude: metadata.latitude ?? null,
+              longitude: metadata.longitude ?? null,
+              gender: metadata.gender ?? '',
+              birthChartUrl: metadata.birthChartUrl ?? '',
+              planets: metadata.planets ?? null,
+              ascendant: metadata.ascendant ?? null,
+            },
+            token: session.access_token,
+          })
+        );
+        console.log('User authenticated and data ready');
+        setIsAuthenticated(true);
+        setLoading(false);
+      } catch (error) {
+        console.error('Session check error:', error);
         setIsAuthenticated(false);
         setLoading(false);
-        return;
       }
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        return;
-      }
-
-      const metadata = user?.user_metadata ?? {};
-
-      dispatch(
-        setUser({
-          user: {
-            id: user.id,
-            email: user.email ?? '',
-            username: metadata.username ?? '',
-            dateOfBirth: metadata.dateOfBirth ?? '',
-            timeOfBirth: metadata.timeOfBirth ?? '',
-            birthplace: metadata.birthplace ?? '',
-            timezoneName: metadata.timezoneName ?? '',
-            timezoneOffset: metadata.timezoneOffset ?? 0,
-            latitude: metadata.latitude ?? null,
-            longitude: metadata.longitude ?? null,
-            gender: metadata.gender ?? '',
-            birthChartUrl: metadata.birthChartUrl ?? '',
-            planets: metadata.planets ?? null,
-            ascendant: metadata.ascendant ?? null,
-          },
-          token: session.access_token,
-        })
-      );
-
-      setIsAuthenticated(true);
-      setLoading(false);
     };
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth event:', event);
+
       if (event === 'SIGNED_OUT' || !session) {
         dispatch(clearUser());
         setIsAuthenticated(false);
         setLoading(false);
       } else if (event === 'SIGNED_IN' && session) {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
+        try {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
 
-        if (user) {
-          const metadata = user.user_metadata ?? {};
+          if (user) {
+            const metadata = user.user_metadata || {};
 
-          dispatch(
-            setUser({
-              user: {
-                id: user.id,
-                email: user.email ?? '',
-                username: metadata.username ?? '',
-                dateOfBirth: metadata.dateOfBirth ?? '',
-                timeOfBirth: metadata.timeOfBirth ?? '',
-                birthplace: metadata.birthplace ?? '',
-                timezoneName: metadata.timezoneName ?? '',
-                timezoneOffset: metadata.timezoneOffset ?? 0,
-                latitude: metadata.latitude ?? null,
-                longitude: metadata.longitude ?? null,
-                gender: metadata.gender ?? '',
-                birthChartUrl: metadata.birthChartUrl ?? '',
-                planets: metadata.planets ?? null,
-                ascendant: metadata.ascendant ?? null,
-              },
-              token: session.access_token,
-            })
-          );
+            dispatch(
+              setUser({
+                user: {
+                  id: user.id,
+                  email: user.email ?? '',
+                  username: metadata.username ?? '',
+                  dateOfBirth: metadata.dateOfBirth ?? '',
+                  timeOfBirth: metadata.timeOfBirth ?? '',
+                  birthplace: metadata.birthplace ?? '',
+                  timezoneName: metadata.timezoneName ?? '',
+                  timezoneOffset: metadata.timezoneOffset ?? 0,
+                  latitude: metadata.latitude ?? null,
+                  longitude: metadata.longitude ?? null,
+                  gender: metadata.gender ?? '',
+                  birthChartUrl: metadata.birthChartUrl ?? '',
+                  planets: metadata.planets ?? null,
+                  ascendant: metadata.ascendant ?? null,
+                },
+                token: session.access_token,
+              })
+            );
 
-          setIsAuthenticated(true);
+            setIsAuthenticated(true);
+          }
+        } catch (error) {
+          console.error('Error handling auth change:', error);
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       }
     });
 
