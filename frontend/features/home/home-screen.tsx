@@ -3,12 +3,21 @@ import { useNavigation } from '@react-navigation/native';
 import { format, addDays, subDays } from 'date-fns';
 import { useZodiacCompatibility } from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.hook';
 import { useLayoutEffect, useState, useMemo } from 'react';
-import { ScrollView, Text, TouchableOpacity, View, Image, useWindowDimensions } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  useWindowDimensions,
+  ActivityIndicator,
+} from 'react-native';
 import { useAppSelector } from 'shared/hooks';
 import { useLanguage } from 'shared/language/language.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 import { HoroscopeSection } from './components/horoscope-section.component';
+import { useAffirmations } from './hooks/affirmations.hook';
 
 interface TimeTab {
   id: string;
@@ -34,6 +43,7 @@ export default function HomeScreen() {
 
   const currentUserSign = userSign || 'Cancer';
   const signImage = getSignImageUrl(currentUserSign);
+  const { getCurrentAffirmation, loading: affirmationsLoading } = useAffirmations();
 
   useLayoutEffect(() => {
     console.log('HomeScreen - User data updated:', user?.username);
@@ -236,11 +246,24 @@ export default function HomeScreen() {
               <Text className={`text-aref mb-4 text-lg font-medium ${colors.textPrimary}`}>
                 {t('home.affirmation')}
               </Text>
-              <Text
-                className={`text-aref text-sm ${colors.textSecondary}`}
-                style={{ lineHeight: 20 }}>
-                {t('home.affirmationText')}
-              </Text>
+              {affirmationsLoading ? (
+                <View className="flex-row items-center">
+                  <ActivityIndicator
+                    size="small"
+                    color={colors.textColor}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text className={`text-aref text-sm ${colors.textSecondary}`}>
+                    Loading affirmation...
+                  </Text>
+                </View>
+              ) : (
+                <Text
+                  className={`text-aref text-sm ${colors.textSecondary}`}
+                  style={{ lineHeight: 20 }}>
+                  {getCurrentAffirmation(activeTab)}
+                </Text>
+              )}
             </View>
           </>
         )}
