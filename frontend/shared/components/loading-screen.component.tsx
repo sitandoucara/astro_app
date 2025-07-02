@@ -10,6 +10,8 @@ import Animated, {
 import { useAppSelector } from 'shared/hooks';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
+import NoiseOverlay from './noise-overlay.component';
+
 export default function LoadingScreen() {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
@@ -36,14 +38,16 @@ export default function LoadingScreen() {
   }));
 
   return (
-    <View
-      className="flex-1 items-center justify-center"
-      style={{ backgroundColor: colors.backgroundColor }}>
-      <Animated.Image
-        source={logoSource}
-        style={[{ width: 130, height: 130, maxWidth: '80%' }, animatedStyle]}
-        resizeMode="contain"
-      />
-    </View>
+    <NoiseOverlay intensity={0.08}>
+      <View
+        className="flex-1 items-center justify-center"
+        style={{ backgroundColor: colors.backgroundColor }}>
+        <Animated.Image
+          source={logoSource}
+          style={[{ width: 130, height: 130, maxWidth: '80%' }, animatedStyle]}
+          resizeMode="contain"
+        />
+      </View>
+    </NoiseOverlay>
   );
 }

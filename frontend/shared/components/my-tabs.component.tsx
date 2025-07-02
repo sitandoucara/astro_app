@@ -5,7 +5,8 @@ import CompatibilityScreen from 'features/compatibility/compatibility.screen';
 import ExploreScreen from 'features/explore/explore.screen';
 import HomeScreen from 'features/home/home-screen';
 import ProfileScreen from 'features/profile/profile.screen';
-import { View, Text, useWindowDimensions } from 'react-native';
+import { Text, useWindowDimensions } from 'react-native';
+import NoiseOverlay from 'shared/components/noise-overlay.component';
 import { useLanguage } from 'shared/language/language.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
@@ -21,7 +22,7 @@ export default function MyTabs() {
   const tabBarPaddingBottom = isTablet ? 22 : 0;
 
   return (
-    <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
+    <NoiseOverlay intensity={1} className="flex-1">
       <Tab.Navigator
         screenOptions={({ route }) => ({
           // Keeps screens in memory for faster access
@@ -102,6 +103,6 @@ export default function MyTabs() {
         <Tab.Screen name="Compatibility" component={CompatibilityScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
-    </View>
+    </NoiseOverlay>
   );
 }
