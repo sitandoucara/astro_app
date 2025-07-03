@@ -82,6 +82,10 @@ AstroMood est une application dédiée à l'astrologie. Elle permet aux utilisat
 - **Vercel** : Déploiement frontend et backend
 - **Géolocalisation** : API native du navigateur
 
+## 📋 Développement
+
+Méthodologie Waterfall avec phases séquentielles sur 6 semaines (mai-juillet 2025).
+
 ## 📡 API Endpoints
 
 ### Authentification
@@ -99,6 +103,11 @@ AstroMood est une application dédiée à l'astrologie. Elle permet aux utilisat
 
 - `GET /api/timezone` : Calcul du fuseau horaire par coordonnées
 - `POST /api/delete-account` : Suppression de compte utilisateur
+
+## 🎥 Démo
+
+- `TestFlight (iOS)` : Build disponible sur demande
+- `APK Android` : Build disponible sur demande
 
 ## 🚀 Installation & Démarrage
 
@@ -163,6 +172,16 @@ npm start
 ## 📄 Documentation
 
 - **API Documentation** : [Stoplight Studio](https://school-test.stoplight.io/docs/astromood/886eb4db2b19b-astro-mood-api)
+
+## 🔖 Ripo Github Landing Page & Admin Web
+
+- **Landing Page & Admin Web** : [Github](https://github.com/sitandoucara/landing_page_astro)
+
+## 🖼 **Captures d'écran**
+
+| **Écran de connexion light mode**               | **Écran d'accueil dark mode**                      | **Écran d'accueil light mode**                       | **Page Profil dark mode**                           |
+| ----------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------- |
+| ![Auth Screen](frontend/assets/auth-screen.png) | ![Home Screen Dark](frontend/assets/home-dark.png) | ![Home Screen light](frontend/assets/home-light.png) | ![Profile Page](frontend/assets/profile-screen.png) |
 
 ## 🎯 Fin
 

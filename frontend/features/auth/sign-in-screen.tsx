@@ -19,6 +19,7 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import { CustomAlert } from 'shared/components/custom-alert.component';
+import NoiseOverlay from 'shared/components/noise-overlay.component';
 import { useAppDispatch, useAppSelector } from 'shared/hooks';
 import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
@@ -116,7 +117,7 @@ export default function SignInScreen({ navigation }: any) {
   });
 
   return (
-    <>
+    <NoiseOverlay intensity={1}>
       <KeyboardAvoidingView
         className="flex-1"
         style={{ backgroundColor: colors.backgroundColor }}
@@ -195,6 +196,6 @@ export default function SignInScreen({ navigation }: any) {
         actions={alertConfig.actions}
         onClose={hideAlert}
       />
-    </>
+    </NoiseOverlay>
   );
 }

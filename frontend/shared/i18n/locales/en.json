@@ -219,6 +219,11 @@
       }
     }
   },
+  "language": {
+    "title": "Change language",
+    "english": "English",
+    "french": "French"
+  },
   "common": {
     "ok": "OK",
     "in": "in",

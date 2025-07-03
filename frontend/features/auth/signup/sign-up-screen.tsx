@@ -10,6 +10,7 @@ import StepOne from './components/step-one.component';
 import StepThree from './components/step-three.component';
 import StepTwo from './components/step-two.component';
 import { LocationResult } from '../../../shared/location/location.hook';
+import NoiseOverlay from 'shared/components/noise-overlay.component';
 
 export default function SignUpScreen({ navigation }: any) {
   const colors = useThemeColors();
@@ -115,7 +116,7 @@ export default function SignUpScreen({ navigation }: any) {
   }, [navigation, step, colors]);
 
   return (
-    <>
+    <NoiseOverlay intensity={1}>
       <View className="flex-1" style={{ backgroundColor: colors.backgroundColor }}>
         {step === 1 && <StepOne formData={formData} updateForm={updateForm} onNext={goToNext} />}
         {step === 2 && (
@@ -138,6 +139,6 @@ export default function SignUpScreen({ navigation }: any) {
         actions={alertConfig.actions}
         onClose={hideAlert}
       />
-    </>
+    </NoiseOverlay>
   );
 }

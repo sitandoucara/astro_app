@@ -6,6 +6,7 @@ import { useLayoutEffect } from 'react';
 import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { CustomAlert } from 'shared/components/custom-alert.component';
+import NoiseOverlay from 'shared/components/noise-overlay.component';
 import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
@@ -114,7 +115,7 @@ export default function LearnScreen({ onBack }: any) {
   };
 
   return (
-    <>
+    <NoiseOverlay intensity={1}>
       <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
         <ScrollView className="mt-20">
           <View>
@@ -197,6 +198,6 @@ export default function LearnScreen({ onBack }: any) {
         onClose={hideAlert}
         icon={alertConfig.icon}
       />
-    </>
+    </NoiseOverlay>
   );
 }

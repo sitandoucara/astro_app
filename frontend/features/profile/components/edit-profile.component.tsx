@@ -8,6 +8,7 @@ import { useState, useLayoutEffect, useEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View, Modal } from 'react-native';
 import Animated, { FadeInUp, SlideInLeft, SlideInRight } from 'react-native-reanimated';
 import { CustomAlert } from 'shared/components/custom-alert.component';
+import NoiseOverlay from 'shared/components/noise-overlay.component';
 import { useAppSelector, useAppDispatch } from 'shared/hooks';
 import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { supabase } from 'shared/lib/supabase';
@@ -176,7 +177,7 @@ export default function EditProfile({ onBack }: any) {
   }, [navigation, colors.textColor]);
 
   return (
-    <>
+    <NoiseOverlay intensity={1}>
       <View
         className="flex-1 items-center justify-center p-10"
         style={{ backgroundColor: colors.backgroundColor }}>
@@ -372,6 +373,6 @@ export default function EditProfile({ onBack }: any) {
           ) : undefined
         }
       />
-    </>
+    </NoiseOverlay>
   );
 }

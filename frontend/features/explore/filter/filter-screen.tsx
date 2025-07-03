@@ -10,7 +10,8 @@ import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
 import { useLanguage } from 'shared/language/language.hook';
 import { RootStackParamList } from 'shared/navigation/types';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
-import ScreenWrapper from 'shared/components/screen-wrapper.component';
+
+import NoiseOverlay from 'shared/components/noise-overlay.component';
 
 export default function FilterScreen({ onBack }: any) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -173,8 +174,8 @@ export default function FilterScreen({ onBack }: any) {
   };
 
   return (
-    <ScreenWrapper noiseIntensity={1}>
-      <View className="flex-1 p-2">
+    <NoiseOverlay intensity={1}>
+      <View className="flex-1 p-2" style={{ backgroundColor: colors.backgroundColor }}>
         <ScrollView className="mt-20">
           <View>
             <View className="mt-8">
@@ -259,6 +260,6 @@ export default function FilterScreen({ onBack }: any) {
         onClose={hideAlert}
         icon={alertConfig.icon}
       />
-    </ScreenWrapper>
+    </NoiseOverlay>
   );
 }
