@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { setLoading, setGeneratingChart } from 'features/auth/auth.slice';
-import { generateChart } from 'features/chart/services/generate-chart.service';
+import { setLoading } from 'features/auth/auth.slice';
 import { useState, useEffect } from 'react';
 import {
   View,
@@ -22,7 +21,6 @@ import Animated, {
 import { CustomAlert } from 'shared/components/custom-alert.component';
 import { useAppDispatch, useAppSelector } from 'shared/hooks';
 import { useCustomAlert } from 'shared/hooks/custom-alert.hook';
-import { supabase } from 'shared/lib/supabase';
 import { useThemeColors } from 'shared/theme/theme-color.hook';
 
 import { signIn } from './auth.hook';
@@ -52,45 +50,16 @@ export default function SignInScreen({ navigation }: any) {
 
     if (error) {
       console.log('Connection error:', error.message);
-
       dispatch(setLoading(false));
       showError('Connection Error', error.message);
       return;
     }
 
-    const user = data?.user;
-    console.log('Connection successful:', user);
-
-    if (user && !user.user_metadata?.birthChartUrl) {
-      console.log('Missing BirthChart, generation...');
-      dispatch(setGeneratingChart(true));
-
-      const metadata = user.user_metadata;
-      const chartPayload = {
-        id: user.id,
-        dateOfBirth: metadata.dateOfBirth,
-        timeOfBirth: metadata.timeOfBirth,
-        latitude: metadata.latitude,
-        longitude: metadata.longitude,
-        timezoneOffset: metadata.timezoneOffset,
-      };
-
-      try {
-        await generateChart(chartPayload);
-        console.log('Chart generated successfully');
-
-        await supabase.auth.refreshSession();
-      } catch (chartError: any) {
-        console.error('Chart generation error:', chartError.message);
-      }
-    }
+    console.log('Connection successful:', data?.user);
 
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     dispatch(setLoading(false));
-    dispatch(setGeneratingChart(false));
-
-    await supabase.auth.getSession();
   };
 
   const keyboardOffset = useSharedValue(0);

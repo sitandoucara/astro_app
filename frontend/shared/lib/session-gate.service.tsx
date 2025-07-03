@@ -5,24 +5,25 @@ import { setUser, clearUser } from 'features/auth/auth.slice';
 import SignInScreen from 'features/auth/sign-in-screen';
 import SignUpScreen from 'features/auth/signup/sign-up-screen';
 import ZodiacCompatibilityScreen from 'features/compatibility/zodiac-signs-compatibility/zodiac-compatibility.screen';
+import FilterScreen from 'features/explore/filter/filter-screen';
 import AudioBookScreen from 'features/explore/learn/audio-book/audio-book.screen';
 import LearnScreen from 'features/explore/learn/learn.screen';
 import GuessWhoGame from 'features/explore/quizz/guess-who-game/guess-who-game.screen';
 import QuizzScreen from 'features/explore/quizz/quizz.screen';
 import TrueOrFalseGame from 'features/explore/quizz/true-or-false-game/true-or-false-game.screen';
 import EditProfile from 'features/profile/components/edit-profile.component';
-import { RootStackParamList } from 'shared/navigation/types';
+import Language from 'features/profile/components/language.component';
+import Voice from 'features/profile/components/voice.component';
 import { useEffect, useState } from 'react';
 import { AppState, StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
 import LoadingScreen from 'shared/components/loading-screen.component';
 import MyTabs from 'shared/components/my-tabs.component';
 import { useAppSelector } from 'shared/hooks';
+import { RootStackParamList } from 'shared/navigation/types';
 
 import { supabase } from './supabase';
-import Language from 'features/profile/components/language.component';
-import FilterScreen from 'features/explore/filter/filter-screen';
-import Voice from 'features/profile/components/voice.component';
+import { createUserFromSupabaseData } from './user-helpers';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -69,30 +70,10 @@ export default function SessionGate() {
         }
 
         console.log('Valid session found, setting up user...');
-        const metadata = user.user_metadata || {};
 
         // Immediate treatment without waiting
-        dispatch(
-          setUser({
-            user: {
-              id: user.id,
-              email: user.email ?? '',
-              username: metadata.username ?? '',
-              dateOfBirth: metadata.dateOfBirth ?? '',
-              timeOfBirth: metadata.timeOfBirth ?? '',
-              birthplace: metadata.birthplace ?? '',
-              timezoneName: metadata.timezoneName ?? '',
-              timezoneOffset: metadata.timezoneOffset ?? 0,
-              latitude: metadata.latitude ?? null,
-              longitude: metadata.longitude ?? null,
-              gender: metadata.gender ?? '',
-              birthChartUrl: metadata.birthChartUrl ?? '',
-              planets: metadata.planets ?? null,
-              ascendant: metadata.ascendant ?? null,
-            },
-            token: session.access_token,
-          })
-        );
+        dispatch(setUser(createUserFromSupabaseData(user, session.access_token)));
+
         console.log('User authenticated and data ready');
         setIsAuthenticated(true);
         setLoading(false);
@@ -119,29 +100,7 @@ export default function SessionGate() {
           } = await supabase.auth.getUser();
 
           if (user) {
-            const metadata = user.user_metadata || {};
-
-            dispatch(
-              setUser({
-                user: {
-                  id: user.id,
-                  email: user.email ?? '',
-                  username: metadata.username ?? '',
-                  dateOfBirth: metadata.dateOfBirth ?? '',
-                  timeOfBirth: metadata.timeOfBirth ?? '',
-                  birthplace: metadata.birthplace ?? '',
-                  timezoneName: metadata.timezoneName ?? '',
-                  timezoneOffset: metadata.timezoneOffset ?? 0,
-                  latitude: metadata.latitude ?? null,
-                  longitude: metadata.longitude ?? null,
-                  gender: metadata.gender ?? '',
-                  birthChartUrl: metadata.birthChartUrl ?? '',
-                  planets: metadata.planets ?? null,
-                  ascendant: metadata.ascendant ?? null,
-                },
-                token: session.access_token,
-              })
-            );
+            dispatch(setUser(createUserFromSupabaseData(user, session.access_token)));
 
             setIsAuthenticated(true);
           }

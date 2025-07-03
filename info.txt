@@ -34,3 +34,5 @@ Usurname : test1
 
 -------
 **utiliser redux RTK Query mais apres avec potentitellement useMemo pour avori un chargement un peu plus instatané
+
+**vercel corce (15 mai) : https://vercel.com/guides/how-to-enable-cors

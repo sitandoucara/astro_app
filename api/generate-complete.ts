@@ -99,7 +99,7 @@ const generateCompleteChart = async (user: any) => {
           Square: "#704C5E",
         },
         wheel_chart_colors: {
-          zodiac_sign_background_color: "#303036",
+          zodiac_sign_background_color: "#826D63",
           chart_background_color: "#281109",
           zodiac_signs_text_color: "#FFFFFF",
           dotted_line_color: "#FFFAFF",
