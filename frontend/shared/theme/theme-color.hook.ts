@@ -4,10 +4,6 @@ export const useThemeColors = () => {
   const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   return {
-    //my-tabs
-    //my-tabs
-    tabActiveColor: isDarkMode ? 'rgba(242, 234, 224, 1)' : 'rgba(50, 34, 30, 1)',
-    tabInactiveColor: isDarkMode ? 'rgba(242, 234, 224, 0.4)' : 'rgba(50, 34, 30, 0.4)',
     //background
     backgroundColor: isDarkMode ? '#F2EAE0' : '#281109',
     cardBg: isDarkMode ? 'bg-light-cardback' : 'bg-[#442F29]/50',

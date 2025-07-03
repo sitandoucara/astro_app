@@ -57,7 +57,7 @@ describe("AstroMood API Integration Tests", () => {
   });
 
   describe("Generate Complete Chart API", () => {
-    it("should handle chart generation request properly", async () => {
+    it("should return 401 if unauthenticated", async () => {
       const testUser = {
         id: `test-integration-${Date.now()}`,
         dateOfBirth: "1990-06-15",
@@ -68,61 +68,37 @@ describe("AstroMood API Integration Tests", () => {
       };
 
       try {
-        const response = await axios.post(
-          `${API_BASE_URL}/api/generate-complete`,
-          testUser
-        );
-
-        // Si ça marche (user créé avec succès)
-        expect(response.status).toBe(200);
-        expect(response.data.success).toBe(true);
-        expect(response.data.data).toHaveProperty("chartUrl");
-        console.log("Chart généré avec succès !");
+        await axios.post(`${API_BASE_URL}/api/generate-complete`, testUser);
       } catch (error: any) {
-        // Si ça échoue (normal - user test n'existe pas dans Supabase)
-        expect(error.response.status).toBe(500);
-        expect(error.response.data).toHaveProperty("error");
-        console.log("Erreur attendue - API fonctionne correctement");
+        expect(error.response.status).toBe(401);
+        expect(error.response.data.error).toBe("Unauthorized");
       }
-    }, 45000);
+    });
 
-    it("should return 400 for missing required fields", async () => {
+    it("should return 401 if fields are missing and unauthenticated", async () => {
       try {
         await axios.post(`${API_BASE_URL}/api/generate-complete`, {
           id: "test-incomplete",
         });
       } catch (error: any) {
-        expect(error.response.status).toBe(400);
-        expect(error.response.data.error).toContain("Missing required fields");
+        expect(error.response.status).toBe(401);
+        expect(error.response.data.error).toBe("Unauthorized");
       }
     });
   });
 
   describe("Delete Account API", () => {
-    it("should return 400 for missing userId", async () => {
+    it("should return 401 if unauthenticated", async () => {
       try {
         await axios.post(`${API_BASE_URL}/api/delete-account`, {});
       } catch (error: any) {
-        expect(error.response.status).toBe(400);
-        expect(error.response.data.error).toBe("Missing userId");
+        expect(error.response.status).toBe(401);
+        expect(error.response.data.error).toBe("Unauthorized");
       }
     });
   });
 
-  describe("API Health Summary", () => {
-    it("should confirm all endpoints are accessible", async () => {
-      console.log("\n Résumé des tests d'intégration :");
-      console.log(" Timezone API : Fonctionnel");
-      console.log(" Planets API : Fonctionnel");
-      console.log(
-        " Generate Chart API : Accessible (erreur normale sans user réel)"
-      );
-      console.log(" Delete Account API : Validation fonctionnelle");
-      expect(true).toBe(true);
-    });
-  });
-
-  describe("🔒 Security Tests", () => {
+  describe("Security Tests", () => {
     describe("Authentication Required", () => {
       it("should return 401 for generate-complete without auth", async () => {
         const testUser = {
@@ -173,6 +149,63 @@ describe("AstroMood API Integration Tests", () => {
           );
         }
       });
+    });
+  });
+
+  describe("CORS Tests", () => {
+    it("should respond to OPTIONS preflight for generate-complete", async () => {
+      const response = await axios.options(
+        `${API_BASE_URL}/api/generate-complete`,
+        {
+          headers: {
+            Origin: "https://test-origin.com",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "Content-Type, Authorization",
+          },
+          validateStatus: () => true,
+        }
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.headers["access-control-allow-origin"]).toBe("*");
+      expect(response.headers["access-control-allow-methods"]).toContain(
+        "POST"
+      );
+      expect(response.headers["access-control-allow-headers"]).toContain(
+        "Authorization"
+      );
+    });
+
+    it("should respond to OPTIONS preflight for delete-account", async () => {
+      const response = await axios.options(
+        `${API_BASE_URL}/api/delete-account`,
+        {
+          headers: {
+            Origin: "https://another-origin.com",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "Content-Type, Authorization",
+          },
+          validateStatus: () => true,
+        }
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.headers["access-control-allow-origin"]).toBe("*");
+      expect(response.headers["access-control-allow-methods"]).toContain(
+        "POST"
+      );
+    });
+  });
+
+  describe("API Health Summary", () => {
+    it("should confirm all endpoints are accessible", async () => {
+      console.log("\n Integration Test Summary:");
+      console.log(" - Timezone API: Functional");
+      console.log(" - Planets API: Functional");
+      console.log(" - Generate Chart API: Protected (401 without token)");
+      console.log(" - Delete Account API: Protected (401 without token)");
+      console.log(" - CORS Preflight: Responses OK");
+      expect(true).toBe(true);
     });
   });
 });

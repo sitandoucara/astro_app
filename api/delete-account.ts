@@ -4,7 +4,6 @@ import { AuthenticatedRequest, requireAuth } from "./middleware/auth";
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const deleteAccountHandler = async (
@@ -16,30 +15,22 @@ const deleteAccountHandler = async (
     return;
   }
 
+  const { userId } = req.body as { userId?: string };
+
+  if (!userId) {
+    res.status(400).json({ error: "Missing userId" });
+    return;
+  }
+
+  if (userId !== req.user?.id) {
+    res.status(403).json({
+      error: "Forbidden",
+      message: "You can only delete your own account",
+    });
+    return;
+  }
+
   try {
-    const { userId } = req.body as { userId?: string };
-    const authenticatedUserId = req.user?.id;
-
-    // Security checks
-    if (!userId) {
-      res.status(400).json({ error: "Missing userId" });
-      return;
-    }
-
-    if (!authenticatedUserId) {
-      res.status(401).json({ error: "Authentication required" });
-      return;
-    }
-
-    if (userId !== authenticatedUserId) {
-      res.status(403).json({
-        error: "Forbidden",
-        message: "You can only delete your own account",
-      });
-      return;
-    }
-
-    // Delete the user
     const { error } = await supabase.auth.admin.deleteUser(userId);
 
     if (error) {
@@ -52,23 +43,23 @@ const deleteAccountHandler = async (
       success: true,
       message: "Account deleted successfully",
     });
-  } catch (error) {
-    console.error("Unexpected error:", error);
+  } catch (err) {
+    console.error("Unexpected error:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-// Headers CORS
+// Export with CORS and auth
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Max-Age", "86400");
 
   if (req.method === "OPTIONS") {
-    res.status(200).end();
+    res.status(204).end();
     return;
   }
 
-  // Apply authentication
   return requireAuth(deleteAccountHandler)(req as AuthenticatedRequest, res);
 }
