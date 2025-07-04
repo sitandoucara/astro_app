@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useState, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { CustomAlert } from 'shared/components/custom-alert.component';
@@ -15,7 +15,7 @@ import NoiseOverlay from 'shared/components/noise-overlay.component';
 export default function SignUpScreen({ navigation }: any) {
   const colors = useThemeColors();
 
-  const { alertConfig, hideAlert, showError, showSuccess } = useCustomAlert();
+  const { alertConfig, hideAlert, showError, showAlert } = useCustomAlert();
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -69,13 +69,18 @@ export default function SignUpScreen({ navigation }: any) {
 
         showError('Signup Error', error.message);
       } else {
-        showSuccess('Account Created!', 'Your account has been successfully created.', [
-          {
-            text: 'Continue to Sign In',
-            style: 'edit-style',
-            onPress: () => navigation.navigate('SignIn'),
-          },
-        ]);
+        showAlert({
+          title: 'Account Created!',
+          message: 'Your account has been successfully created.',
+          actions: [
+            {
+              text: 'Continue to Sign In',
+              style: 'edit-style',
+              onPress: () => navigation.navigate('SignIn'),
+            },
+          ],
+          icon: null,
+        });
       }
     } catch (err) {
       console.error('Timezone error:', err);
@@ -138,6 +143,11 @@ export default function SignUpScreen({ navigation }: any) {
         message={alertConfig.message}
         actions={alertConfig.actions}
         onClose={hideAlert}
+        icon={
+          alertConfig.title === 'Account Created!' ? (
+            <MaterialIcons name="check-circle" size={42} color="#10B981" />
+          ) : undefined
+        }
       />
     </NoiseOverlay>
   );

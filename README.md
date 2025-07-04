@@ -1,4 +1,4 @@
-# AstroMood - Astrology App
+# My AstroMood - Astrology App
 
 AstroMood est une application dédiée à l'astrologie. Elle permet aux utilisateurs de générer leur thème astral personnalisé, de découvrir leur compatibilité, d'accéder à des horoscopes quotidiens et d'apprendre l'astrologie à travers des contenus interactifs.
 
